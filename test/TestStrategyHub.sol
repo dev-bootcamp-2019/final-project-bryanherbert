@@ -43,6 +43,28 @@ contract TestStrategyHub {
     Assert.equal(c, initialFund, "Strategy funds do not match test funds");
     Assert.equal(d, true, "Quant is not listed as investor");
     Assert.equal(e, initialFund, "Quant's funds are not listed");
+  }
+
+  function testIsInvestor(){
+    //Check to see if account is an investor in a certain strategy
+    address investorAddr = address(investor);
+    uint stratNum = 0;
+    investor.checkInvestmentStatus(s, stratNum);
+
+    (,,,d,) = s.getStratDetails(stratNum, investorAddr);
+
+    //Tests
+    Assert.equal(d, false, "Account is incorrectly listed as investor");
+
+    //For quick purposes of testing to see if we can change account status
+    investor.makeInvestment(s, stratNum);
+
+    (,,,d,e) = s.getStratDetails(stratNum, investorAddr);
+
+    //Tests
+    Assert.equal(d, true, "Account is incorrectly listed as not an investor");
+    Assert.equal(e, 0, "Account balance is not empty");
+
 
 
   }
@@ -63,5 +85,18 @@ contract Quant {
 }
 
 contract Investor {
+
+    function checkInvestmentStatus(StrategyHub s, uint _stratNum) public {
+        s.isInvestor(_stratNum);
+    }
+
+    function makeInvestment(StrategyHub s, uint _stratNum) public {
+        s.Invest(_stratNum);
+    }
+
+    //Fallback function, accepts ether
+    function() public payable{
+
+    }
 
 }
