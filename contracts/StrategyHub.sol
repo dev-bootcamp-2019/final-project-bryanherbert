@@ -28,6 +28,27 @@ contract StrategyHub {
         address stratOwner
     );
 
+    //Modifiers
+    modifier verifyBalance(address _account, uint _investment){
+        //Account Balance must be greater than investment + Fees
+        //Not sure this correct- want it to represent ~2%
+        uint fee = (_investment / 50) + 1;
+        require(
+            _account.balance > _investment + fee,
+            "Sender does not have enough balance to invest"
+        );
+        _;
+    }
+
+    modifier verifyFee(uint _investment, uint _proposedFee) {
+        //Verify that the msg.value > fee
+        require(
+            _proposedFee >= _investment/50+1,
+            "Fee is insufficent"
+        );
+        _;
+    }
+
     constructor() public {
         owner = msg.sender;
         //initialize strategy count to 0
@@ -57,10 +78,14 @@ contract StrategyHub {
         return strategies[_stratNum].investors[msg.sender];
     }
 
-    //not a permanent function
-    //check to see if we can change investor status to true
-    function Invest(uint _stratNum) public returns (bool) {
+    //Make investment into particular fund
+    //Must have required funds
+    function Invest(uint _stratNum, uint _investment) public payable 
+    verifyBalance(msg.sender, _investment) 
+    verifyFee(_investment, msg.value) 
+    returns (bool) {
         strategies[_stratNum].investors[msg.sender] = true;
+        strategies[_stratNum].balances[msg.sender] = _investment;
         return strategies[_stratNum].investors[msg.sender];
     }
 

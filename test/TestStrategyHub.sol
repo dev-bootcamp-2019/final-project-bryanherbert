@@ -23,8 +23,9 @@ contract TestStrategyHub {
     //Deploy Quant and Investor contracts
     quant = new Quant();
     //Give the quant some ether
-    address(quant).transfer(10 ether);
+    address(quant).transfer(2 ether);
     investor = new Investor();
+    address(investor).transfer(3 ether);
   }
   
   function testInitializeStrategy(){
@@ -50,23 +51,22 @@ contract TestStrategyHub {
     address investorAddr = address(investor);
     uint stratNum = 0;
     investor.checkInvestmentStatus(s, stratNum);
+    uint investment = 2 ether;
 
-    (,,,d,) = s.getStratDetails(stratNum, investorAddr);
+    (,,,d,e) = s.getStratDetails(stratNum, investorAddr);
 
     //Tests
     Assert.equal(d, false, "Account is incorrectly listed as investor");
+    Assert.equal(e, 0, "Account balance should be empty");
 
-    //For quick purposes of testing to see if we can change account status
-    investor.makeInvestment(s, stratNum);
+    //Make an actual investment
+    investor.makeInvestment(s, stratNum, investment);
 
     (,,,d,e) = s.getStratDetails(stratNum, investorAddr);
 
     //Tests
     Assert.equal(d, true, "Account is incorrectly listed as not an investor");
-    Assert.equal(e, 0, "Account balance is not empty");
-
-
-
+    Assert.equal(e, investment, "Account balance is not empty");
   }
 
 }
@@ -90,8 +90,10 @@ contract Investor {
         s.isInvestor(_stratNum);
     }
 
-    function makeInvestment(StrategyHub s, uint _stratNum) public {
-        s.Invest(_stratNum);
+    function makeInvestment(StrategyHub s, uint _stratNum, uint _investment) public {
+        //2% fee
+        uint fee = _investment/50 + 1;
+        s.Invest.value(fee)(_stratNum, _investment);
     }
 
     //Fallback function, accepts ether
