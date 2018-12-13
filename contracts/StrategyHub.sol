@@ -105,6 +105,21 @@ contract StrategyHub {
         return 100/strategies[_stratNum].feeRate;
     }
 
+    function withdrawFunds(uint _stratNum) public {
+        //Need to make sure this matches up with withdraw philosophy
+        //Add event
+        //subtract virtual balance from total funds
+        strategies[_stratNum].funds -= strategies[_stratNum].virtualBalances[msg.sender];
+        //zero out virtual Balance
+        strategies[_stratNum].virtualBalances[msg.sender] = 0;
+        //transfer fees back to investor
+        msg.sender.transfer(strategies[_stratNum].fees[msg.sender]);
+        //Zero out fees
+        strategies[_stratNum].fees[msg.sender] = 0;
+        //set investor status to faslse
+        strategies[_stratNum].investors[msg.sender] = false;
+    }
+
     //not a permanent function
     function getStratDetails(uint _stratNum) public view returns (bytes32, address, uint, uint){
         return (strategies[_stratNum].name, 
@@ -112,7 +127,7 @@ contract StrategyHub {
         strategies[_stratNum].funds, 
         strategies[_stratNum].feeRate);
     }
-
+    //need two functions because of stack height
     function getStratDetails2(uint _stratNum, address _addr) public view returns (bool, uint, uint){
         return(strategies[_stratNum].investors[_addr], 
         strategies[_stratNum].virtualBalances[_addr],

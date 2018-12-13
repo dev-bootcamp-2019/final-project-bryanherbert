@@ -83,6 +83,27 @@ contract TestStrategyHub {
     Assert.equal(g, (investment/s.checkFeeRate(stratNum)+1), "Investor's fees were not valid");
   }
 
+  function testWithdrawFunds(){
+      address investorAddr = address(investor);
+      uint stratNum = 0;
+      uint preBalance = investorAddr.balance;
+      //investor withdraws funds
+      investor.withdrawFunds(s, stratNum);
+      uint postBalance = investorAddr.balance;
+
+    //Tests
+    (,,c,) = s.getStratDetails(stratNum);
+    (e,f,g) = s.getStratDetails2(stratNum, investorAddr);
+
+    //Tests
+    Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
+    Assert.equal(e, false, "Account falsely remain an investor");
+    Assert.equal(f, 0, "Investor's virtual balance is not zeroed out");
+    Assert.equal(g, 0, "Investor's fees are not zeroed out");
+    //confirm fees were refunded
+    Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
+  }
+
 }
 
 contract Quant {
@@ -107,6 +128,10 @@ contract Investor {
     function makeInvestment(StrategyHub s, uint _stratNum, uint _investment) public {
         uint fee = _investment/s.checkFeeRate(_stratNum) + 1;
         s.Invest.value(fee)(_stratNum, _investment);
+    }
+
+    function withdrawFunds(StrategyHub s, uint _stratNum) public {
+        s.withdrawFunds(_stratNum);
     }
 
     //Fallback function, accepts ether
