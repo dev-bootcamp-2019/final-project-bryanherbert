@@ -35,12 +35,12 @@ contract TestStrategyHub {
     bytes32 name = "alpha";
     address quantAddress = address(quant);
     uint initialFund = 1 ether;
-    uint count = 0;
+    //uint count = 0;
     uint feeRate = 2;
     quant.initializeStrategy(s, name, initialFund, feeRate);
 
-    (a,b,c,d) = s.getStratDetails(count);
-    (e,f,g) = s. getStratDetails2(count, quantAddress);
+    (a,b,c,d) = s.getStratDetails(name);
+    (e,f,g) = s. getStratDetails2(name, quantAddress);
 
     //Tests
     Assert.equal(a, name, "Strategy name does not match test name");
@@ -55,12 +55,13 @@ contract TestStrategyHub {
   function testIsInvestor(){
     //Check to see if account is an investor in a certain strategy
     address investorAddr = address(investor);
-    uint stratNum = 0;
-    bool isInvestor = investor.checkInvestmentStatus(s, stratNum);
+    bytes32 name = "alpha";
+    //uint stratNum = 0;
+    bool isInvestor = investor.checkInvestmentStatus(s, name);
     uint investment = 2 ether;
 
-    (,,c,) = s.getStratDetails(stratNum);
-    (e,f,g) = s.getStratDetails2(stratNum, investorAddr);
+    (,,c,) = s.getStratDetails(name);
+    (e,f,g) = s.getStratDetails2(name, investorAddr);
 
     //Tests
     Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
@@ -70,30 +71,31 @@ contract TestStrategyHub {
     Assert.equal(g, 0, "Investor's fees are not zero");
 
     //Make an actual investment
-    investor.makeInvestment(s, stratNum, investment);
+    investor.makeInvestment(s, name, investment);
 
     //Tests
-    (,,c,) = s.getStratDetails(stratNum);
-    (e,f,g) = s.getStratDetails2(stratNum, investorAddr);
+    (,,c,) = s.getStratDetails(name);
+    (e,f,g) = s.getStratDetails2(name, investorAddr);
 
     //Tests
     Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
     Assert.equal(e, true, "Account is not listed as investor");
     Assert.equal(f, 2 ether, "Investor's virtual balance does not match investment");
-    Assert.equal(g, (investment/s.checkFeeRate(stratNum)+1), "Investor's fees were not valid");
+    Assert.equal(g, (investment/s.checkFeeRate(name)+1), "Investor's fees were not valid");
   }
 
   function testWithdrawFunds(){
       address investorAddr = address(investor);
-      uint stratNum = 0;
+      //uint stratNum = 0;
+      bytes32 name = "alpha";
       uint preBalance = investorAddr.balance;
       //investor withdraws funds
-      investor.withdrawFunds(s, stratNum);
+      investor.withdrawFunds(s, name);
       uint postBalance = investorAddr.balance;
 
     //Tests
-    (,,c,) = s.getStratDetails(stratNum);
-    (e,f,g) = s.getStratDetails2(stratNum, investorAddr);
+    (,,c,) = s.getStratDetails(name);
+    (e,f,g) = s.getStratDetails2(name, investorAddr);
 
     //Tests
     Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
@@ -116,22 +118,21 @@ contract Quant {
     function() public payable {
 
     }
-
 }
 
 contract Investor {
 
-    function checkInvestmentStatus(StrategyHub s, uint _stratNum) public view returns (bool) {
-        return s.isInvestor(_stratNum);
+    function checkInvestmentStatus(StrategyHub s, bytes32 _name) public view returns (bool) {
+        return s.isInvestor(_name);
     }
 
-    function makeInvestment(StrategyHub s, uint _stratNum, uint _investment) public {
-        uint fee = _investment/s.checkFeeRate(_stratNum) + 1;
-        s.Invest.value(fee)(_stratNum, _investment);
+    function makeInvestment(StrategyHub s, bytes32 _name, uint _investment) public {
+        uint fee = _investment/s.checkFeeRate(_name) + 1;
+        s.Invest.value(fee)(_name, _investment);
     }
 
-    function withdrawFunds(StrategyHub s, uint _stratNum) public {
-        s.withdrawFunds(_stratNum);
+    function withdrawFunds(StrategyHub s, bytes32 _name) public {
+        s.withdrawFunds(_name);
     }
 
     //Fallback function, accepts ether

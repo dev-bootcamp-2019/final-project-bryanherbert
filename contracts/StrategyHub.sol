@@ -4,7 +4,7 @@ contract StrategyHub {
     //State Variables
     address owner;
     //maybe change uint to name of strategy
-    mapping(uint => Strategy) public strategies;
+    mapping(bytes32 => Strategy) public strategies;
     uint stratCount;
 
     struct Strategy {
@@ -29,15 +29,16 @@ contract StrategyHub {
 
     //Events
     event StrategyCreated(
+        bytes32 name,
         uint stratNum,
         address stratOwner
     );
 
     //Modifiers
-    modifier verifyBalance(uint _stratNum, address _account, uint _investment){
+    modifier verifyBalance(bytes32 _name, address _account, uint _investment){
         //Account Balance must be greater than investment + Fees
         //Not sure this correct- want it to represent ~2%
-        uint fee = _investment/checkFeeRate(_stratNum);
+        uint fee = _investment/checkFeeRate(_name);
         require(
             _account.balance > _investment + fee,
             "Sender does not have enough balance to invest"
@@ -45,10 +46,10 @@ contract StrategyHub {
         _;
     }
 
-    modifier verifyFee(uint _stratNum, uint _investment, uint _proposedFee) {
+    modifier verifyFee(bytes32 _name, uint _investment, uint _proposedFee) {
         //Verify that the msg.value > fee
         require(
-            _proposedFee >= _investment/checkFeeRate(_stratNum),
+            _proposedFee >= _investment/checkFeeRate(_name),
             "Fee is insufficent"
         );
         _;
@@ -62,75 +63,75 @@ contract StrategyHub {
 
     function initializeStrat(bytes32 _name, uint _investment, uint _feeRate) public payable {
         //initialize strat name to _name
-        strategies[stratCount].name = _name;
+        strategies[_name].name = _name;
         //Strat owner is message sender
-        strategies[stratCount].stratOwner =  msg.sender;
+        strategies[_name].stratOwner =  msg.sender;
         //Initial funds are the msg.value
-        strategies[stratCount].funds = _investment;
+        strategies[_name].funds = _investment;
         //Set fee rate
-        strategies[stratCount].feeRate = _feeRate;
+        strategies[_name].feeRate = _feeRate;
         //set stratOwner to also be an investor
-        strategies[stratCount].investors[msg.sender] = true;
+        strategies[_name].investors[msg.sender] = true;
         //set stratOwner's investor balance to the msg.value
-        strategies[stratCount].virtualBalances[msg.sender] = _investment;
+        strategies[_name].virtualBalances[msg.sender] = _investment;
         //set stratOwner's fees to zero
-        strategies[stratCount].fees[msg.sender] = 0;
+        strategies[_name].fees[msg.sender] = 0;
         //Emit Event
-        emit StrategyCreated(stratCount, msg.sender);
+        emit StrategyCreated(_name, stratCount, msg.sender);
         //Increment stratCount
         stratCount++;
 
     }
 
     //Check to see if an account is an investor in a strategy
-    function isInvestor(uint _stratNum) public view returns (bool) {
-        return strategies[_stratNum].investors[msg.sender];
+    function isInvestor(bytes32 _name) public view returns (bool) {
+        return strategies[_name].investors[msg.sender];
     }
 
     //Make investment into particular fund
     //Must have required funds
-    function Invest(uint _stratNum, uint _investment) public payable 
-    verifyBalance(_stratNum, msg.sender, _investment) 
-    verifyFee(_stratNum, _investment, msg.value) 
+    function Invest(bytes32 _name, uint _investment) public payable 
+    verifyBalance(_name, msg.sender, _investment) 
+    verifyFee(_name, _investment, msg.value) 
     returns (bool) {
-        strategies[_stratNum].funds += _investment;
-        strategies[_stratNum].investors[msg.sender] = true;
-        strategies[_stratNum].virtualBalances[msg.sender] = _investment;
-        strategies[_stratNum].fees[msg.sender] = msg.value;
-        return strategies[_stratNum].investors[msg.sender];
+        strategies[_name].funds += _investment;
+        strategies[_name].investors[msg.sender] = true;
+        strategies[_name].virtualBalances[msg.sender] = _investment;
+        strategies[_name].fees[msg.sender] = msg.value;
+        return strategies[_name].investors[msg.sender];
     }
 
     //check fee rate
-    function checkFeeRate(uint _stratNum) public view returns (uint) {
-        return 100/strategies[_stratNum].feeRate;
+    function checkFeeRate(bytes32 _name) public view returns (uint) {
+        return 100/strategies[_name].feeRate;
     }
 
-    function withdrawFunds(uint _stratNum) public {
+    function withdrawFunds(bytes32 _name) public {
         //Need to make sure this matches up with withdraw philosophy
         //Add event
         //subtract virtual balance from total funds
-        strategies[_stratNum].funds -= strategies[_stratNum].virtualBalances[msg.sender];
+        strategies[_name].funds -= strategies[_name].virtualBalances[msg.sender];
         //zero out virtual Balance
-        strategies[_stratNum].virtualBalances[msg.sender] = 0;
+        strategies[_name].virtualBalances[msg.sender] = 0;
         //transfer fees back to investor
-        msg.sender.transfer(strategies[_stratNum].fees[msg.sender]);
+        msg.sender.transfer(strategies[_name].fees[msg.sender]);
         //Zero out fees
-        strategies[_stratNum].fees[msg.sender] = 0;
+        strategies[_name].fees[msg.sender] = 0;
         //set investor status to faslse
-        strategies[_stratNum].investors[msg.sender] = false;
+        strategies[_name].investors[msg.sender] = false;
     }
 
     //not a permanent function
-    function getStratDetails(uint _stratNum) public view returns (bytes32, address, uint, uint){
-        return (strategies[_stratNum].name, 
-        strategies[_stratNum].stratOwner, 
-        strategies[_stratNum].funds, 
-        strategies[_stratNum].feeRate);
+    function getStratDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
+        return (strategies[_name].name, 
+        strategies[_name].stratOwner, 
+        strategies[_name].funds, 
+        strategies[_name].feeRate);
     }
     //need two functions because of stack height
-    function getStratDetails2(uint _stratNum, address _addr) public view returns (bool, uint, uint){
-        return(strategies[_stratNum].investors[_addr], 
-        strategies[_stratNum].virtualBalances[_addr],
-        strategies[_stratNum].fees[_addr]);
+    function getStratDetails2(bytes32 _name, address _addr) public view returns (bool, uint, uint){
+        return(strategies[_name].investors[_addr], 
+        strategies[_name].virtualBalances[_addr],
+        strategies[_name].fees[_addr]);
     }
 }
