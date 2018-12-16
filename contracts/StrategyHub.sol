@@ -55,6 +55,26 @@ contract StrategyHub {
         _;
     }
 
+    modifier checkFeePayment(bytes32 _name, address _account, uint _timePeriod) {
+        //Verify that msg.sender has enough in fees to make payment installment
+        //payment = 1/12th of fee
+        uint payment = (strategies[_name].virtualBalances[_account]/checkFeeRate(_name))/_timePeriod;
+        require(
+            strategies[_name].fees[_account] > payment,
+            "Fee balance is insufficient to make payment"
+        );
+        _;
+    }
+
+    modifier verifyInvestmentStatus(bytes32 _name, address _account){
+        //check that msg.sender is an investor
+        require(
+            strategies[_name].investors[_account] = true,
+            "Message Sender is not an investor"
+        );
+        _;
+    }
+
     constructor() public {
         owner = msg.sender;
         //initialize strategy count to 0
@@ -106,7 +126,24 @@ contract StrategyHub {
         return 100/strategies[_name].feeRate;
     }
 
-    function withdrawFunds(bytes32 _name) public {
+    //One-time pay fee function
+    function payFee(bytes32 _name, uint _timePeriod) public
+    verifyInvestmentStatus(_name, msg.sender)
+    checkFeePayment(_name, msg.sender, _timePeriod)
+    {
+        //Calculate payment
+        uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
+        //Owner fees account
+        address stratOwner = strategies[_name].stratOwner;
+        //Subtract payment from investor fees
+        strategies[_name].fees[msg.sender] -= payment;
+        strategies[_name].fees[stratOwner] += payment;
+
+    }
+
+    function withdrawFunds(bytes32 _name) public
+    verifyInvestmentStatus(_name, msg.sender) 
+    {
         //Need to make sure this matches up with withdraw philosophy
         //Add event
         //subtract virtual balance from total funds

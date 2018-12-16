@@ -33,18 +33,18 @@ contract TestStrategyHub {
   function testInitializeStrategy(){
     //Quant initializes new strategy
     bytes32 name = "alpha";
-    address quantAddress = address(quant);
+    address quantAddr = address(quant);
     uint initialFund = 1 ether;
-    //uint count = 0;
+    //feeRate is 2%
     uint feeRate = 2;
     quant.initializeStrategy(s, name, initialFund, feeRate);
 
     (a,b,c,d) = s.getStratDetails(name);
-    (e,f,g) = s. getStratDetails2(name, quantAddress);
+    (e,f,g) = s. getStratDetails2(name, quantAddr);
 
     //Tests
     Assert.equal(a, name, "Strategy name does not match test name");
-    Assert.equal(b, quantAddress, "Quant is not owner of strategy");
+    Assert.equal(b, quantAddr, "Quant is not owner of strategy");
     Assert.equal(c, initialFund, "Strategy funds do not match test funds");
     Assert.equal(d, feeRate, "Fee Rate does not match test rate");
     Assert.equal(e, true, "Quant is not listed as investor");
@@ -56,7 +56,6 @@ contract TestStrategyHub {
     //Check to see if account is an investor in a certain strategy
     address investorAddr = address(investor);
     bytes32 name = "alpha";
-    //uint stratNum = 0;
     bool isInvestor = investor.checkInvestmentStatus(s, name);
     uint investment = 2 ether;
 
@@ -84,9 +83,38 @@ contract TestStrategyHub {
     Assert.equal(g, (investment/s.checkFeeRate(name)+1), "Investor's fees were not valid");
   }
 
+  function testPayFees(){
+    bytes32 name = "alpha";
+    //Paid monthly; 12 times in a year
+    uint timePeriod = 12;
+    uint investment = 2 ether;
+    uint fee = (investment/s.checkFeeRate(name)+1);
+    address investorAddr = address(investor);
+    address quantAddr = address(quant);
+
+    //Pre Fee Tests
+    //Quant
+    (,,g) = s.getStratDetails2(name, quantAddr);
+    Assert.equal(g, 0, "Quant's fees were not zero");
+    //Investor
+    (,,g) = s.getStratDetails2(name, investorAddr);
+    Assert.equal(g, fee, "Investor's fees are not valid");
+
+    investor.payFee(s, name, timePeriod);
+
+    //Post Fee Tests
+    //Quant
+    (,,g) = s.getStratDetails2(name, quantAddr);
+    Assert.equal(g, fee/timePeriod, "Quant did not receive fee");
+    //Investor
+    (,,g) = s.getStratDetails2(name, investorAddr);
+    Assert.equal(g, fee - (fee/timePeriod), "Investor did not pay fee");
+
+
+}
+
   function testWithdrawFunds(){
       address investorAddr = address(investor);
-      //uint stratNum = 0;
       bytes32 name = "alpha";
       uint preBalance = investorAddr.balance;
       //investor withdraws funds
@@ -129,6 +157,10 @@ contract Investor {
     function makeInvestment(StrategyHub s, bytes32 _name, uint _investment) public {
         uint fee = _investment/s.checkFeeRate(_name) + 1;
         s.Invest.value(fee)(_name, _investment);
+    }
+
+    function payFee(StrategyHub s, bytes32 _name, uint _timePeriod) public {
+        s.payFee(_name, _timePeriod);
     }
 
     function withdrawFunds(StrategyHub s, bytes32 _name) public {
