@@ -111,9 +111,21 @@ contract TestStrategyHub {
         Assert.equal(g, fee - (fee/timePeriod), "Investor did not pay fee");
     }
 
-    /*function collectFees(){
+    function testCollectFees(){
+        bytes32 name = "alpha";
+        uint quantBalance = 2 ether;
+        uint investment = 2 ether;
+        uint timePeriod = 12;
+        uint feePayment = (investment/s.checkFeeRate(name)+1)/timePeriod;
+        //Pre-collection tests
+        Assert.equal(quantAddr.balance, quantBalance, "Quant account pre-balance is incorrect");
 
-    }*/
+        //Collect Fees
+        quant.collectFees(s, name);
+
+        //Post-collection tests
+        Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
+    }
 
 
     function testWithdrawFunds(){
@@ -142,6 +154,10 @@ contract Quant {
 
     function initializeStrategy(StrategyHub strategyHub, bytes32 _name, uint _initalFund, uint _feeRate) public {
         strategyHub.initializeStrat(_name, _initalFund, _feeRate);
+    }
+
+    function collectFees(StrategyHub strategyHub, bytes32 _name) public {
+        strategyHub.collectFees(_name);
     }
 
     //Fallback function, accepts ether

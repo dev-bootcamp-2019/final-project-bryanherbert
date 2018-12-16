@@ -75,6 +75,15 @@ contract StrategyHub {
         _;
     }
 
+    //Can replace this with ethpm code
+    modifier isOwner(bytes32 _name, address _account){
+        require(
+            strategies[_name].stratOwner == _account,
+            "Message Sender does not own strategy"
+        );
+        _;
+    }
+
     constructor() public {
         owner = msg.sender;
         //initialize strategy count to 0
@@ -85,7 +94,7 @@ contract StrategyHub {
         //initialize strat name to _name
         strategies[_name].name = _name;
         //Strat owner is message sender
-        strategies[_name].stratOwner =  msg.sender;
+        strategies[_name].stratOwner = msg.sender;
         //Initial funds are the msg.value
         strategies[_name].funds = _investment;
         //Set fee rate
@@ -138,7 +147,15 @@ contract StrategyHub {
         //Subtract payment from investor fees
         strategies[_name].fees[msg.sender] -= payment;
         strategies[_name].fees[stratOwner] += payment;
+    }
 
+    //Owner of Strategy Collects Fees
+    function collectFees(bytes32 _name) public
+    isOwner(_name, msg.sender)
+    {
+        uint feesCollected = strategies[_name].fees[msg.sender];
+        strategies[_name].fees[msg.sender] = 0;
+        msg.sender.transfer(feesCollected);
     }
 
     function withdrawFunds(bytes32 _name) public
