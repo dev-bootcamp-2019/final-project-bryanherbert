@@ -39,12 +39,12 @@ contract StrategyHub {
     );
 
     //Modifiers
-    modifier verifyBalance(bytes32 _name, address _account, uint _investment){
+    modifier verifyBalance(bytes32 _name, uint _investment){
         //Account Balance must be greater than investment + Fees
         //Not sure this correct- want it to represent ~2%
         uint fee = _investment/checkFeeRate(_name);
         require(
-            _account.balance > _investment + fee,
+            msg.sender.balance > _investment + fee,
             "Sender does not have enough balance to invest"
         );
         _;
@@ -59,37 +59,37 @@ contract StrategyHub {
         _;
     }
 
-    modifier checkFeePayment(bytes32 _name, address _account, uint _timePeriod) {
-        uint payment = (strategies[_name].virtualBalances[_account]/checkFeeRate(_name))/_timePeriod;
+    modifier checkFeePayment(bytes32 _name, uint _timePeriod) {
+        uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
         require(
             //Check that msg.sender has enough in fees to make payment installment
-            strategies[_name].fees[_account] > payment,
+            strategies[_name].fees[msg.sender] > payment,
             "Fee balance is insufficient to make payment or payment cycle is not complete"
         );
         _;
     }
 
-    modifier verifyInvestmentStatus(bytes32 _name, address _account){
+    modifier verifyInvestmentStatus(bytes32 _name){
         //check that msg.sender is an investor
         require(
-            strategies[_name].investors[_account] = true,
+            strategies[_name].investors[msg.sender] = true,
             "Message Sender is not an investor"
         );
         _;
     }
 
     //Can replace this with ethpm code
-    modifier isOwner(bytes32 _name, address _account){
+    modifier isOwner(bytes32 _name){
         require(
-            strategies[_name].stratOwner == _account,
+            strategies[_name].stratOwner == msg.sender,
             "Message Sender does not own strategy"
         );
         _;
     }
 
-    modifier cycleComplete(bytes32 _name, address _account){
+    modifier cycleComplete(bytes32 _name){
         require(
-            now >= strategies[_name].paymentCycleStart[_account] + strategies[_name].paymentCycle * 1 days,
+            now >= strategies[_name].paymentCycleStart[msg.sender] + strategies[_name].paymentCycle * 1 days,
             "Cycle is not complete, no fee due"
         );
         _;
@@ -133,7 +133,7 @@ contract StrategyHub {
     //Make investment into particular fund
     //Must have required funds
     function Invest(bytes32 _name, uint _investment) public payable 
-    verifyBalance(_name, msg.sender, _investment) 
+    verifyBalance(_name, _investment) 
     verifyFee(_name, _investment, msg.value) 
     returns (bool) {
         strategies[_name].funds += _investment;
@@ -151,9 +151,9 @@ contract StrategyHub {
 
     //One-time pay fee function
     function payFee(bytes32 _name, uint _timePeriod) public
-    verifyInvestmentStatus(_name, msg.sender)
-    checkFeePayment(_name, msg.sender, _timePeriod)
-    cycleComplete(_name, msg.sender)
+    verifyInvestmentStatus(_name)
+    checkFeePayment(_name, _timePeriod)
+    cycleComplete(_name)
     {
         //Calculate payment
         uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
@@ -167,7 +167,7 @@ contract StrategyHub {
 
     //Owner of Strategy Collects Fees
     function collectFees(bytes32 _name) public
-    isOwner(_name, msg.sender)
+    isOwner(_name)
     {
         uint feesCollected = strategies[_name].fees[msg.sender];
         strategies[_name].fees[msg.sender] = 0;
@@ -175,7 +175,7 @@ contract StrategyHub {
     }
 
     function withdrawFunds(bytes32 _name) public
-    verifyInvestmentStatus(_name, msg.sender) 
+    verifyInvestmentStatus(_name) 
     {
         //Need to make sure this matches up with withdraw philosophy
         //Add event
