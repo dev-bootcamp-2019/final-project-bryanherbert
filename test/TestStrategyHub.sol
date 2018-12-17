@@ -17,9 +17,10 @@ contract TestStrategyHub {
     address b;
     uint c;
     uint d;
-    bool e;
-    uint f;
+    uint e;
+    bool f;
     uint g;
+    uint h;
 
     function beforeAll(){
         //Deploy StrategyHub contracts
@@ -40,19 +41,22 @@ contract TestStrategyHub {
         uint initialFund = 1 ether;
         //feeRate is 2%
         uint feeRate = 2;
-        quant.initializeStrategy(s, name, initialFund, feeRate);
+        //paymentCycle is in days
+        uint paymentCycle = 0;
+        quant.initializeStrategy(s, name, initialFund, feeRate, paymentCycle);
 
         (a,b,c,d) = s.getStratDetails(name);
-        (e,f,g) = s. getStratDetails2(name, quantAddr);
+        (e,f,g,h) = s. getStratDetails2(name, quantAddr);
 
         //Tests
         Assert.equal(a, name, "Strategy name does not match test name");
         Assert.equal(b, quantAddr, "Quant is not owner of strategy");
         Assert.equal(c, initialFund, "Strategy funds do not match test funds");
         Assert.equal(d, feeRate, "Fee Rate does not match test rate");
-        Assert.equal(e, true, "Quant is not listed as investor");
-        Assert.equal(f, initialFund, "Quant's funds are not listed");
-        Assert.equal(g, 0, "Quant's fees deposited are not zero");
+        Assert.equal(e, paymentCycle, "Payment Cycle does not match test cycle");
+        Assert.equal(f, true, "Quant is not listed as investor");
+        Assert.equal(g, initialFund, "Quant's funds are not listed");
+        Assert.equal(h, 0, "Quant's fees deposited are not zero");
     }
 
     function testIsInvestor(){
@@ -62,27 +66,27 @@ contract TestStrategyHub {
         uint investment = 2 ether;
 
         (,,c,) = s.getStratDetails(name);
-        (e,f,g) = s.getStratDetails2(name, investorAddr);
+        (,f,g,h) = s.getStratDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
         Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
-        Assert.equal(e, false, "Account is incorrectly listed as investor");
-        Assert.equal(f, 0, "Investor's virtual balance is not zero");
-        Assert.equal(g, 0, "Investor's fees are not zero");
+        Assert.equal(f, false, "Account is incorrectly listed as investor");
+        Assert.equal(g, 0, "Investor's virtual balance is not zero");
+        Assert.equal(h, 0, "Investor's fees are not zero");
 
         //Make an actual investment
         investor.makeInvestment(s, name, investment);
 
         //Tests
         (,,c,) = s.getStratDetails(name);
-        (e,f,g) = s.getStratDetails2(name, investorAddr);
+        (,f,g,h) = s.getStratDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
-        Assert.equal(e, true, "Account is not listed as investor");
-        Assert.equal(f, 2 ether, "Investor's virtual balance does not match investment");
-        Assert.equal(g, (investment/s.checkFeeRate(name)+1), "Investor's fees were not valid");
+        Assert.equal(f, true, "Account is not listed as investor");
+        Assert.equal(g, 2 ether, "Investor's virtual balance does not match investment");
+        Assert.equal(h, (investment/s.checkFeeRate(name)+1), "Investor's fees were not valid");
     }
 
     function testPayFees(){
@@ -94,21 +98,21 @@ contract TestStrategyHub {
 
         //Pre Fee Tests
         //Quant
-        (,,g) = s.getStratDetails2(name, quantAddr);
-        Assert.equal(g, 0, "Quant's fees were not zero");
+        (,,,h) = s.getStratDetails2(name, quantAddr);
+        Assert.equal(h, 0, "Quant's fees were not zero");
         //Investor
-        (,,g) = s.getStratDetails2(name, investorAddr);
-        Assert.equal(g, fee, "Investor's fees are not valid");
+        (,,,h) = s.getStratDetails2(name, investorAddr);
+        Assert.equal(h, fee, "Investor's fees are not valid");
 
         investor.payFee(s, name, timePeriod);
 
         //Post Fee Tests
         //Quant
-        (,,g) = s.getStratDetails2(name, quantAddr);
-        Assert.equal(g, fee/timePeriod, "Quant did not receive fee");
+        (,,,h) = s.getStratDetails2(name, quantAddr);
+        Assert.equal(h, fee/timePeriod, "Quant did not receive fee");
         //Investor
-        (,,g) = s.getStratDetails2(name, investorAddr);
-        Assert.equal(g, fee - (fee/timePeriod), "Investor did not pay fee");
+        (,,,h) = s.getStratDetails2(name, investorAddr);
+        Assert.equal(h, fee - (fee/timePeriod), "Investor did not pay fee");
     }
 
     function testCollectFees(){
@@ -137,13 +141,13 @@ contract TestStrategyHub {
 
         //Tests
         (,,c,) = s.getStratDetails(name);
-        (e,f,g) = s.getStratDetails2(name, investorAddr);
+        (,f,g,h) = s.getStratDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
-        Assert.equal(e, false, "Account falsely remain an investor");
-        Assert.equal(f, 0, "Investor's virtual balance is not zeroed out");
-        Assert.equal(g, 0, "Investor's fees are not zeroed out");
+        Assert.equal(f, false, "Account falsely remain an investor");
+        Assert.equal(g, 0, "Investor's virtual balance is not zeroed out");
+        Assert.equal(h, 0, "Investor's fees are not zeroed out");
         //confirm fees were refunded
         Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
     }
@@ -152,8 +156,8 @@ contract TestStrategyHub {
 
 contract Quant {
 
-    function initializeStrategy(StrategyHub strategyHub, bytes32 _name, uint _initalFund, uint _feeRate) public {
-        strategyHub.initializeStrat(_name, _initalFund, _feeRate);
+    function initializeStrategy(StrategyHub strategyHub, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
+        strategyHub.initializeStrat(_name, _initalFund, _feeRate, _paymentCycle);
     }
 
     function collectFees(StrategyHub strategyHub, bytes32 _name) public {

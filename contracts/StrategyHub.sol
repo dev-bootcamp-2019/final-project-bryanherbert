@@ -16,6 +16,8 @@ contract StrategyHub {
         uint funds;
         //Add fee that quant can set- in whole number, i.e. 2% is represented as 2
         uint feeRate;
+        //Number of days in Payment Cycle
+        uint paymentCycle;
         //maps investors to investment status- current investors return true, non-investors return false
         mapping (address => bool) investors;
         //maps investors to their virtual balances in the strategy
@@ -23,6 +25,8 @@ contract StrategyHub {
         //maps investors to the actual fee they have stored in the Strategy Hub contract
         //fees are paid into stratOwner fee account and paid from investor fee account
         mapping (address => uint) fees;
+        //Adoption Times for each investor
+        mapping(address => uint) paymentCycleStart;
         //will need to add IPFS hash eventually to verify code
 
     }
@@ -56,12 +60,11 @@ contract StrategyHub {
     }
 
     modifier checkFeePayment(bytes32 _name, address _account, uint _timePeriod) {
-        //Verify that msg.sender has enough in fees to make payment installment
-        //payment = 1/12th of fee
         uint payment = (strategies[_name].virtualBalances[_account]/checkFeeRate(_name))/_timePeriod;
         require(
+            //Check that msg.sender has enough in fees to make payment installment
             strategies[_name].fees[_account] > payment,
-            "Fee balance is insufficient to make payment"
+            "Fee balance is insufficient to make payment or payment cycle is not complete"
         );
         _;
     }
@@ -84,13 +87,21 @@ contract StrategyHub {
         _;
     }
 
+    modifier cycleComplete(bytes32 _name, address _account){
+        require(
+            now >= strategies[_name].paymentCycleStart[_account] + strategies[_name].paymentCycle * 1 days,
+            "Cycle is not complete, no fee due"
+        );
+        _;
+    }
+
     constructor() public {
         owner = msg.sender;
         //initialize strategy count to 0
         stratCount = 0;
     }
 
-    function initializeStrat(bytes32 _name, uint _investment, uint _feeRate) public payable {
+    function initializeStrat(bytes32 _name, uint _investment, uint _feeRate, uint _paymentCycle) public payable {
         //initialize strat name to _name
         strategies[_name].name = _name;
         //Strat owner is message sender
@@ -99,6 +110,8 @@ contract StrategyHub {
         strategies[_name].funds = _investment;
         //Set fee rate
         strategies[_name].feeRate = _feeRate;
+        //Set payment cycle
+        strategies[_name].paymentCycle = _paymentCycle;
         //set stratOwner to also be an investor
         strategies[_name].investors[msg.sender] = true;
         //set stratOwner's investor balance to the msg.value
@@ -127,6 +140,7 @@ contract StrategyHub {
         strategies[_name].investors[msg.sender] = true;
         strategies[_name].virtualBalances[msg.sender] = _investment;
         strategies[_name].fees[msg.sender] = msg.value;
+        strategies[_name].paymentCycleStart[msg.sender] = now;
         return strategies[_name].investors[msg.sender];
     }
 
@@ -139,6 +153,7 @@ contract StrategyHub {
     function payFee(bytes32 _name, uint _timePeriod) public
     verifyInvestmentStatus(_name, msg.sender)
     checkFeePayment(_name, msg.sender, _timePeriod)
+    cycleComplete(_name, msg.sender)
     {
         //Calculate payment
         uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
@@ -147,6 +162,7 @@ contract StrategyHub {
         //Subtract payment from investor fees
         strategies[_name].fees[msg.sender] -= payment;
         strategies[_name].fees[stratOwner] += payment;
+        strategies[_name].paymentCycleStart[msg.sender] = now;
     }
 
     //Owner of Strategy Collects Fees
@@ -183,8 +199,9 @@ contract StrategyHub {
         strategies[_name].feeRate);
     }
     //need two functions because of stack height
-    function getStratDetails2(bytes32 _name, address _addr) public view returns (bool, uint, uint){
-        return(strategies[_name].investors[_addr], 
+    function getStratDetails2(bytes32 _name, address _addr) public view returns (uint, bool, uint, uint){
+        return(strategies[_name].paymentCycle,
+        strategies[_name].investors[_addr], 
         strategies[_name].virtualBalances[_addr],
         strategies[_name].fees[_addr]);
     }
