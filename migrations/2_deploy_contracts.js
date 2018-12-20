@@ -1,5 +1,5 @@
-var StrategyHub = artifacts.require("./StrategyHub.sol");
+var FundMarketplace = artifacts.require("./FundMarketplace.sol");
 
 module.exports = function(deployer) {
-  deployer.deploy(StrategyHub);
+  deployer.deploy(FundMarketplace);
 };

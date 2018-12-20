@@ -1,4 +1,4 @@
-const StrategyHub = artifacts.require("./StrategyHub.sol");
+const FundMarketplace = artifacts.require("./FundMarketplace.sol");
 
 //SimpleStorage model
 // contract("SimpleStorage", accounts => {

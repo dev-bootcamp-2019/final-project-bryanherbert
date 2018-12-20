@@ -2,14 +2,14 @@ pragma solidity ^0.4.24;
 
 import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
-import "../contracts/StrategyHub.sol";
+import "../contracts/FundMarketplace.sol";
 
-contract TestStrategyHub {
+contract TestFundMarketplace {
 
     //State Variables
-    StrategyHub s;
+    FundMarketplace s;
     Quant quant;
-    Investor investor;
+    //Investor investor;
     address quantAddr;
     address investorAddr;
     uint public initialBalance = 10 ether;
@@ -24,18 +24,18 @@ contract TestStrategyHub {
 
     function beforeAll() public {
         //Deploy StrategyHub contracts
-        s = new StrategyHub();
+        s = new FundMarketplace();
         //Deploy Quant and Investor contracts
         quant = new Quant();
         //Give the quant some ether
         address(quant).transfer(2 ether);
-        investor = new Investor();
-        address(investor).transfer(3 ether);
+        //investor = new Investor();
+        //address(investor).transfer(3 ether);
         quantAddr = address(quant);
-        investorAddr = address(investor);
+        //investorAddr = address(investor);
     }
   
-    function testInitializeStrategy() public{
+    function testInitializeFund() public{
         //Quant initializes new strategy
         bytes32 name = "alpha";
         uint initialFund = 1 ether;
@@ -45,8 +45,8 @@ contract TestStrategyHub {
         uint paymentCycle = 0;
         quant.initializeStrategy(s, name, initialFund, feeRate, paymentCycle);
 
-        (a,b,c,d) = s.getStratDetails(name);
-        (e,f,g,h) = s. getStratDetails2(name, quantAddr);
+        (a,b,c,d) = s.getFundDetails(name);
+        (e,f,g,h) = s. getFundDetails2(name, quantAddr);
 
         //Tests
         Assert.equal(a, name, "Strategy name does not match test name");
@@ -58,7 +58,7 @@ contract TestStrategyHub {
         Assert.equal(g, initialFund, "Quant's funds are not listed");
         Assert.equal(h, 0, "Quant's fees deposited are not zero");
     }
-
+/*
     function testIsInvestor() public{
         //Check to see if account is an investor in a certain strategy
         bytes32 name = "alpha";
@@ -151,18 +151,18 @@ contract TestStrategyHub {
         //confirm fees were refunded
         Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
     }
-
+*/
 }
 
 contract Quant {
 
-    function initializeStrategy(StrategyHub strategyHub, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
-        strategyHub.initializeStrat(_name, _initalFund, _feeRate, _paymentCycle);
+    function initializeStrategy(FundMarketplace f, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
+        f.initializeStrat(_name, this, _initalFund, _feeRate, _paymentCycle);
     }
 
-    function collectFees(StrategyHub strategyHub, bytes32 _name) public {
-        strategyHub.collectFees(_name);
-    }
+    // function collectFees(StrategyHub strategyHub, bytes32 _name) public {
+    //     strategyHub.collectFees(_name);
+    // }
 
     //Fallback function, accepts ether
     function() public payable {
@@ -170,7 +170,7 @@ contract Quant {
     }
 }
 
-contract Investor {
+/*contract Investor {
 
     function checkInvestmentStatus(StrategyHub s, bytes32 _name) public view returns (bool) {
         return s.isInvestor(_name);
@@ -194,4 +194,4 @@ contract Investor {
 
     }
 
-}
+}*/
