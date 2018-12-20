@@ -201,6 +201,8 @@ contract FundMarketplace {
         (a,b,c,d) = f.getFundDetails2(_name, _addr);
         return (a,b,c,d);
     }
+
+
 }
 
 contract FundList {
@@ -262,7 +264,7 @@ contract FundList {
         return (funds[_name].name, fundCount-1, funds[_name].fundOwner);
     }
 
-    //Get fund information (for testing purposes)
+    //Get fund information (for testing/verification purposes)
     function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
         return (funds[_name].name, 
         funds[_name].fundOwner, 
