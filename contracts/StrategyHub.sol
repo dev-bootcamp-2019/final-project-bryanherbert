@@ -2,7 +2,7 @@ pragma solidity ^0.4.24;
 
 contract StrategyHub {
     //State Variables
-    address owner;
+    address admin;
     //maybe change uint to name of strategy
     mapping(bytes32 => Strategy) public strategies;
     uint stratCount;
@@ -120,7 +120,7 @@ contract StrategyHub {
     }
 
     constructor() public {
-        owner = msg.sender;
+        admin = msg.sender;
         //initialize strategy count to 0
         stratCount = 0;
     }
