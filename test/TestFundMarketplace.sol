@@ -8,8 +8,9 @@ contract TestFundMarketplace {
 
     //State Variables
     FundMarketplace s;
+    FundList fl;
     Quant quant;
-    //Investor investor;
+    Investor investor;
     address quantAddr;
     address investorAddr;
     uint public initialBalance = 10 ether;
@@ -25,14 +26,17 @@ contract TestFundMarketplace {
     function beforeAll() public {
         //Deploy StrategyHub contracts
         s = new FundMarketplace();
+        //retrieve fundlist
+        fl = s.getFundList();
         //Deploy Quant and Investor contracts
         quant = new Quant();
         //Give the quant some ether
         address(quant).transfer(2 ether);
-        //investor = new Investor();
-        //address(investor).transfer(3 ether);
+        investor = new Investor();
+        //Give the investor some ether
+        address(investor).transfer(3 ether);
         quantAddr = address(quant);
-        //investorAddr = address(investor);
+        investorAddr = address(investor);
     }
   
     function testInitializeFund() public{
@@ -43,10 +47,10 @@ contract TestFundMarketplace {
         uint feeRate = 2;
         //paymentCycle is in days
         uint paymentCycle = 0;
-        quant.initializeStrategy(s, name, initialFund, feeRate, paymentCycle);
+        quant.initializeFund(s, name, initialFund, feeRate, paymentCycle);
 
-        (a,b,c,d) = s.getFundDetails(name);
-        (e,f,g,h) = s. getFundDetails2(name, quantAddr);
+        (a,b,c,d) = fl.getFundDetails(name);
+        (e,f,g,h) = fl. getFundDetails2(name, quantAddr);
 
         //Tests
         Assert.equal(a, name, "Strategy name does not match test name");
@@ -58,6 +62,7 @@ contract TestFundMarketplace {
         Assert.equal(g, initialFund, "Quant's funds are not listed");
         Assert.equal(h, 0, "Quant's fees deposited are not zero");
     }
+
 /*
     function testIsInvestor() public{
         //Check to see if account is an investor in a certain strategy
@@ -65,8 +70,8 @@ contract TestFundMarketplace {
         bool isInvestor = investor.checkInvestmentStatus(s, name);
         uint investment = 2 ether;
 
-        (,,c,) = s.getStratDetails(name);
-        (,f,g,h) = s.getStratDetails2(name, investorAddr);
+        (,,c,) = s.getFundDetails(name);
+        (,f,g,h) = s.getFundDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
@@ -156,8 +161,8 @@ contract TestFundMarketplace {
 
 contract Quant {
 
-    function initializeStrategy(FundMarketplace f, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
-        f.initializeStrat(_name, this, _initalFund, _feeRate, _paymentCycle);
+    function initializeFund(FundMarketplace f, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
+        f.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);
     }
 
     // function collectFees(StrategyHub strategyHub, bytes32 _name) public {
@@ -170,28 +175,28 @@ contract Quant {
     }
 }
 
-/*contract Investor {
+contract Investor {
 
-    function checkInvestmentStatus(StrategyHub s, bytes32 _name) public view returns (bool) {
-        return s.isInvestor(_name);
-    }
+    // function checkInvestmentStatus(StrategyHub s, bytes32 _name) public view returns (bool) {
+    //     return s.isInvestor(_name);
+    // }
 
-    function makeInvestment(StrategyHub s, bytes32 _name, uint _investment) public {
-        uint fee = _investment/s.checkFeeRate(_name) + 1;
-        s.Invest.value(fee)(_name, _investment);
-    }
+    // function makeInvestment(StrategyHub s, bytes32 _name, uint _investment) public {
+    //     uint fee = _investment/s.checkFeeRate(_name) + 1;
+    //     s.Invest.value(fee)(_name, _investment);
+    // }
 
-    function payFee(StrategyHub s, bytes32 _name, uint _timePeriod) public {
-        s.payFee(_name, _timePeriod);
-    }
+    // function payFee(StrategyHub s, bytes32 _name, uint _timePeriod) public {
+    //     s.payFee(_name, _timePeriod);
+    // }
 
-    function withdrawFunds(StrategyHub s, bytes32 _name) public {
-        s.withdrawFunds(_name);
-    }
+    // function withdrawFunds(StrategyHub s, bytes32 _name) public {
+    //     s.withdrawFunds(_name);
+    // }
 
     //Fallback function, accepts ether
     function() public payable{
 
     }
 
-}*/
+}

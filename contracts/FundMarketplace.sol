@@ -101,7 +101,11 @@ contract FundMarketplace {
         f = new FundList();
     }
 
-    function initializeStrat(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) public payable {
+    function getFundList() public view returns (FundList) {
+        return f;
+    }
+
+    function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) public payable {
         bytes32 fundName;
         uint fundCount;
         address fundOwner;
@@ -112,7 +116,9 @@ contract FundMarketplace {
 /*
     //Check to see if an account is an investor in a strategy
     function isInvestor(bytes32 _name) public view returns (bool) {
-        return strategies[_name].investors[msg.sender];
+        bool result;
+        (,result,,) = f.getFundDetails2(_name, msg.sender);
+        return result;
     }
 
     //Make investment into particular fund
@@ -130,6 +136,7 @@ contract FundMarketplace {
         emit Investment(_name, msg.sender, _investment);
         return strategies[_name].investors[msg.sender];
     }
+
 
     //check fee rate
     function checkFeeRate(bytes32 _name) public view returns (uint) {
@@ -183,26 +190,6 @@ contract FundMarketplace {
         emit FundsWithdrawn(_name, msg.sender, bal, fees);
     }
 */
-    //Get fund information (for testing purposes)
-    function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
-        bytes32 a;
-        address b;
-        uint c;
-        uint d;
-        (a,b,c,d) = f.getFundDetails(_name);
-        return (a,b,c,d);
-    }
-    //need two functions because of stack height
-    function getFundDetails2(bytes32 _name, address _addr) public view returns (uint, bool, uint, uint){
-        uint a;
-        bool b;
-        uint c;
-        uint d;
-        (a,b,c,d) = f.getFundDetails2(_name, _addr);
-        return (a,b,c,d);
-    }
-
-
 }
 
 contract FundList {
@@ -235,13 +222,26 @@ contract FundList {
         //will need to add IPFS hash eventually to verify code
     }
 
+    //Administrative control
+    //Any write functions must be completed by the administrator
+    modifier isAdmin{
+        require(
+            msg.sender == admin,
+            "Message Sender is not Administrator"
+        );
+        _;
+    }
+
     constructor() public {
         admin = msg.sender;
         //initialize strategy count to 0
         fundCount = 0;
     }
 
-    function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) public payable returns(bytes32, uint, address) {
+    function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
+    public payable
+    isAdmin()
+    returns(bytes32, uint, address) {
         //initialize strat name to _name
         funds[_name].name = _name;
         //Strat owner is message sender
