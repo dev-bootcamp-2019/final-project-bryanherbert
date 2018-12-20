@@ -38,6 +38,30 @@ contract StrategyHub {
         address stratOwner
     );
 
+    event Investment(
+        bytes32 name,
+        address investor,
+        uint investment
+    );
+    
+    event FeesPaid(
+        bytes32 name,
+        address investor,
+        uint fee
+    );
+
+    event FeesCollected(
+        bytes32 name,
+        uint fee
+    );
+
+    event FundsWithdrawn(
+        bytes32 name,
+        address investor,
+        uint investment,
+        uint fees
+    );
+
     //Modifiers
     modifier verifyBalance(bytes32 _name, uint _investment){
         //Account Balance must be greater than investment + Fees
@@ -141,6 +165,8 @@ contract StrategyHub {
         strategies[_name].virtualBalances[msg.sender] = _investment;
         strategies[_name].fees[msg.sender] = msg.value;
         strategies[_name].paymentCycleStart[msg.sender] = now;
+        //Emit event
+        emit Investment(_name, msg.sender, _investment);
         return strategies[_name].investors[msg.sender];
     }
 
@@ -163,6 +189,7 @@ contract StrategyHub {
         strategies[_name].fees[msg.sender] -= payment;
         strategies[_name].fees[stratOwner] += payment;
         strategies[_name].paymentCycleStart[msg.sender] = now;
+        emit FeesPaid(_name, msg.sender, payment);
     }
 
     //Owner of Strategy Collects Fees
@@ -172,23 +199,27 @@ contract StrategyHub {
         uint feesCollected = strategies[_name].fees[msg.sender];
         strategies[_name].fees[msg.sender] = 0;
         msg.sender.transfer(feesCollected);
+        emit FeesCollected(_name, feesCollected);
     }
 
     function withdrawFunds(bytes32 _name) public
     verifyInvestmentStatus(_name) 
     {
         //Need to make sure this matches up with withdraw philosophy
-        //Add event
+        //Temporary Balance and Fees
+        uint bal = strategies[_name].virtualBalances[msg.sender];
+        uint fees = strategies[_name].fees[msg.sender];
         //subtract virtual balance from total funds
-        strategies[_name].funds -= strategies[_name].virtualBalances[msg.sender];
+        strategies[_name].funds -= bal;
         //zero out virtual Balance
         strategies[_name].virtualBalances[msg.sender] = 0;
         //transfer fees back to investor
-        msg.sender.transfer(strategies[_name].fees[msg.sender]);
+        msg.sender.transfer(fees);
         //Zero out fees
         strategies[_name].fees[msg.sender] = 0;
         //set investor status to faslse
         strategies[_name].investors[msg.sender] = false;
+        emit FundsWithdrawn(_name, msg.sender, bal, fees);
     }
 
     //not a permanent function

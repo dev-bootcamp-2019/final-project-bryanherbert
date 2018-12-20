@@ -22,7 +22,7 @@ contract TestStrategyHub {
     uint g;
     uint h;
 
-    function beforeAll(){
+    function beforeAll() public {
         //Deploy StrategyHub contracts
         s = new StrategyHub();
         //Deploy Quant and Investor contracts
@@ -35,7 +35,7 @@ contract TestStrategyHub {
         investorAddr = address(investor);
     }
   
-    function testInitializeStrategy(){
+    function testInitializeStrategy() public{
         //Quant initializes new strategy
         bytes32 name = "alpha";
         uint initialFund = 1 ether;
@@ -59,7 +59,7 @@ contract TestStrategyHub {
         Assert.equal(h, 0, "Quant's fees deposited are not zero");
     }
 
-    function testIsInvestor(){
+    function testIsInvestor() public{
         //Check to see if account is an investor in a certain strategy
         bytes32 name = "alpha";
         bool isInvestor = investor.checkInvestmentStatus(s, name);
@@ -89,7 +89,7 @@ contract TestStrategyHub {
         Assert.equal(h, (investment/s.checkFeeRate(name)+1), "Investor's fees were not valid");
     }
 
-    function testPayFees(){
+    function testPayFees() public {
         bytes32 name = "alpha";
         //Paid monthly; 12 times in a year
         uint timePeriod = 12;
@@ -115,7 +115,7 @@ contract TestStrategyHub {
         Assert.equal(h, fee - (fee/timePeriod), "Investor did not pay fee");
     }
 
-    function testCollectFees(){
+    function testCollectFees() public {
         bytes32 name = "alpha";
         uint quantBalance = 2 ether;
         uint investment = 2 ether;
@@ -132,7 +132,7 @@ contract TestStrategyHub {
     }
 
 
-    function testWithdrawFunds(){
+    function testWithdrawFunds() public {
         bytes32 name = "alpha";
         uint preBalance = investorAddr.balance;
         //investor withdraws funds
