@@ -37,26 +37,26 @@ contract FundMarketplace {
     //     uint fees
     // );
 
-    // //Modifiers
-    // modifier verifyBalance(bytes32 _name, uint _investment){
-    //     //Account Balance must be greater than investment + Fees
-    //     //Not sure this correct- want it to represent ~2%
-    //     uint fee = _investment/checkFeeRate(_name);
-    //     require(
-    //         msg.sender.balance > _investment + fee,
-    //         "Sender does not have enough balance to invest"
-    //     );
-    //     _;
-    // }
+    //Modifiers
+    modifier verifyBalance(bytes32 _name, uint _investment){
+        //Account Balance must be greater than investment + Fees
+        //Not sure this correct- want it to represent ~2%
+        uint fee = _investment/checkFeeRate(_name);
+        require(
+            msg.sender.balance > _investment + fee,
+            "Sender does not have enough balance to invest"
+        );
+        _;
+    }
 
-    // modifier verifyFee(bytes32 _name, uint _investment, uint _proposedFee) {
-    //     //Verify that the msg.value > fee
-    //     require(
-    //         _proposedFee >= _investment/checkFeeRate(_name),
-    //         "Fee is insufficent"
-    //     );
-    //     _;
-    // }
+    modifier verifyFee(bytes32 _name, uint _investment, uint _proposedFee) {
+        //Verify that the msg.value > fee
+        require(
+            _proposedFee >= _investment/checkFeeRate(_name),
+            "Fee is insufficent"
+        );
+        _;
+    }
 
     // modifier checkFeePayment(bytes32 _name, uint _timePeriod) {
     //     uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
@@ -113,13 +113,7 @@ contract FundMarketplace {
         //Emit Event
         emit FundCreated(fundName, fundCount, fundOwner);
     }
-/*
-    //Check to see if an account is an investor in a strategy
-    function isInvestor(bytes32 _name) public view returns (bool) {
-        bool result;
-        (,result,,) = f.getFundDetails2(_name, msg.sender);
-        return result;
-    }
+
 
     //Make investment into particular fund
     //Must have required funds
@@ -127,11 +121,7 @@ contract FundMarketplace {
     verifyBalance(_name, _investment) 
     verifyFee(_name, _investment, msg.value) 
     returns (bool) {
-        strategies[_name].funds += _investment;
-        strategies[_name].investors[msg.sender] = true;
-        strategies[_name].virtualBalances[msg.sender] = _investment;
-        strategies[_name].fees[msg.sender] = msg.value;
-        strategies[_name].paymentCycleStart[msg.sender] = now;
+        f.Invest.value(msg.value)(_name, _investment, msg.sender);
         //Emit event
         emit Investment(_name, msg.sender, _investment);
         return strategies[_name].investors[msg.sender];
@@ -140,9 +130,9 @@ contract FundMarketplace {
 
     //check fee rate
     function checkFeeRate(bytes32 _name) public view returns (uint) {
-        return 100/strategies[_name].feeRate;
+        return 100/funds[_name].feeRate;
     }
-
+/*
     //One-time pay fee function
     function payFee(bytes32 _name, uint _timePeriod) public
     verifyInvestmentStatus(_name)
@@ -262,6 +252,23 @@ contract FundList {
         //Increment fundCount
         fundCount++;
         return (funds[_name].name, fundCount-1, funds[_name].fundOwner);
+    }
+
+    //Check to see if an account is an investor in a strategy
+    function isInvestor(bytes32 _name) public view returns (bool) {
+        bool result;
+        (,result,,) = getFundDetails2(_name, msg.sender);
+        return result;
+    }
+
+    //Make investment into particular fund
+    //Must have required funds
+    function Invest(bytes32 _name, uint _investment, address _investor) public payable {
+        strategies[_name].funds += _investment;
+        strategies[_name].investors[_investor] = true;
+        strategies[_name].virtualBalances[_investor] = _investment;
+        strategies[_name].fees[_investor] = msg.value;
+        strategies[_name].paymentCycleStart[_investor] = now;
     }
 
     //Get fund information (for testing/verification purposes)
