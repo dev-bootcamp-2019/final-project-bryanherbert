@@ -4,7 +4,7 @@ contract FundMarketplace {
     //State Variables
     address admin;
     //FundList Contract
-    FundList f;
+    FundList fl;
 
     //Events
     event FundCreated(
@@ -13,17 +13,17 @@ contract FundMarketplace {
         address stratOwner
     );
 
-    // event Investment(
-    //     bytes32 name,
-    //     address investor,
-    //     uint investment
-    // );
+    event Investment(
+        bytes32 name,
+        address investor,
+        uint investment
+    );
     
-    // event FeesPaid(
-    //     bytes32 name,
-    //     address investor,
-    //     uint fee
-    // );
+    event FeesPaid(
+        bytes32 name,
+        address investor,
+        uint fee
+    );
 
     // event FeesCollected(
     //     bytes32 name,
@@ -41,7 +41,7 @@ contract FundMarketplace {
     modifier verifyBalance(bytes32 _name, uint _investment){
         //Account Balance must be greater than investment + Fees
         //Not sure this correct- want it to represent ~2%
-        uint fee = _investment/checkFeeRate(_name);
+        uint fee = _investment/fl.checkFeeRate(_name);
         require(
             msg.sender.balance > _investment + fee,
             "Sender does not have enough balance to invest"
@@ -52,30 +52,34 @@ contract FundMarketplace {
     modifier verifyFee(bytes32 _name, uint _investment, uint _proposedFee) {
         //Verify that the msg.value > fee
         require(
-            _proposedFee >= _investment/checkFeeRate(_name),
+            _proposedFee >= _investment/fl.checkFeeRate(_name),
             "Fee is insufficent"
         );
         _;
     }
 
-    // modifier checkFeePayment(bytes32 _name, uint _timePeriod) {
-    //     uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
-    //     require(
-    //         //Check that msg.sender has enough in fees to make payment installment
-    //         strategies[_name].fees[msg.sender] > payment,
-    //         "Fee balance is insufficient to make payment or payment cycle is not complete"
-    //     );
-    //     _;
-    // }
+    modifier checkFeePayment(bytes32 _name, uint _timePeriod) {
+        uint virtualBalance;
+        uint fees;
+        //Get investor's virtual balance and fees deposited
+        (,,virtualBalance,fees) = fl.getFundDetails2(_name, msg.sender);
+        uint payment = (virtualBalance/fl.checkFeeRate(_name))/_timePeriod;
+        require(
+            //Check that msg.sender has enough in fees to make payment installment
+            fees > payment,
+            "Fee balance is insufficient to make payment or payment cycle is not complete"
+        );
+        _;
+    }
 
-    // modifier verifyInvestmentStatus(bytes32 _name){
-    //     //check that msg.sender is an investor
-    //     require(
-    //         strategies[_name].investors[msg.sender] = true,
-    //         "Message Sender is not an investor"
-    //     );
-    //     _;
-    // }
+    modifier verifyInvestmentStatus(bytes32 _name){
+        //check that msg.sender is an investor
+        require(
+            fl.isInvestor(_name, msg.sender) == true,
+            "Message Sender is not an investor"
+        );
+        _;
+    }
 
     // //Can replace this with ethpm code
     // modifier isOwner(bytes32 _name){
@@ -86,30 +90,34 @@ contract FundMarketplace {
     //     _;
     // }
 
-    // modifier cycleComplete(bytes32 _name){
-    //     require(
-    //         now >= strategies[_name].paymentCycleStart[msg.sender] + strategies[_name].paymentCycle * 1 days,
-    //         "Cycle is not complete, no fee due"
-    //     );
-    //     _;
-    // }
+    modifier cycleComplete(bytes32 _name){
+        uint paymentCycleStart = fl.checkPaymentCycleStart(_name, msg.sender);
+        uint paymentCycle;
+        (paymentCycle,,,) = fl.getFundDetails2(_name, msg.sender);
+
+        require(
+            now >= paymentCycleStart + paymentCycle * 1 days,
+            "Cycle is not complete, no fee due"
+        );
+        _;
+    }
 
     constructor() public {
         admin = msg.sender;
         //Need to initialize a new contract instance of FundList
         //Attempt may be wrong
-        f = new FundList();
+        fl = new FundList();
     }
 
     function getFundList() public view returns (FundList) {
-        return f;
+        return fl;
     }
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) public payable {
         bytes32 fundName;
         uint fundCount;
         address fundOwner;
-        (fundName, fundCount, fundOwner) = f.initializeFund(_name, _fundOwner, _investment, _feeRate, _paymentCycle);
+        (fundName, fundCount, fundOwner) = fl.initializeFund(_name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Emit Event
         emit FundCreated(fundName, fundCount, fundOwner);
     }
@@ -119,36 +127,30 @@ contract FundMarketplace {
     //Must have required funds
     function Invest(bytes32 _name, uint _investment) public payable 
     verifyBalance(_name, _investment) 
-    verifyFee(_name, _investment, msg.value) 
-    returns (bool) {
-        f.Invest.value(msg.value)(_name, _investment, msg.sender);
+    verifyFee(_name, _investment, msg.value) {
+        bytes32 fundName;
+        address newInvestor;
+        uint newInvestment;
+        (fundName, newInvestor, newInvestment) = fl.Invest.value(msg.value)(_name, _investment, msg.sender);
         //Emit event
         emit Investment(_name, msg.sender, _investment);
-        return strategies[_name].investors[msg.sender];
     }
 
 
-    //check fee rate
-    function checkFeeRate(bytes32 _name) public view returns (uint) {
-        return 100/funds[_name].feeRate;
-    }
-/*
     //One-time pay fee function
     function payFee(bytes32 _name, uint _timePeriod) public
     verifyInvestmentStatus(_name)
     checkFeePayment(_name, _timePeriod)
     cycleComplete(_name)
     {
-        //Calculate payment
-        uint payment = (strategies[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
-        //Owner fees account
-        address stratOwner = strategies[_name].stratOwner;
-        //Subtract payment from investor fees
-        strategies[_name].fees[msg.sender] -= payment;
-        strategies[_name].fees[stratOwner] += payment;
-        strategies[_name].paymentCycleStart[msg.sender] = now;
-        emit FeesPaid(_name, msg.sender, payment);
+        bytes32 fundName;
+        address investor;
+        uint feePayment;
+        (fundName, investor, feePayment) = fl.payFee(_name, _timePeriod, msg.sender);
+        emit FeesPaid(fundName, investor, feePayment);
     }
+
+/*
 
     //Owner of Strategy Collects Fees
     function collectFees(bytes32 _name) public
@@ -255,20 +257,52 @@ contract FundList {
     }
 
     //Check to see if an account is an investor in a strategy
-    function isInvestor(bytes32 _name) public view returns (bool) {
+    //eventually change to only one parameter and use delegate call instead
+    function isInvestor(bytes32 _name, address _investor) public view returns (bool) {
         bool result;
-        (,result,,) = getFundDetails2(_name, msg.sender);
+        (,result,,) = getFundDetails2(_name, _investor);
         return result;
     }
 
     //Make investment into particular fund
     //Must have required funds
-    function Invest(bytes32 _name, uint _investment, address _investor) public payable {
-        strategies[_name].funds += _investment;
-        strategies[_name].investors[_investor] = true;
-        strategies[_name].virtualBalances[_investor] = _investment;
-        strategies[_name].fees[_investor] = msg.value;
-        strategies[_name].paymentCycleStart[_investor] = now;
+    function Invest(bytes32 _name, uint _investment, address _investor) public payable
+    isAdmin()
+    returns (bytes32, address, uint) 
+    {
+        funds[_name].totalBalance += _investment;
+        funds[_name].investors[_investor] = true;
+        funds[_name].virtualBalances[_investor] = _investment;
+        funds[_name].fees[_investor] = msg.value;
+        funds[_name].paymentCycleStart[_investor] = now;
+        return (funds[_name].name, _investor, funds[_name].virtualBalances[_investor]);
+    }
+    
+    //check Fee Rate - read operation from struct
+    function checkFeeRate(bytes32 _name) public view returns (uint) {
+        return 100/funds[_name].feeRate;
+    }
+
+    //One-time pay fee function
+    function payFee(bytes32 _name, uint _timePeriod, address _investor) public
+    isAdmin()
+    returns (bytes32, address, uint)
+    {
+        //Calculate payment
+        uint payment = (funds[_name].virtualBalances[_investor]/checkFeeRate(_name))/_timePeriod;
+        //Owner fees account
+        address fundOwner = funds[_name].fundOwner;
+        //Subtract payment from investor fees
+        funds[_name].fees[_investor] -= payment;
+        funds[_name].fees[fundOwner] += payment;
+        funds[_name].paymentCycleStart[_investor] = now;
+        return (_name, _investor, payment);
+    }
+
+    function checkPaymentCycleStart(bytes32 _name, address _investor) public view
+    returns (uint)
+    {
+        return funds[_name].paymentCycleStart[_investor];
     }
 
     //Get fund information (for testing/verification purposes)
