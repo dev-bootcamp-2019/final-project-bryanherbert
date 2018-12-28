@@ -109,17 +109,17 @@ contract FundMarketplace {
         fl.payFee(_name, _timePeriod, msg.sender);
     }
 
-    //Owner of Strategy Collects Fees
-    function collectFees(bytes32 _name) external
-    isOwner(_name)
-    {
-        fl.collectFees(_name, msg.sender);
-    }
+    // //Owner of Strategy Collects Fees
+    // function collectFees(bytes32 _name) external
+    // isOwner(_name)
+    // {
+    //     fl.collectFees(_name, msg.sender);
+    // }
 
-    function withdrawFunds(bytes32 _name) public
-    verifyInvestmentStatus(_name) 
-    {
-        //Need to make sure this matches up with withdraw philosophy
-        fl.withdrawFunds(_name, msg.sender);
-    }
+    // function withdrawFunds(bytes32 _name) public
+    // verifyInvestmentStatus(_name) 
+    // {
+    //     //Need to make sure this matches up with withdraw philosophy
+    //     fl.withdrawFunds(_name, msg.sender);
+    // }
 }

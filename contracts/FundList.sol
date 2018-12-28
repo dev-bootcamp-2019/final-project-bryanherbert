@@ -1,6 +1,8 @@
 pragma solidity ^0.4.24;
 
 library Init {
+    struct Data { mapping(bytes32 => Fund) list; }
+
     struct Fund {
         //Name of fund
         bytes32 name;
@@ -24,12 +26,67 @@ library Init {
         mapping(address => uint) paymentCycleStart;
         //will need to add IPFS hash eventually to verify code
     }
+
+    function initializeFund(Data storage self, bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
+    internal
+    {
+        //initialize strat name to _name
+        self.list[_name].name = _name;
+        //Strat owner is message sender
+        //Be careful of message sender here - might be the Fund Marketplace contract - might have to use delegatecall
+        self.list[_name].fundOwner = _fundOwner;
+        //Initial funds are the msg.value
+        self.list[_name].totalBalance = _investment;
+        //Set fee rate
+        self.list[_name].feeRate = _feeRate;
+        //Set payment cycle
+        self.list[_name].paymentCycle = _paymentCycle;
+        //set fundOwner to also be an investor
+        self.list[_name].investors[_fundOwner] = true;
+        //set fundOwner's investor balance to the msg.value
+        self.list[_name].virtualBalances[_fundOwner] = _investment;
+        //set fundOwner's fees to zero
+        self.list[_name].fees[_fundOwner] = 0;
+    }
+
+    function Invest(Data storage self, bytes32 _name, uint _investment, address _investor, uint _value) 
+    internal
+    {
+        self.list[_name].totalBalance += _investment;
+        self.list[_name].investors[_investor] = true;
+        self.list[_name].virtualBalances[_investor] = _investment;
+        self.list[_name].fees[_investor] = _value;
+        self.list[_name].paymentCycleStart[_investor] = now;
+    }
+
+    //check Fee Rate - read operation from struct
+    function checkFeeRate(Data storage self, bytes32 _name) 
+    internal view
+    returns (uint) {
+        return 100/self.list[_name].feeRate;
+    }
+
+    function payFee(Data storage self, bytes32 _name, uint _timePeriod, address _investor) 
+    internal
+    returns(uint)
+    {
+        //Calculate payment
+        uint payment = (self.list[_name].virtualBalances[_investor]/checkFeeRate(self, _name))/_timePeriod;
+        //Owner fees account
+        address fundOwner = self.list[_name].fundOwner;
+        //Subtract payment from investor fees
+        self.list[_name].fees[_investor] -= payment;
+        self.list[_name].fees[fundOwner] += payment;
+        self.list[_name].paymentCycleStart[_investor] = now;
+        return payment;
+    }
 }
 
 contract FundList {
     //State Variables
     address internal admin;
-    mapping(bytes32 => Init.Fund) internal funds;
+    //mapping(bytes32 => Init.Fund) internal funds;
+    Init.Data funds;
     uint fundCount;
 
     //Events
@@ -83,23 +140,7 @@ contract FundList {
     external payable
     isAdmin()
     {
-        //initialize strat name to _name
-        funds[_name].name = _name;
-        //Strat owner is message sender
-        //Be careful of message sender here - might be the Fund Marketplace contract - might have to use delegatecall
-        funds[_name].fundOwner = _fundOwner;
-        //Initial funds are the msg.value
-        funds[_name].totalBalance = _investment;
-        //Set fee rate
-        funds[_name].feeRate = _feeRate;
-        //Set payment cycle
-        funds[_name].paymentCycle = _paymentCycle;
-        //set fundOwner to also be an investor
-        funds[_name].investors[_fundOwner] = true;
-        //set fundOwner's investor balance to the msg.value
-        funds[_name].virtualBalances[_fundOwner] = _investment;
-        //set fundOwner's fees to zero
-        funds[_name].fees[_fundOwner] = 0;
+        Init.initializeFund(funds, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
         fundCount++;
         emit FundCreated(_name, fundCount, _fundOwner);
@@ -118,82 +159,72 @@ contract FundList {
     function Invest(bytes32 _name, uint _investment, address _investor) external payable
     isAdmin()
     {
-        funds[_name].totalBalance += _investment;
-        funds[_name].investors[_investor] = true;
-        funds[_name].virtualBalances[_investor] = _investment;
-        funds[_name].fees[_investor] = msg.value;
-        funds[_name].paymentCycleStart[_investor] = now;
+        Init.Invest(funds, _name, _investment, _investor, msg.value);
         emit Investment(_name, _investor, _investment);
     }
     
     //check Fee Rate - read operation from struct
-    function checkFeeRate(bytes32 _name) public view returns (uint) {
-        return 100/funds[_name].feeRate;
+    //was originally "public view" when not in library
+    function checkFeeRate(bytes32 _name) external view returns (uint) {
+        return Init.checkFeeRate(funds, _name);
     }
 
     //One-time pay fee function
     function payFee(bytes32 _name, uint _timePeriod, address _investor) external
     isAdmin()
     {
-        //Calculate payment
-        uint payment = (funds[_name].virtualBalances[_investor]/checkFeeRate(_name))/_timePeriod;
-        //Owner fees account
-        address fundOwner = funds[_name].fundOwner;
-        //Subtract payment from investor fees
-        funds[_name].fees[_investor] -= payment;
-        funds[_name].fees[fundOwner] += payment;
-        funds[_name].paymentCycleStart[_investor] = now;
+        uint payment = Init.payFee(funds, _name, _timePeriod, _investor);
         emit FeesPaid (_name, _investor, payment);
     }
 
     function checkPaymentCycleStart(bytes32 _name, address _investor) external view
     returns (uint)
     {
-        return funds[_name].paymentCycleStart[_investor];
+        return funds.list[_name].paymentCycleStart[_investor];
     }
 
-    //Owner of Strategy Collects Fees
-    function collectFees(bytes32 _name, address fundOwner) external
-    isAdmin()
-    {
-        uint feesCollected = funds[_name].fees[fundOwner];
-        funds[_name].fees[fundOwner] = 0;
-        fundOwner.transfer(feesCollected);
-        emit FeesCollected(_name, feesCollected);
-    }
+    // //Owner of Strategy Collects Fees
+    // function collectFees(bytes32 _name, address fundOwner) external
+    // isAdmin()
+    // {
+    //     uint feesCollected = funds.list[_name].fees[fundOwner];
+    //     funds.list[_name].fees[fundOwner] = 0;
+    //     fundOwner.transfer(feesCollected);
+    //     emit FeesCollected(_name, feesCollected);
+    // }
 
-    function withdrawFunds(bytes32 _name, address _investor) external
-    isAdmin() 
-    {
-        //Need to make sure this matches up with withdraw philosophy
-        //Temporary Balance and Fees
-        uint bal = funds[_name].virtualBalances[_investor];
-        uint fees = funds[_name].fees[_investor];
-        //subtract virtual balance from total funds
-        funds[_name].totalBalance -= bal;
-        //zero out virtual Balance
-        funds[_name].virtualBalances[_investor] = 0;
-        //transfer fees back to investor
-        _investor.transfer(fees);
-        //Zero out fees
-        funds[_name].fees[_investor] = 0;
-        //set investor status to faslse
-        funds[_name].investors[_investor] = false;
-        emit FundsWithdrawn(_name, _investor, bal, fees);
-    }
+    // function withdrawFunds(bytes32 _name, address _investor) external
+    // isAdmin() 
+    // {
+    //     //Need to make sure this matches up with withdraw philosophy
+    //     //Temporary Balance and Fees
+    //     uint bal = funds[_name].virtualBalances[_investor];
+    //     uint fees = funds[_name].fees[_investor];
+    //     //subtract virtual balance from total funds
+    //     funds[_name].totalBalance -= bal;
+    //     //zero out virtual Balance
+    //     funds[_name].virtualBalances[_investor] = 0;
+    //     //transfer fees back to investor
+    //     _investor.transfer(fees);
+    //     //Zero out fees
+    //     funds[_name].fees[_investor] = 0;
+    //     //set investor status to faslse
+    //     funds[_name].investors[_investor] = false;
+    //     emit FundsWithdrawn(_name, _investor, bal, fees);
+    // }
 
     //Get fund information (for testing/verification purposes)
     function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
-        return (funds[_name].name, 
-        funds[_name].fundOwner, 
-        funds[_name].totalBalance, 
-        funds[_name].feeRate);
+        return (funds.list[_name].name, 
+        funds.list[_name].fundOwner, 
+        funds.list[_name].totalBalance, 
+        funds.list[_name].feeRate);
     }
     //need two functions because of stack height
     function getFundDetails2(bytes32 _name, address _addr) public view returns (uint, bool, uint, uint){
-        return(funds[_name].paymentCycle,
-        funds[_name].investors[_addr], 
-        funds[_name].virtualBalances[_addr],
-        funds[_name].fees[_addr]);
+        return(funds.list[_name].paymentCycle,
+        funds.list[_name].investors[_addr], 
+        funds.list[_name].virtualBalances[_addr],
+        funds.list[_name].fees[_addr]);
     }
 }

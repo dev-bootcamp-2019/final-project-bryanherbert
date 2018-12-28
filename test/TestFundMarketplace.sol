@@ -139,27 +139,26 @@ contract TestFundMarketplace {
     //     Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
     // }
 
-/*
-    function testWithdrawFunds() public {
-        bytes32 name = "alpha";
-        uint preBalance = investorAddr.balance;
-        //investor withdraws funds
-        investor.withdrawFunds(s, name);
-        uint postBalance = investorAddr.balance;
+    // function testWithdrawFunds() public {
+    //     bytes32 name = "alpha";
+    //     uint preBalance = investorAddr.balance;
+    //     //investor withdraws funds
+    //     investor.withdrawFunds(fm, name);
+    //     uint postBalance = investorAddr.balance;
 
-        //Tests
-        (,,c,) = s.getStratDetails(name);
-        (,f,g,h) = s.getStratDetails2(name, investorAddr);
+    //     //Tests
+    //     (,,c,) = fl.getFundDetails(name);
+    //     (,f,g,h) = fl.getFundDetails2(name, investorAddr);
 
-        //Tests
-        Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
-        Assert.equal(f, false, "Account falsely remain an investor");
-        Assert.equal(g, 0, "Investor's virtual balance is not zeroed out");
-        Assert.equal(h, 0, "Investor's fees are not zeroed out");
-        //confirm fees were refunded
-        Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
-    }
-*/
+    //     //Tests
+    //     Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
+    //     Assert.equal(f, false, "Account falsely remain an investor");
+    //     Assert.equal(g, 0, "Investor's virtual balance is not zeroed out");
+    //     Assert.equal(h, 0, "Investor's fees are not zeroed out");
+    //     //confirm fees were refunded
+    //     Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
+    // }
+
 }
 
 contract Quant {
@@ -193,8 +192,8 @@ contract Investor {
         fm.payFee(_name, _timePeriod);
     }
 
-    // function withdrawFunds(StrategyHub s, bytes32 _name) public {
-    //     s.withdrawFunds(_name);
+    // function withdrawFunds(FundMarketplace fm, bytes32 _name) public {
+    //     fm.withdrawFunds(_name);
     // }
 
     //Fallback function, accepts ether
