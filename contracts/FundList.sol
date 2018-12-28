@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-library Set {
+library Init {
     struct Fund {
         //Name of fund
         bytes32 name;
@@ -29,8 +29,39 @@ library Set {
 contract FundList {
     //State Variables
     address internal admin;
-    mapping(bytes32 => Set.Fund) internal funds;
+    mapping(bytes32 => Init.Fund) internal funds;
     uint fundCount;
+
+    //Events
+    event FundCreated(
+        bytes32 name,
+        uint fundCount,
+        address fundOwner
+    );
+
+    event Investment(
+        bytes32 name,
+        address investor,
+        uint investment
+    );
+    
+    event FeesPaid(
+        bytes32 name,
+        address investor,
+        uint fee
+    );
+
+    event FeesCollected(
+        bytes32 name,
+        uint fee
+    );
+
+    event FundsWithdrawn(
+        bytes32 name,
+        address investor,
+        uint investment,
+        uint fees
+    );
 
     //Administrative control
     //Any write functions must be completed by the administrator
@@ -51,7 +82,7 @@ contract FundList {
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable
     isAdmin()
-    returns(bytes32, uint, address) {
+    {
         //initialize strat name to _name
         funds[_name].name = _name;
         //Strat owner is message sender
@@ -71,7 +102,7 @@ contract FundList {
         funds[_name].fees[_fundOwner] = 0;
         //Increment fundCount
         fundCount++;
-        return (funds[_name].name, fundCount-1, funds[_name].fundOwner);
+        emit FundCreated(_name, fundCount, _fundOwner);
     }
 
     //Check to see if an account is an investor in a strategy
@@ -86,14 +117,13 @@ contract FundList {
     //Must have required funds
     function Invest(bytes32 _name, uint _investment, address _investor) external payable
     isAdmin()
-    returns (bytes32, address, uint) 
     {
         funds[_name].totalBalance += _investment;
         funds[_name].investors[_investor] = true;
         funds[_name].virtualBalances[_investor] = _investment;
         funds[_name].fees[_investor] = msg.value;
         funds[_name].paymentCycleStart[_investor] = now;
-        return (funds[_name].name, _investor, funds[_name].virtualBalances[_investor]);
+        emit Investment(_name, _investor, _investment);
     }
     
     //check Fee Rate - read operation from struct
@@ -104,7 +134,6 @@ contract FundList {
     //One-time pay fee function
     function payFee(bytes32 _name, uint _timePeriod, address _investor) external
     isAdmin()
-    returns (bytes32, address, uint)
     {
         //Calculate payment
         uint payment = (funds[_name].virtualBalances[_investor]/checkFeeRate(_name))/_timePeriod;
@@ -114,7 +143,7 @@ contract FundList {
         funds[_name].fees[_investor] -= payment;
         funds[_name].fees[fundOwner] += payment;
         funds[_name].paymentCycleStart[_investor] = now;
-        return (_name, _investor, payment);
+        emit FeesPaid (_name, _investor, payment);
     }
 
     function checkPaymentCycleStart(bytes32 _name, address _investor) external view
@@ -123,16 +152,35 @@ contract FundList {
         return funds[_name].paymentCycleStart[_investor];
     }
 
-    // //Owner of Strategy Collects Fees
-    // function collectFees(bytes32 _name, address fundOwner) external
-    // isAdmin()
-    // returns(uint)
-    // {
-    //     uint feesCollected = funds[_name].fees[fundOwner];
-    //     funds[_name].fees[fundOwner] = 0;
-    //     fundOwner.transfer(feesCollected);
-    //     return (feesCollected);
-    // }
+    //Owner of Strategy Collects Fees
+    function collectFees(bytes32 _name, address fundOwner) external
+    isAdmin()
+    {
+        uint feesCollected = funds[_name].fees[fundOwner];
+        funds[_name].fees[fundOwner] = 0;
+        fundOwner.transfer(feesCollected);
+        emit FeesCollected(_name, feesCollected);
+    }
+
+    function withdrawFunds(bytes32 _name, address _investor) external
+    isAdmin() 
+    {
+        //Need to make sure this matches up with withdraw philosophy
+        //Temporary Balance and Fees
+        uint bal = funds[_name].virtualBalances[_investor];
+        uint fees = funds[_name].fees[_investor];
+        //subtract virtual balance from total funds
+        funds[_name].totalBalance -= bal;
+        //zero out virtual Balance
+        funds[_name].virtualBalances[_investor] = 0;
+        //transfer fees back to investor
+        _investor.transfer(fees);
+        //Zero out fees
+        funds[_name].fees[_investor] = 0;
+        //set investor status to faslse
+        funds[_name].investors[_investor] = false;
+        emit FundsWithdrawn(_name, _investor, bal, fees);
+    }
 
     //Get fund information (for testing/verification purposes)
     function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){

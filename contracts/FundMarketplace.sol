@@ -8,37 +8,6 @@ contract FundMarketplace {
     //FundList Contract
     FundList fl;
 
-    //Events
-    event FundCreated(
-        bytes32 name,
-        uint fundCount,
-        address stratOwner
-    );
-
-    event Investment(
-        bytes32 name,
-        address investor,
-        uint investment
-    );
-    
-    event FeesPaid(
-        bytes32 name,
-        address investor,
-        uint fee
-    );
-
-    event FeesCollected(
-        bytes32 name,
-        uint fee
-    );
-
-    event FundsWithdrawn(
-        bytes32 name,
-        address investor,
-        uint investment,
-        uint fees
-    );
-
     //Modifiers
     modifier verifyBalance(bytes32 _name, uint _investment){
         //Account Balance must be greater than investment + Fees
@@ -83,16 +52,16 @@ contract FundMarketplace {
         _;
     }
 
-    // //Can replace this with ethpm code
-    // modifier isOwner(bytes32 _name){
-    //     address _fundOwner;
-    //     (,_fundOwner,,) = fl.getFundDetails(_name);
-    //     require(
-    //         _fundOwner == msg.sender,
-    //         "Message Sender does not own strategy"
-    //     );
-    //     _;
-    // }
+    //Can replace this with ethpm code
+    modifier isOwner(bytes32 _name){
+        address _fundOwner;
+        (,_fundOwner,,) = fl.getFundDetails(_name);
+        require(
+            _fundOwner == msg.sender,
+            "Message Sender does not own strategy"
+        );
+        _;
+    }
 
     modifier cycleComplete(bytes32 _name){
         uint paymentCycleStart = fl.checkPaymentCycleStart(_name, msg.sender);
@@ -118,27 +87,17 @@ contract FundMarketplace {
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable {
-        bytes32 fundName;
-        uint fundCount;
-        address fundOwner;
-        (fundName, fundCount, fundOwner) = fl.initializeFund(_name, _fundOwner, _investment, _feeRate, _paymentCycle);
-        //Emit Event
-        emit FundCreated(fundName, fundCount, fundOwner);
+        fl.initializeFund(_name, _fundOwner, _investment, _feeRate, _paymentCycle);
     }
-
 
     //Make investment into particular fund
     //Must have required funds
     function Invest(bytes32 _name, uint _investment) 
     external payable 
     verifyBalance(_name, _investment) 
-    verifyFee(_name, _investment, msg.value) {
-        bytes32 fundName;
-        address newInvestor;
-        uint newInvestment;
-        (fundName, newInvestor, newInvestment) = fl.Invest.value(msg.value)(_name, _investment, msg.sender);
-        //Emit event
-        emit Investment(_name, msg.sender, _investment);
+    verifyFee(_name, _investment, msg.value) 
+    {
+        fl.Invest.value(msg.value)(_name, _investment, msg.sender);
     }
 
     //One-time pay fee function
@@ -147,39 +106,20 @@ contract FundMarketplace {
     checkFeePayment(_name, _timePeriod)
     cycleComplete(_name)
     {
-        bytes32 fundName;
-        address investor;
-        uint feePayment;
-        (fundName, investor, feePayment) = fl.payFee(_name, _timePeriod, msg.sender);
-        emit FeesPaid(fundName, investor, feePayment);
+        fl.payFee(_name, _timePeriod, msg.sender);
     }
 
-    // //Owner of Strategy Collects Fees
-    // function collectFees(bytes32 _name) external
-    // isOwner(_name)
-    // {
-    //     uint feesCollected = fl.collectFees(_name, msg.sender);
-    //     emit FeesCollected(_name, feesCollected);
-    // }
-/*
+    //Owner of Strategy Collects Fees
+    function collectFees(bytes32 _name) external
+    isOwner(_name)
+    {
+        fl.collectFees(_name, msg.sender);
+    }
+
     function withdrawFunds(bytes32 _name) public
     verifyInvestmentStatus(_name) 
     {
         //Need to make sure this matches up with withdraw philosophy
-        //Temporary Balance and Fees
-        uint bal = strategies[_name].virtualBalances[msg.sender];
-        uint fees = strategies[_name].fees[msg.sender];
-        //subtract virtual balance from total funds
-        strategies[_name].funds -= bal;
-        //zero out virtual Balance
-        strategies[_name].virtualBalances[msg.sender] = 0;
-        //transfer fees back to investor
-        msg.sender.transfer(fees);
-        //Zero out fees
-        strategies[_name].fees[msg.sender] = 0;
-        //set investor status to faslse
-        strategies[_name].investors[msg.sender] = false;
-        emit FundsWithdrawn(_name, msg.sender, bal, fees);
+        fl.withdrawFunds(_name, msg.sender);
     }
-*/
 }
