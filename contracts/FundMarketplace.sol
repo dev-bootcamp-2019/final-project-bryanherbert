@@ -1,6 +1,5 @@
 pragma solidity ^0.4.24;
 
-
 library Init {
     struct Data { mapping(bytes32 => Fund) list; }
 
@@ -53,6 +52,18 @@ library Init {
     function Invest(Data storage self, bytes32 _name, uint _investment, address _investor, uint _value) 
     internal
     {
+        //Verify Balance
+        uint fee = _investment/checkFeeRate(self, _name);
+        require(
+            _investor.balance > _investment + fee,
+            "Sender does not have enough balance to invest"
+        );
+        //Verify Fees
+        //Verify that the msg.value > fee
+        require(
+            _value >= _investment/checkFeeRate(self,_name),
+            "Fee is insufficent"
+        );
         self.list[_name].totalBalance += _investment;
         self.list[_name].investors[_investor] = true;
         self.list[_name].virtualBalances[_investor] = _investment;
@@ -84,11 +95,34 @@ library Init {
 
     function collectFees(Data storage self, bytes32 _name, address fundOwner)
     internal
+    returns (uint)
     {
         //Calculate fees
         uint feesCollected = self.list[_name].fees[fundOwner];
         self.list[_name].fees[fundOwner] = 0;
         fundOwner.transfer(feesCollected);
+        return feesCollected;
+    }
+
+    function withdrawFunds(Data storage self, bytes32 _name, address _investor)
+    internal
+    returns (uint, uint)
+    {
+        //Need to make sure this matches up with withdraw philosophy
+        //Temporary Balance and Fees
+        uint bal = self.list[_name].virtualBalances[_investor];
+        uint fees = self.list[_name].fees[_investor];
+        //subtract virtual balance from total funds
+        self.list[_name].totalBalance -= bal;
+        //zero out virtual Balance
+        self.list[_name].virtualBalances[_investor] = 0;
+        //transfer fees back to investor
+        _investor.transfer(fees);
+        //Zero out fees
+        self.list[_name].fees[_investor] = 0;
+        //set investor status to faslse
+        self.list[_name].investors[_investor] = false;
+        return (bal, fees);
     }
 }
 
@@ -129,26 +163,26 @@ contract FundMarketplace {
         uint fees
     );
 
-    //Modifiers
-    modifier verifyBalance(bytes32 _name, uint _investment){
-        //Account Balance must be greater than investment + Fees
-        //Not sure this correct- want it to represent ~2%
-        uint fee = _investment/checkFeeRate(_name);
-        require(
-            msg.sender.balance > _investment + fee,
-            "Sender does not have enough balance to invest"
-        );
-        _;
-    }
+    // //Modifiers
+    // modifier verifyBalance(bytes32 _name, uint _investment){
+    //     //Account Balance must be greater than investment + Fees
+    //     //Not sure this correct- want it to represent ~2%
+    //     uint fee = _investment/checkFeeRate(_name);
+    //     require(
+    //         msg.sender.balance > _investment + fee,
+    //         "Sender does not have enough balance to invest"
+    //     );
+    //     _;
+    // }
 
-    modifier verifyFee(bytes32 _name, uint _investment, uint _proposedFee) {
-        //Verify that the msg.value > fee
-        require(
-            _proposedFee >= _investment/checkFeeRate(_name),
-            "Fee is insufficent"
-        );
-        _;
-    }
+    // modifier verifyFee(bytes32 _name, uint _investment, uint _proposedFee) {
+    //     //Verify that the msg.value > fee
+    //     require(
+    //         _proposedFee >= _investment/checkFeeRate(_name),
+    //         "Fee is insufficent"
+    //     );
+    //     _;
+    // }
 
     modifier checkFeePayment(bytes32 _name, uint _timePeriod) {
         uint virtualBalance;
@@ -220,8 +254,8 @@ contract FundMarketplace {
     //Must have required funds
     function Invest(bytes32 _name, uint _investment) 
     external payable 
-    verifyBalance(_name, _investment) 
-    verifyFee(_name, _investment, msg.value) 
+    //verifyBalance(_name, _investment) 
+    //verifyFee(_name, _investment, msg.value) 
     {
         Init.Invest(funds, _name, _investment, msg.sender, msg.value);
         emit Investment(_name, msg.sender, _investment);
@@ -251,17 +285,21 @@ contract FundMarketplace {
 
     //Owner of Strategy Collects Fees
     function collectFees(bytes32 _name) external
-    isOwner(_name)
+    //isOwner(_name)
     {
-        Init.collectFees(funds, _name, msg.sender);
+        uint fees = Init.collectFees(funds, _name, msg.sender);
+        emit FeesCollected(_name, fees);
     }
 
-    // function withdrawFunds(bytes32 _name) public
-    // verifyInvestmentStatus(_name) 
-    // {
-    //     //Need to make sure this matches up with withdraw philosophy
-    //     fl.withdrawFunds(_name, msg.sender);
-    // }
+    function withdrawFunds(bytes32 _name) public
+    //verifyInvestmentStatus(_name) 
+    {
+        //Need to make sure this matches up with withdraw philosophy
+        uint investment;
+        uint fees;
+        (investment, fees) = Init.withdrawFunds(funds, _name, msg.sender);
+        emit FundsWithdrawn(_name, msg.sender, investment, fees);
+    }
 
     //Get fund information (for testing/verification purposes)
     function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
