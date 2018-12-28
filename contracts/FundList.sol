@@ -1,12 +1,12 @@
 pragma solidity ^0.4.24;
 
-library Init {
+library Init2 {
     struct Data { mapping(bytes32 => Fund) list; }
 
     struct Fund {
         //Name of fund
         bytes32 name;
-        //Partner who initialized the strategy
+        //Partner who Initialized the strategy
         //Could be a multisig wallet
         address fundOwner;
         //amount of funds the strategy is virtually managing
@@ -86,7 +86,7 @@ contract FundList {
     //State Variables
     address internal admin;
     //mapping(bytes32 => Init.Fund) internal funds;
-    Init.Data funds;
+    Init2.Data funds;
     uint fundCount;
 
     //Events
@@ -140,7 +140,7 @@ contract FundList {
     external payable
     isAdmin()
     {
-        Init.initializeFund(funds, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
+        Init2.initializeFund(funds, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
         fundCount++;
         emit FundCreated(_name, fundCount, _fundOwner);
@@ -159,21 +159,21 @@ contract FundList {
     function Invest(bytes32 _name, uint _investment, address _investor) external payable
     isAdmin()
     {
-        Init.Invest(funds, _name, _investment, _investor, msg.value);
+        Init2.Invest(funds, _name, _investment, _investor, msg.value);
         emit Investment(_name, _investor, _investment);
     }
     
     //check Fee Rate - read operation from struct
     //was originally "public view" when not in library
     function checkFeeRate(bytes32 _name) external view returns (uint) {
-        return Init.checkFeeRate(funds, _name);
+        return Init2.checkFeeRate(funds, _name);
     }
 
     //One-time pay fee function
     function payFee(bytes32 _name, uint _timePeriod, address _investor) external
     isAdmin()
     {
-        uint payment = Init.payFee(funds, _name, _timePeriod, _investor);
+        uint payment = Init2.payFee(funds, _name, _timePeriod, _investor);
         emit FeesPaid (_name, _investor, payment);
     }
 
