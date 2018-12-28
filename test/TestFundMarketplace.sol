@@ -8,7 +8,6 @@ contract TestFundMarketplace {
 
     //State Variables
     FundMarketplace fm;
-    FundList fl;
     Quant quant;
     Investor investor;
     address quantAddr;
@@ -26,8 +25,6 @@ contract TestFundMarketplace {
     function beforeAll() public {
         //Deploy StrategyHub contracts
         fm = new FundMarketplace();
-        //retrieve fundlist
-        fl = fm.getFundList();
         //Deploy Quant and Investor contracts
         quant = new Quant();
         //Give the quant some ether
@@ -49,8 +46,8 @@ contract TestFundMarketplace {
         uint paymentCycle = 0;
         quant.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
 
-        (a,b,c,d) = fl.getFundDetails(name);
-        (e,f,g,h) = fl. getFundDetails2(name, quantAddr);
+        (a,b,c,d) = fm.getFundDetails(name);
+        (e,f,g,h) = fm. getFundDetails2(name, quantAddr);
 
         //Tests
         Assert.equal(a, name, "Strategy name does not match test name");
@@ -67,11 +64,11 @@ contract TestFundMarketplace {
     function testIsInvestor() public{
         //Check to see if account is an investor in a certain strategy
         bytes32 name = "alpha";
-        bool isInvestor = investor.checkInvestmentStatus(fl, name);
+        bool isInvestor = investor.checkInvestmentStatus(fm, name);
         uint investment = 2 ether;
 
-        (,,c,) = fl.getFundDetails(name);
-        (,f,g,h) = fl.getFundDetails2(name, investorAddr);
+        (,,c,) = fm.getFundDetails(name);
+        (,f,g,h) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
@@ -81,20 +78,20 @@ contract TestFundMarketplace {
         Assert.equal(h, 0, "Investor's fees are not zero");
 
         //Make an actual investment
-        investor.makeInvestment(fm, fl, name, investment);
+        investor.makeInvestment(fm, name, investment);
         //Store investment status
-        isInvestor = investor.checkInvestmentStatus(fl, name);
+        isInvestor = investor.checkInvestmentStatus(fm, name);
 
         //Tests
-        (,,c,) = fl.getFundDetails(name);
-        (,f,g,h) = fl.getFundDetails2(name, investorAddr);
+        (,,c,) = fm.getFundDetails(name);
+        (,f,g,h) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(isInvestor, true, "Account is incorrectly listed as  a non-investor");
         Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
         Assert.equal(f, true, "Account is not listed as investor");
         Assert.equal(g, 2 ether, "Investor's virtual balance does not match investment");
-        Assert.equal(h, (investment/fl.checkFeeRate(name)+1), "Investor's fees were not valid");
+        Assert.equal(h, (investment/fm.checkFeeRate(name)+1), "Investor's fees were not valid");
     }
 
     function testPayFees() public {
@@ -102,42 +99,42 @@ contract TestFundMarketplace {
         //Paid monthly; 12 times in a year
         uint timePeriod = 12;
         uint investment = 2 ether;
-        uint fee = (investment/fl.checkFeeRate(name)+1);
+        uint fee = (investment/fm.checkFeeRate(name)+1);
 
         //Pre Fee Tests
         //Quant
-        (,,,h) = fl.getFundDetails2(name, quantAddr);
+        (,,,h) = fm.getFundDetails2(name, quantAddr);
         Assert.equal(h, 0, "Quant's fees were not zero");
         //Investor
-        (,,,h) = fl.getFundDetails2(name, investorAddr);
+        (,,,h) = fm.getFundDetails2(name, investorAddr);
         Assert.equal(h, fee, "Investor's fees are not valid");
 
         investor.payFee(fm, name, timePeriod);
 
         //Post Fee Tests
         //Quant
-        (,,,h) = fl.getFundDetails2(name, quantAddr);
+        (,,,h) = fm.getFundDetails2(name, quantAddr);
         Assert.equal(h, fee/timePeriod, "Quant did not receive fee");
         //Investor
-        (,,,h) = fl.getFundDetails2(name, investorAddr);
+        (,,,h) = fm.getFundDetails2(name, investorAddr);
         Assert.equal(h, fee - (fee/timePeriod), "Investor did not pay fee");
     }
 
-    // function testCollectFees() public {
-    //     bytes32 name = "alpha";
-    //     uint quantBalance = 2 ether;
-    //     uint investment = 2 ether;
-    //     uint timePeriod = 12;
-    //     uint feePayment = (investment/fl.checkFeeRate(name)+1)/timePeriod;
-    //     //Pre-collection tests
-    //     Assert.equal(quantAddr.balance, quantBalance, "Quant account pre-balance is incorrect");
+    function testCollectFees() public {
+        bytes32 name = "alpha";
+        uint quantBalance = 2 ether;
+        uint investment = 2 ether;
+        uint timePeriod = 12;
+        uint feePayment = (investment/fm.checkFeeRate(name)+1)/timePeriod;
+        //Pre-collection tests
+        Assert.equal(quantAddr.balance, quantBalance, "Quant account pre-balance is incorrect");
 
-    //     //Collect Fees
-    //     quant.collectFees(fm, name);
+        //Collect Fees
+        quant.collectFees(fm, name);
 
-    //     //Post-collection tests
-    //     Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
-    // }
+        //Post-collection tests
+        Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
+    }
 
     // function testWithdrawFunds() public {
     //     bytes32 name = "alpha";
@@ -167,9 +164,9 @@ contract Quant {
         fm.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);
     }
 
-    // function collectFees(FundMarketplace fm, bytes32 _name) public {
-    //     fm.collectFees(_name);
-    // }
+    function collectFees(FundMarketplace fm, bytes32 _name) public {
+        fm.collectFees(_name);
+    }
 
     //Fallback function, accepts ether
     function() public payable {
@@ -179,12 +176,12 @@ contract Quant {
 
 contract Investor {
 
-    function checkInvestmentStatus(FundList fl, bytes32 _name) public view returns (bool) {
-        return fl.isInvestor(_name, this);
+    function checkInvestmentStatus(FundMarketplace fm, bytes32 _name) public view returns (bool) {
+        return fm.isInvestor(_name, this);
     }
 
-    function makeInvestment(FundMarketplace fm, FundList fl, bytes32 _name, uint _investment) public {
-        uint fee = _investment/fl.checkFeeRate(_name) + 1;
+    function makeInvestment(FundMarketplace fm, bytes32 _name, uint _investment) public {
+        uint fee = _investment/fm.checkFeeRate(_name) + 1;
         fm.Invest.value(fee)(_name, _investment);
     }
 
