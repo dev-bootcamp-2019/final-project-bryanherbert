@@ -123,21 +123,21 @@ contract TestFundMarketplace {
         Assert.equal(h, fee - (fee/timePeriod), "Investor did not pay fee");
     }
 
-    function testCollectFees() public {
-        bytes32 name = "alpha";
-        uint quantBalance = 2 ether;
-        uint investment = 2 ether;
-        uint timePeriod = 12;
-        uint feePayment = (investment/fl.checkFeeRate(name)+1)/timePeriod;
-        //Pre-collection tests
-        Assert.equal(quantAddr.balance, quantBalance, "Quant account pre-balance is incorrect");
+    // function testCollectFees() public {
+    //     bytes32 name = "alpha";
+    //     uint quantBalance = 2 ether;
+    //     uint investment = 2 ether;
+    //     uint timePeriod = 12;
+    //     uint feePayment = (investment/fl.checkFeeRate(name)+1)/timePeriod;
+    //     //Pre-collection tests
+    //     Assert.equal(quantAddr.balance, quantBalance, "Quant account pre-balance is incorrect");
 
-        //Collect Fees
-        quant.collectFees(fm, name);
+    //     //Collect Fees
+    //     quant.collectFees(fm, name);
 
-        //Post-collection tests
-        Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
-    }
+    //     //Post-collection tests
+    //     Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
+    // }
 
 /*
     function testWithdrawFunds() public {
@@ -168,9 +168,9 @@ contract Quant {
         fm.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);
     }
 
-    function collectFees(FundMarketplace fm, bytes32 _name) public {
-        fm.collectFees(_name);
-    }
+    // function collectFees(FundMarketplace fm, bytes32 _name) public {
+    //     fm.collectFees(_name);
+    // }
 
     //Fallback function, accepts ether
     function() public payable {

@@ -4,7 +4,7 @@ import "../contracts/FundList.sol";
 
 contract FundMarketplace {
     //State Variables
-    address admin;
+    address internal admin;
     //FundList Contract
     FundList fl;
 
@@ -32,12 +32,12 @@ contract FundMarketplace {
         uint fee
     );
 
-    // event FundsWithdrawn(
-    //     bytes32 name,
-    //     address investor,
-    //     uint investment,
-    //     uint fees
-    // );
+    event FundsWithdrawn(
+        bytes32 name,
+        address investor,
+        uint investment,
+        uint fees
+    );
 
     //Modifiers
     modifier verifyBalance(bytes32 _name, uint _investment){
@@ -83,16 +83,16 @@ contract FundMarketplace {
         _;
     }
 
-    //Can replace this with ethpm code
-    modifier isOwner(bytes32 _name){
-        address _fundOwner;
-        (,_fundOwner,,) = fl.getFundDetails(_name);
-        require(
-            _fundOwner == msg.sender,
-            "Message Sender does not own strategy"
-        );
-        _;
-    }
+    // //Can replace this with ethpm code
+    // modifier isOwner(bytes32 _name){
+    //     address _fundOwner;
+    //     (,_fundOwner,,) = fl.getFundDetails(_name);
+    //     require(
+    //         _fundOwner == msg.sender,
+    //         "Message Sender does not own strategy"
+    //     );
+    //     _;
+    // }
 
     modifier cycleComplete(bytes32 _name){
         uint paymentCycleStart = fl.checkPaymentCycleStart(_name, msg.sender);
@@ -108,16 +108,16 @@ contract FundMarketplace {
 
     constructor() public {
         admin = msg.sender;
-        //Need to initialize a new contract instance of FundList
-        //Attempt may be wrong
         fl = new FundList();
     }
 
-    function getFundList() public view returns (FundList) {
+    //Both initializes and returns address of a new Fundlist()- for gas purposes
+    function getFundList() external view returns (FundList) {
         return fl;
     }
 
-    function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) public payable {
+    function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
+    external payable {
         bytes32 fundName;
         uint fundCount;
         address fundOwner;
@@ -129,7 +129,8 @@ contract FundMarketplace {
 
     //Make investment into particular fund
     //Must have required funds
-    function Invest(bytes32 _name, uint _investment) public payable 
+    function Invest(bytes32 _name, uint _investment) 
+    external payable 
     verifyBalance(_name, _investment) 
     verifyFee(_name, _investment, msg.value) {
         bytes32 fundName;
@@ -140,9 +141,8 @@ contract FundMarketplace {
         emit Investment(_name, msg.sender, _investment);
     }
 
-
     //One-time pay fee function
-    function payFee(bytes32 _name, uint _timePeriod) public
+    function payFee(bytes32 _name, uint _timePeriod) external
     verifyInvestmentStatus(_name)
     checkFeePayment(_name, _timePeriod)
     cycleComplete(_name)
@@ -154,13 +154,13 @@ contract FundMarketplace {
         emit FeesPaid(fundName, investor, feePayment);
     }
 
-    //Owner of Strategy Collects Fees
-    function collectFees(bytes32 _name) public
-    isOwner(_name)
-    {
-        uint feesCollected = fl.collectFees(_name, msg.sender);
-        emit FeesCollected(_name, feesCollected);
-    }
+    // //Owner of Strategy Collects Fees
+    // function collectFees(bytes32 _name) external
+    // isOwner(_name)
+    // {
+    //     uint feesCollected = fl.collectFees(_name, msg.sender);
+    //     emit FeesCollected(_name, feesCollected);
+    // }
 /*
     function withdrawFunds(bytes32 _name) public
     verifyInvestmentStatus(_name) 

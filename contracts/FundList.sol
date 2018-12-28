@@ -1,11 +1,6 @@
 pragma solidity ^0.4.24;
 
-contract FundList {
-    //State Variables
-    address admin;
-    mapping(bytes32 => Fund) public funds;
-    uint fundCount;
-
+library Set {
     struct Fund {
         //Name of fund
         bytes32 name;
@@ -29,6 +24,13 @@ contract FundList {
         mapping(address => uint) paymentCycleStart;
         //will need to add IPFS hash eventually to verify code
     }
+}
+
+contract FundList {
+    //State Variables
+    address internal admin;
+    mapping(bytes32 => Set.Fund) internal funds;
+    uint fundCount;
 
     //Administrative control
     //Any write functions must be completed by the administrator
@@ -47,7 +49,7 @@ contract FundList {
     }
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
-    public payable
+    external payable
     isAdmin()
     returns(bytes32, uint, address) {
         //initialize strat name to _name
@@ -74,7 +76,7 @@ contract FundList {
 
     //Check to see if an account is an investor in a strategy
     //eventually change to only one parameter and use delegate call instead
-    function isInvestor(bytes32 _name, address _investor) public view returns (bool) {
+    function isInvestor(bytes32 _name, address _investor) external view returns (bool) {
         bool result;
         (,result,,) = getFundDetails2(_name, _investor);
         return result;
@@ -82,7 +84,7 @@ contract FundList {
 
     //Make investment into particular fund
     //Must have required funds
-    function Invest(bytes32 _name, uint _investment, address _investor) public payable
+    function Invest(bytes32 _name, uint _investment, address _investor) external payable
     isAdmin()
     returns (bytes32, address, uint) 
     {
@@ -100,7 +102,7 @@ contract FundList {
     }
 
     //One-time pay fee function
-    function payFee(bytes32 _name, uint _timePeriod, address _investor) public
+    function payFee(bytes32 _name, uint _timePeriod, address _investor) external
     isAdmin()
     returns (bytes32, address, uint)
     {
@@ -115,22 +117,22 @@ contract FundList {
         return (_name, _investor, payment);
     }
 
-    function checkPaymentCycleStart(bytes32 _name, address _investor) public view
+    function checkPaymentCycleStart(bytes32 _name, address _investor) external view
     returns (uint)
     {
         return funds[_name].paymentCycleStart[_investor];
     }
 
-    //Owner of Strategy Collects Fees
-    function collectFees(bytes32 _name, address fundOwner) public
-    isAdmin()
-    returns(uint)
-    {
-        uint feesCollected = funds[_name].fees[fundOwner];
-        funds[_name].fees[fundOwner] = 0;
-        fundOwner.transfer(feesCollected);
-        return (feesCollected);
-    }
+    // //Owner of Strategy Collects Fees
+    // function collectFees(bytes32 _name, address fundOwner) external
+    // isAdmin()
+    // returns(uint)
+    // {
+    //     uint feesCollected = funds[_name].fees[fundOwner];
+    //     funds[_name].fees[fundOwner] = 0;
+    //     fundOwner.transfer(feesCollected);
+    //     return (feesCollected);
+    // }
 
     //Get fund information (for testing/verification purposes)
     function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
