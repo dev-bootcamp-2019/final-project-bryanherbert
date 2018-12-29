@@ -2,82 +2,50 @@ pragma solidity ^0.4.24;
 
 import "../contracts/StructLib.sol";
 import "../contracts/InitLib.sol";
-
-library InvestLib {
-    //Modifiers
-    modifier verifyBalance(StructLib.Data storage self, bytes32 _name, uint _investment){
-        //Account Balance must be greater than investment + Fees
-        //Not sure this correct- want it to represent ~2%
-        uint fee = _investment/Misc.checkFeeRate(self, _name);
-        require(
-            msg.sender.balance > _investment + fee,
-            "Sender does not have enough balance to invest"
-        );
-        _;
-    }
-
-    modifier verifyFee(StructLib.Data storage self, bytes32 _name, uint _investment, uint _proposedFee) {
-        //Verify that the msg.value > fee
-        require(
-            _proposedFee >= _investment/Misc.checkFeeRate(self, _name),
-            "Fee is insufficent"
-        );
-        _;
-    }
-    function Invest(StructLib.Data storage self, bytes32 _name, uint _investment, address _investor, uint _value) 
-    internal
-    verifyBalance(self, _name, _investment)
-    verifyFee(self, _name, _investment, _value)
-    {
-        self.list[_name].totalBalance += _investment;
-        self.list[_name].investors[_investor] = true;
-        self.list[_name].virtualBalances[_investor] = _investment;
-        self.list[_name].fees[_investor] = _value;
-        self.list[_name].paymentCycleStart[_investor] = now;
-    }
-}
+import "../contracts/InvestLib.sol";
+import "../contracts/Misc.sol";
 
 library PayFeeLib {
     //Modifiers
-    // modifier verifyInvestmentStatus(StructLib.Data storage self, bytes32 _name){
-    //     //check that msg.sender is an investor
-    //     require(
-    //         //isInvestor(_name, msg.sender) == true,
-    //         self.list[_name].investors[msg.sender] == true,
-    //         "Message Sender is not an investor"
-    //     );
-    //     _;
-    // }
+    modifier verifyInvestmentStatus(StructLib.Data storage self, bytes32 _name){
+        //check that msg.sender is an investor
+        require(
+            //isInvestor(_name, msg.sender) == true,
+            self.list[_name].investors[msg.sender] == true,
+            "Message Sender is not an investor"
+        );
+        _;
+    }
 
-    // modifier checkFeePayment(StructLib.Data storage self, bytes32 _name, uint _timePeriod) {
-    //     //uint virtualBalance = self.list[_name].virtualBalances[msg.sender];
-    //     //uint fees = self.list[_name].fees[msg.sender];
-    //     //Get investor's virtual balance and fees deposited
-    //     //(,,virtualBalance,fees) = getFundDetails2(_name, msg.sender);
-    //     //uint payment = (self.list[_name].virtualBalances[msg.sender]/checkFeeRate(self, _name))/_timePeriod;
-    //     require(
-    //         //Check that msg.sender has enough in fees to make payment installment
-    //         self.list[_name].fees[msg.sender] > (self.list[_name].virtualBalances[msg.sender]/Misc.checkFeeRate(self, _name))/_timePeriod,
-    //         "Fee balance is insufficient to make payment or payment cycle is not complete"
-    //     );
-    //     _;
-    // }
+    modifier checkFeePayment(StructLib.Data storage self, bytes32 _name, uint _timePeriod) {
+        //uint virtualBalance = self.list[_name].virtualBalances[msg.sender];
+        //uint fees = self.list[_name].fees[msg.sender];
+        //Get investor's virtual balance and fees deposited
+        //(,,virtualBalance,fees) = getFundDetails2(_name, msg.sender);
+        //uint payment = (self.list[_name].virtualBalances[msg.sender]/checkFeeRate(self, _name))/_timePeriod;
+        require(
+            //Check that msg.sender has enough in fees to make payment installment
+            self.list[_name].fees[msg.sender] > (self.list[_name].virtualBalances[msg.sender]/Misc.checkFeeRate(self, _name))/_timePeriod,
+            "Fee balance is insufficient to make payment or payment cycle is not complete"
+        );
+        _;
+    }
 
-    // modifier cycleComplete(StructLib.Data storage self, bytes32 _name){
-    //     //uint paymentCycleStart = self.list[_name].paymentCycleStart[msg.sender];
-    //     //uint paymentCycle = self.list[_name].paymentCycle;
-    //     require(
-    //         now >= self.list[_name].paymentCycleStart[msg.sender] + self.list[_name].paymentCycle * 1 days,
-    //         "Cycle is not complete, no fee due"
-    //     );
-    //     _;
-    // }
+    modifier cycleComplete(StructLib.Data storage self, bytes32 _name){
+        //uint paymentCycleStart = self.list[_name].paymentCycleStart[msg.sender];
+        //uint paymentCycle = self.list[_name].paymentCycle;
+        require(
+            now >= self.list[_name].paymentCycleStart[msg.sender] + self.list[_name].paymentCycle * 1 days,
+            "Cycle is not complete, no fee due"
+        );
+        _;
+    }
 
     function payFee(StructLib.Data storage self, bytes32 _name, uint _timePeriod) 
     internal
-    // verifyInvestmentStatus(self, _name)
-    // checkFeePayment(self, _name, _timePeriod)
-    // cycleComplete(self, _name)
+    verifyInvestmentStatus(self, _name)
+    checkFeePayment(self, _name, _timePeriod)
+    cycleComplete(self, _name)
     {
         //Calculate payment
         uint payment = (self.list[_name].virtualBalances[msg.sender]/Misc.checkFeeRate(self, _name))/_timePeriod;
@@ -90,19 +58,8 @@ library PayFeeLib {
     }
 }
 
-library Misc {
-    //check Fee Rate - read operation from struct
-    function checkFeeRate(StructLib.Data storage self, bytes32 _name) 
-    internal view
-    returns (uint) {
-        return 100/self.list[_name].feeRate;
-    }
-}
-
 library Init {
     //Modifiers
-
-    
 
     // //Can replace this with ethpm code
     // modifier isOwner(bytes32 _name){

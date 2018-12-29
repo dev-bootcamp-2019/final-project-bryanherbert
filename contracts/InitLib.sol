@@ -4,7 +4,7 @@ import "../contracts/StructLib.sol";
 
 library InitLib {
     function initializeFund(StructLib.Data storage self, bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
-    internal
+    public
     {
         //initialize strat name to _name
         self.list[_name].name = _name;

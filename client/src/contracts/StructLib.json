@@ -3,22 +3,22 @@
   "abi": [],
   "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820cae1a0efea608a2a7655a02c9e3c30e0b08a75fbcaf062f3d853e93593a004440029",
   "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a72305820cae1a0efea608a2a7655a02c9e3c30e0b08a75fbcaf062f3d853e93593a004440029",
-  "sourceMap": "26:1156:2:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
-  "deployedSourceMap": "26:1156:2:-;;;;;;;;",
+  "sourceMap": "26:1156:4:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "26:1156:4:-;;;;;;;;",
   "source": "pragma solidity ^0.4.24;\n\nlibrary StructLib{\n    struct Data { mapping(bytes32 => Fund) list; }\n\n    struct Fund {\n        //Name of fund\n        bytes32 name;\n        //Partner who Initialized the strategy\n        //Could be a multisig wallet\n        address fundOwner;\n        //amount of funds the strategy is virtually managing\n        uint totalBalance;\n        //Add fee that quant can set- in whole number, i.e. 2% is represented as 2\n        uint feeRate;\n        //Number of days in Payment Cycle\n        uint paymentCycle;\n        //maps investors to investment status- current investors return true, non-investors return false\n        mapping (address => bool) investors;\n        //maps investors to their virtual balances in the strategy\n        mapping (address => uint) virtualBalances;\n        //maps investors to the actual fee they have stored in the Strategy Hub contract\n        //fees are paid into stratOwner fee account and paid from investor fee account\n        mapping (address => uint) fees;\n        //Adoption Times for each investor\n        mapping(address => uint) paymentCycleStart;\n        //will need to add IPFS hash eventually to verify code\n    }\n}",
   "sourcePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
   "ast": {
     "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
     "exportedSymbols": {
       "StructLib": [
-        943
+        951
       ]
     },
-    "id": 944,
+    "id": 952,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 910,
+        "id": 918,
         "literals": [
           "solidity",
           "^",
@@ -26,7 +26,7 @@
           ".24"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:2"
+        "src": "0:24:4"
       },
       {
         "baseContracts": [],
@@ -34,57 +34,57 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 943,
+        "id": 951,
         "linearizedBaseContracts": [
-          943
+          951
         ],
         "name": "StructLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "StructLib.Data",
-            "id": 915,
+            "id": 923,
             "members": [
               {
                 "constant": false,
-                "id": 914,
+                "id": 922,
                 "name": "list",
                 "nodeType": "VariableDeclaration",
-                "scope": 915,
-                "src": "63:29:2",
+                "scope": 923,
+                "src": "63:29:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$942_storage_$",
+                  "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$950_storage_$",
                   "typeString": "mapping(bytes32 => struct StructLib.Fund)"
                 },
                 "typeName": {
-                  "id": 913,
+                  "id": 921,
                   "keyType": {
-                    "id": 911,
+                    "id": 919,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "71:7:2",
+                    "src": "71:7:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "63:24:2",
+                  "src": "63:24:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$942_storage_$",
+                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$950_storage_$",
                     "typeString": "mapping(bytes32 => struct StructLib.Fund)"
                   },
                   "valueType": {
                     "contractScope": null,
-                    "id": 912,
+                    "id": 920,
                     "name": "Fund",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 942,
-                    "src": "82:4:2",
+                    "referencedDeclaration": 950,
+                    "src": "82:4:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Fund_$942_storage_ptr",
+                      "typeIdentifier": "t_struct$_Fund_$950_storage_ptr",
                       "typeString": "struct StructLib.Fund"
                     }
                   }
@@ -95,21 +95,21 @@
             ],
             "name": "Data",
             "nodeType": "StructDefinition",
-            "scope": 943,
-            "src": "49:46:2",
+            "scope": 951,
+            "src": "49:46:4",
             "visibility": "public"
           },
           {
             "canonicalName": "StructLib.Fund",
-            "id": 942,
+            "id": 950,
             "members": [
               {
                 "constant": false,
-                "id": 917,
+                "id": 925,
                 "name": "name",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "146:12:2",
+                "scope": 950,
+                "src": "146:12:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -117,10 +117,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 916,
+                  "id": 924,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "146:7:2",
+                  "src": "146:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -131,11 +131,11 @@
               },
               {
                 "constant": false,
-                "id": 919,
+                "id": 927,
                 "name": "fundOwner",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "252:17:2",
+                "scope": 950,
+                "src": "252:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -143,10 +143,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 918,
+                  "id": 926,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "252:7:2",
+                  "src": "252:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -157,11 +157,11 @@
               },
               {
                 "constant": false,
-                "id": 921,
+                "id": 929,
                 "name": "totalBalance",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "340:17:2",
+                "scope": 950,
+                "src": "340:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -169,10 +169,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 920,
+                  "id": 928,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "340:4:2",
+                  "src": "340:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -183,11 +183,11 @@
               },
               {
                 "constant": false,
-                "id": 923,
+                "id": 931,
                 "name": "feeRate",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "450:12:2",
+                "scope": 950,
+                "src": "450:12:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -195,10 +195,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 922,
+                  "id": 930,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "450:4:2",
+                  "src": "450:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -209,11 +209,11 @@
               },
               {
                 "constant": false,
-                "id": 925,
+                "id": 933,
                 "name": "paymentCycle",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "514:17:2",
+                "scope": 950,
+                "src": "514:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -221,10 +221,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 924,
+                  "id": 932,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "514:4:2",
+                  "src": "514:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -235,11 +235,11 @@
               },
               {
                 "constant": false,
-                "id": 929,
+                "id": 937,
                 "name": "investors",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "646:35:2",
+                "scope": 950,
+                "src": "646:35:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -247,28 +247,28 @@
                   "typeString": "mapping(address => bool)"
                 },
                 "typeName": {
-                  "id": 928,
+                  "id": 936,
                   "keyType": {
-                    "id": 926,
+                    "id": 934,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "655:7:2",
+                    "src": "655:7:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "646:25:2",
+                  "src": "646:25:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                     "typeString": "mapping(address => bool)"
                   },
                   "valueType": {
-                    "id": 927,
+                    "id": 935,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "666:4:2",
+                    "src": "666:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -280,101 +280,11 @@
               },
               {
                 "constant": false,
-                "id": 933,
+                "id": 941,
                 "name": "virtualBalances",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "758:41:2",
-                "stateVariable": false,
-                "storageLocation": "default",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                  "typeString": "mapping(address => uint256)"
-                },
-                "typeName": {
-                  "id": 932,
-                  "keyType": {
-                    "id": 930,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "767:7:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "nodeType": "Mapping",
-                  "src": "758:25:2",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                    "typeString": "mapping(address => uint256)"
-                  },
-                  "valueType": {
-                    "id": 931,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "778:4:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  }
-                },
-                "value": null,
-                "visibility": "internal"
-              },
-              {
-                "constant": false,
-                "id": 937,
-                "name": "fees",
-                "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "985:30:2",
-                "stateVariable": false,
-                "storageLocation": "default",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                  "typeString": "mapping(address => uint256)"
-                },
-                "typeName": {
-                  "id": 936,
-                  "keyType": {
-                    "id": 934,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "994:7:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "nodeType": "Mapping",
-                  "src": "985:25:2",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                    "typeString": "mapping(address => uint256)"
-                  },
-                  "valueType": {
-                    "id": 935,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1005:4:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  }
-                },
-                "value": null,
-                "visibility": "internal"
-              },
-              {
-                "constant": false,
-                "id": 941,
-                "name": "paymentCycleStart",
-                "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "1068:42:2",
+                "scope": 950,
+                "src": "758:41:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -387,14 +297,14 @@
                     "id": 938,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1076:7:2",
+                    "src": "767:7:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "1068:24:2",
+                  "src": "758:25:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                     "typeString": "mapping(address => uint256)"
@@ -403,7 +313,97 @@
                     "id": 939,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1087:4:2",
+                    "src": "778:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 945,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 950,
+                "src": "985:30:4",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                  "typeString": "mapping(address => uint256)"
+                },
+                "typeName": {
+                  "id": 944,
+                  "keyType": {
+                    "id": 942,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "994:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "985:25:4",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                    "typeString": "mapping(address => uint256)"
+                  },
+                  "valueType": {
+                    "id": 943,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1005:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 949,
+                "name": "paymentCycleStart",
+                "nodeType": "VariableDeclaration",
+                "scope": 950,
+                "src": "1068:42:4",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                  "typeString": "mapping(address => uint256)"
+                },
+                "typeName": {
+                  "id": 948,
+                  "keyType": {
+                    "id": 946,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1076:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1068:24:4",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                    "typeString": "mapping(address => uint256)"
+                  },
+                  "valueType": {
+                    "id": 947,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1087:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -416,29 +416,29 @@
             ],
             "name": "Fund",
             "nodeType": "StructDefinition",
-            "scope": 943,
-            "src": "101:1079:2",
+            "scope": 951,
+            "src": "101:1079:4",
             "visibility": "public"
           }
         ],
-        "scope": 944,
-        "src": "26:1156:2"
+        "scope": 952,
+        "src": "26:1156:4"
       }
     ],
-    "src": "0:1182:2"
+    "src": "0:1182:4"
   },
   "legacyAST": {
     "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
     "exportedSymbols": {
       "StructLib": [
-        943
+        951
       ]
     },
-    "id": 944,
+    "id": 952,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 910,
+        "id": 918,
         "literals": [
           "solidity",
           "^",
@@ -446,7 +446,7 @@
           ".24"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:2"
+        "src": "0:24:4"
       },
       {
         "baseContracts": [],
@@ -454,57 +454,57 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 943,
+        "id": 951,
         "linearizedBaseContracts": [
-          943
+          951
         ],
         "name": "StructLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "StructLib.Data",
-            "id": 915,
+            "id": 923,
             "members": [
               {
                 "constant": false,
-                "id": 914,
+                "id": 922,
                 "name": "list",
                 "nodeType": "VariableDeclaration",
-                "scope": 915,
-                "src": "63:29:2",
+                "scope": 923,
+                "src": "63:29:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$942_storage_$",
+                  "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$950_storage_$",
                   "typeString": "mapping(bytes32 => struct StructLib.Fund)"
                 },
                 "typeName": {
-                  "id": 913,
+                  "id": 921,
                   "keyType": {
-                    "id": 911,
+                    "id": 919,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "71:7:2",
+                    "src": "71:7:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "63:24:2",
+                  "src": "63:24:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$942_storage_$",
+                    "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$950_storage_$",
                     "typeString": "mapping(bytes32 => struct StructLib.Fund)"
                   },
                   "valueType": {
                     "contractScope": null,
-                    "id": 912,
+                    "id": 920,
                     "name": "Fund",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 942,
-                    "src": "82:4:2",
+                    "referencedDeclaration": 950,
+                    "src": "82:4:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Fund_$942_storage_ptr",
+                      "typeIdentifier": "t_struct$_Fund_$950_storage_ptr",
                       "typeString": "struct StructLib.Fund"
                     }
                   }
@@ -515,21 +515,21 @@
             ],
             "name": "Data",
             "nodeType": "StructDefinition",
-            "scope": 943,
-            "src": "49:46:2",
+            "scope": 951,
+            "src": "49:46:4",
             "visibility": "public"
           },
           {
             "canonicalName": "StructLib.Fund",
-            "id": 942,
+            "id": 950,
             "members": [
               {
                 "constant": false,
-                "id": 917,
+                "id": 925,
                 "name": "name",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "146:12:2",
+                "scope": 950,
+                "src": "146:12:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -537,10 +537,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 916,
+                  "id": 924,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "146:7:2",
+                  "src": "146:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -551,11 +551,11 @@
               },
               {
                 "constant": false,
-                "id": 919,
+                "id": 927,
                 "name": "fundOwner",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "252:17:2",
+                "scope": 950,
+                "src": "252:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -563,10 +563,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 918,
+                  "id": 926,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "252:7:2",
+                  "src": "252:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
                     "typeString": "address"
@@ -577,11 +577,11 @@
               },
               {
                 "constant": false,
-                "id": 921,
+                "id": 929,
                 "name": "totalBalance",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "340:17:2",
+                "scope": 950,
+                "src": "340:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -589,10 +589,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 920,
+                  "id": 928,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "340:4:2",
+                  "src": "340:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -603,11 +603,11 @@
               },
               {
                 "constant": false,
-                "id": 923,
+                "id": 931,
                 "name": "feeRate",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "450:12:2",
+                "scope": 950,
+                "src": "450:12:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -615,10 +615,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 922,
+                  "id": 930,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "450:4:2",
+                  "src": "450:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -629,11 +629,11 @@
               },
               {
                 "constant": false,
-                "id": 925,
+                "id": 933,
                 "name": "paymentCycle",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "514:17:2",
+                "scope": 950,
+                "src": "514:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -641,10 +641,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 924,
+                  "id": 932,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
-                  "src": "514:4:2",
+                  "src": "514:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -655,11 +655,11 @@
               },
               {
                 "constant": false,
-                "id": 929,
+                "id": 937,
                 "name": "investors",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "646:35:2",
+                "scope": 950,
+                "src": "646:35:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -667,28 +667,28 @@
                   "typeString": "mapping(address => bool)"
                 },
                 "typeName": {
-                  "id": 928,
+                  "id": 936,
                   "keyType": {
-                    "id": 926,
+                    "id": 934,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "655:7:2",
+                    "src": "655:7:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "646:25:2",
+                  "src": "646:25:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                     "typeString": "mapping(address => bool)"
                   },
                   "valueType": {
-                    "id": 927,
+                    "id": 935,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
-                    "src": "666:4:2",
+                    "src": "666:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
@@ -700,101 +700,11 @@
               },
               {
                 "constant": false,
-                "id": 933,
+                "id": 941,
                 "name": "virtualBalances",
                 "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "758:41:2",
-                "stateVariable": false,
-                "storageLocation": "default",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                  "typeString": "mapping(address => uint256)"
-                },
-                "typeName": {
-                  "id": 932,
-                  "keyType": {
-                    "id": 930,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "767:7:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "nodeType": "Mapping",
-                  "src": "758:25:2",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                    "typeString": "mapping(address => uint256)"
-                  },
-                  "valueType": {
-                    "id": 931,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "778:4:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  }
-                },
-                "value": null,
-                "visibility": "internal"
-              },
-              {
-                "constant": false,
-                "id": 937,
-                "name": "fees",
-                "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "985:30:2",
-                "stateVariable": false,
-                "storageLocation": "default",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                  "typeString": "mapping(address => uint256)"
-                },
-                "typeName": {
-                  "id": 936,
-                  "keyType": {
-                    "id": 934,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "994:7:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
-                    }
-                  },
-                  "nodeType": "Mapping",
-                  "src": "985:25:2",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
-                    "typeString": "mapping(address => uint256)"
-                  },
-                  "valueType": {
-                    "id": 935,
-                    "name": "uint",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1005:4:2",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  }
-                },
-                "value": null,
-                "visibility": "internal"
-              },
-              {
-                "constant": false,
-                "id": 941,
-                "name": "paymentCycleStart",
-                "nodeType": "VariableDeclaration",
-                "scope": 942,
-                "src": "1068:42:2",
+                "scope": 950,
+                "src": "758:41:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -807,14 +717,14 @@
                     "id": 938,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1076:7:2",
+                    "src": "767:7:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
                   "nodeType": "Mapping",
-                  "src": "1068:24:2",
+                  "src": "758:25:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                     "typeString": "mapping(address => uint256)"
@@ -823,7 +733,97 @@
                     "id": 939,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1087:4:2",
+                    "src": "778:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 945,
+                "name": "fees",
+                "nodeType": "VariableDeclaration",
+                "scope": 950,
+                "src": "985:30:4",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                  "typeString": "mapping(address => uint256)"
+                },
+                "typeName": {
+                  "id": 944,
+                  "keyType": {
+                    "id": 942,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "994:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "985:25:4",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                    "typeString": "mapping(address => uint256)"
+                  },
+                  "valueType": {
+                    "id": 943,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1005:4:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 949,
+                "name": "paymentCycleStart",
+                "nodeType": "VariableDeclaration",
+                "scope": 950,
+                "src": "1068:42:4",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                  "typeString": "mapping(address => uint256)"
+                },
+                "typeName": {
+                  "id": 948,
+                  "keyType": {
+                    "id": 946,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1076:7:4",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "nodeType": "Mapping",
+                  "src": "1068:24:4",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
+                    "typeString": "mapping(address => uint256)"
+                  },
+                  "valueType": {
+                    "id": 947,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1087:4:4",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -836,16 +836,16 @@
             ],
             "name": "Fund",
             "nodeType": "StructDefinition",
-            "scope": 943,
-            "src": "101:1079:2",
+            "scope": 951,
+            "src": "101:1079:4",
             "visibility": "public"
           }
         ],
-        "scope": 944,
-        "src": "26:1156:2"
+        "scope": 952,
+        "src": "26:1156:4"
       }
     ],
-    "src": "0:1182:2"
+    "src": "0:1182:4"
   },
   "compiler": {
     "name": "solc",
@@ -860,5 +860,5 @@
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-12-28T22:29:49.900Z"
+  "updatedAt": "2018-12-29T22:57:28.725Z"
 }
