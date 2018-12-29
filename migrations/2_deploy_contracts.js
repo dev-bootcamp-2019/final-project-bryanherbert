@@ -4,6 +4,8 @@ var InitLib = artifacts.require("./InitLib.sol");
 var Misc = artifacts.require("./Misc.sol");
 var InvestLib = artifacts.require("./InvestLib.sol");
 var PayFeeLib = artifacts.require("./PayFeeLib.sol");
+var CollectFeesLib = artifacts.require("./CollectFeesLib.sol");
+var WithdrawFundsLib = artifacts.require("./WithdrawFundsLib.sol");
 
 module.exports = function(deployer) {
   //StructLib
@@ -22,11 +24,19 @@ module.exports = function(deployer) {
   deployer.link(StructLib, PayFeeLib);
   deployer.link(Misc, PayFeeLib);
   deployer.deploy(PayFeeLib);
+  //CollectFeesLib and Links
+  deployer.link(StructLib, CollectFeesLib);
+  deployer.deploy(CollectFeesLib);
+  //WithdrawFundsLib and Links
+  deployer.link(StructLib, WithdrawFundsLib);
+  deployer.deploy(WithdrawFundsLib);
   //FundMarketplace and Links
   deployer.link(StructLib, FundMarketplace);
   deployer.link(InitLib, FundMarketplace);
   deployer.link(Misc, FundMarketplace);
   deployer.link(InvestLib, FundMarketplace);
   deployer.link(PayFeeLib, FundMarketplace);
+  deployer.link(CollectFeesLib, FundMarketplace);
+  deployer.link(WithdrawFundsLib, FundMarketplace);
   deployer.deploy(FundMarketplace);
 };

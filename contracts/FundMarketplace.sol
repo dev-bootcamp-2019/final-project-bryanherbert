@@ -5,55 +5,8 @@ import "../contracts/InitLib.sol";
 import "../contracts/InvestLib.sol";
 import "../contracts/Misc.sol";
 import "../contracts/PayFeeLib.sol";
-
-library Init {
-    //Modifiers
-
-    // //Can replace this with ethpm code
-    // modifier isOwner(bytes32 _name){
-    //     address _fundOwner;
-    //     (,_fundOwner,,) = getFundDetails(_name);
-    //     require(
-    //         _fundOwner == msg.sender,
-    //         "Message Sender does not own strategy"
-    //     );
-    //     _;
-    // }
-
-    function collectFees(StructLib.Data storage self, bytes32 _name, address fundOwner)
-    internal
-    returns (uint)
-    {
-        //Calculate fees
-        uint feesCollected = self.list[_name].fees[fundOwner];
-        self.list[_name].fees[fundOwner] = 0;
-        fundOwner.transfer(feesCollected);
-        return feesCollected;
-    }
-
-    function withdrawFunds(StructLib.Data storage self, bytes32 _name, address _investor)
-    internal
-    returns (uint, uint)
-    {
-        //Need to make sure this matches up with withdraw philosophy
-        //Temporary Balance and Fees
-        uint bal = self.list[_name].virtualBalances[_investor];
-        uint fees = self.list[_name].fees[_investor];
-        //subtract virtual balance from total funds
-        self.list[_name].totalBalance -= bal;
-        //zero out virtual Balance
-        self.list[_name].virtualBalances[_investor] = 0;
-        //transfer fees back to investor
-        _investor.transfer(fees);
-        //Zero out fees
-        self.list[_name].fees[_investor] = 0;
-        //set investor status to faslse
-        self.list[_name].investors[_investor] = false;
-        return (bal, fees);
-    }
-}
-
-
+import "../contracts/CollectFeesLib.sol";
+import "../contracts/WithdrawFundsLib.sol";
 
 contract FundMarketplace {
     //State Variables
@@ -95,6 +48,19 @@ contract FundMarketplace {
     constructor() public {
         admin = msg.sender;
     }
+
+    //Modifiers
+
+    // //Can replace this with ethpm code
+    // modifier isOwner(bytes32 _name){
+    //     address _fundOwner;
+    //     (,_fundOwner,,) = getFundDetails(_name);
+    //     require(
+    //         _fundOwner == msg.sender,
+    //         "Message Sender does not own strategy"
+    //     );
+    //     _;
+    // }
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable {
@@ -145,7 +111,7 @@ contract FundMarketplace {
     function collectFees(bytes32 _name) external
     //isOwner(_name)
     {
-        uint fees = Init.collectFees(funds, _name, msg.sender);
+        uint fees = CollectFeesLib.collectFees(funds, _name, msg.sender);
         emit FeesCollected(_name, fees);
     }
 
@@ -155,7 +121,7 @@ contract FundMarketplace {
         //Need to make sure this matches up with withdraw philosophy
         uint investment;
         uint fees;
-        (investment, fees) = Init.withdrawFunds(funds, _name, msg.sender);
+        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender);
         emit FundsWithdrawn(_name, msg.sender, investment, fees);
     }
 
