@@ -11,6 +11,8 @@ library StructLib{
         address fundOwner;
         //amount of funds the strategy is virtually managing
         uint totalBalance;
+        //Keep track of available capital
+        uint capitalDeployed;
         //Add fee that quant can set- in whole number, i.e. 2% is represented as 2
         uint feeRate;
         //Number of days in Payment Cycle

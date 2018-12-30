@@ -7,6 +7,7 @@ import "../contracts/Misc.sol";
 import "../contracts/PayFeeLib.sol";
 import "../contracts/CollectFeesLib.sol";
 import "../contracts/WithdrawFundsLib.sol";
+import "../contracts/OrderLib.sol";
 
 contract FundMarketplace {
     //State Variables
@@ -16,34 +17,43 @@ contract FundMarketplace {
 
     //Events
     event FundCreated(
-        bytes32 name,
+        bytes32 indexed name,
         uint fundCount,
         address fundOwner
     );
 
     event Investment(
-        bytes32 name,
-        address investor,
+        bytes32 indexed name,
+        address indexed investor,
         uint investment
     );
     
     event FeesPaid(
-        bytes32 name,
-        address investor,
+        bytes32 indexed name,
+        address indexed investor,
         uint fee
     );
 
     event FeesCollected(
-        bytes32 name,
+        bytes32 indexed name,
         uint fee
     );
 
     event FundsWithdrawn(
-        bytes32 name,
+        bytes32 indexed name,
         address investor,
         uint investment,
         uint fees
     );
+
+    event OrderPlaced(
+        bytes32 indexed name,
+        bytes action,
+        bytes32 ticker,
+        uint qty,
+        uint price
+    );
+
 
     constructor() public {
         admin = msg.sender;
@@ -87,6 +97,16 @@ contract FundMarketplace {
         emit Investment(_name, msg.sender, _investment);
     }
 
+    //Place order for a trade
+    //Not sure what calldata is exactly for _action
+    function placeOrder(bytes32 _name, bytes _action, bytes32 _ticker, uint qty, uint price)
+    external 
+    {
+        OrderLib.placeOrder(funds, _name, _action, price);
+        emit OrderPlaced(_name, _action, _ticker, qty, price);
+
+    }
+
     //check Fee Rate - read operation from struct
     //was originally "public view" when not in library
     function checkFeeRate(bytes32 _name) public view returns (uint) {
@@ -126,12 +146,17 @@ contract FundMarketplace {
     }
 
     //Get fund information (for testing/verification purposes)
-    function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint){
+    
+    function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint, uint){
         return (funds.list[_name].name, 
         funds.list[_name].fundOwner, 
-        funds.list[_name].totalBalance, 
+        funds.list[_name].totalBalance,
+        funds.list[_name].capitalDeployed,
         funds.list[_name].feeRate);
     }
+
+    //Delineate these two functions based on whether an address is needed or not
+    
     //need two functions because of stack height
     function getFundDetails2(bytes32 _name, address _addr) public view returns (uint, bool, uint, uint){
         return(funds.list[_name].paymentCycle,
