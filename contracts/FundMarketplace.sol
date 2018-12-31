@@ -8,6 +8,7 @@ import "../contracts/PayFeeLib.sol";
 import "../contracts/CollectFeesLib.sol";
 import "../contracts/WithdrawFundsLib.sol";
 import "../contracts/OrderLib.sol";
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 contract FundMarketplace {
     //State Variables
@@ -53,7 +54,6 @@ contract FundMarketplace {
         uint qty,
         uint price
     );
-
 
     constructor() public {
         admin = msg.sender;
@@ -116,7 +116,7 @@ contract FundMarketplace {
     function payFee(bytes32 _name, uint _timePeriod) external
     {
         PayFeeLib.payFee(funds, _name, _timePeriod);
-        uint payment = (funds.list[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
+        uint payment = SafeMath.div(SafeMath.div(funds.list[_name].virtualBalances[msg.sender], checkFeeRate(_name)), _timePeriod);
         emit FeesPaid (_name, msg.sender, payment);
     }
 
@@ -128,19 +128,19 @@ contract FundMarketplace {
         emit FeesCollected(_name, fees);
     }
 
-    function withdrawFunds(bytes32 _name) public
-    //verifyInvestmentStatus(_name) 
-    {
-        //Need to make sure this matches up with withdraw philosophy
-        uint investment;
-        uint fees;
-        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender);
-        emit FundsWithdrawn(_name, msg.sender, investment, fees);
-    }
+    // function withdrawFunds(bytes32 _name) public
+    // //verifyInvestmentStatus(_name) 
+    // {
+    //     //Need to make sure this matches up with withdraw philosophy
+    //     uint investment;
+    //     uint fees;
+    //     (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender);
+    //     emit FundsWithdrawn(_name, msg.sender, investment, fees);
+    // }
 
     //Get fund information (for testing/verification purposes)
     
-    function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint, uint, uint){
+    function getFundDetails(bytes32 _name) external view returns (bytes32, address, uint, uint, uint, uint){
         return (funds.list[_name].name, 
         funds.list[_name].fundOwner, 
         funds.list[_name].totalCapital,
@@ -148,11 +148,9 @@ contract FundMarketplace {
         funds.list[_name].feeRate,
         funds.list[_name].paymentCycle);
     }
-    //Both above
-    //Delineate these two functions based on whether an address is needed or not
-    //and below
+
     //need two functions because of stack height
-    function getFundDetails2(bytes32 _name, address _addr) public view returns (bool, uint, uint){
+    function getFundDetails2(bytes32 _name, address _addr) external view returns (bool, uint, uint){
         return(funds.list[_name].investors[_addr], 
         funds.list[_name].virtualBalances[_addr],
         funds.list[_name].fees[_addr]);

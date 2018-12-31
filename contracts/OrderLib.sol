@@ -1,6 +1,7 @@
 pragma solidity ^0.4.24;
 
 import "../contracts/StructLib.sol";
+import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 library OrderLib{
     function placeOrder(StructLib.Data storage self, bytes32 _name, bytes memory _action, uint _price)
@@ -31,6 +32,6 @@ library OrderLib{
     function calcQty(StructLib.Data storage self, bytes32 _name, uint qty) public view returns(uint) {
         //Investor's capital as a percentage of total funds
         //Need to incorporate Safe.Math for more robust solution
-        return ((qty * self.list[_name].virtualBalances[msg.sender])/self.list[_name].totalCapital);
+        return(SafeMath.div(SafeMath.mul(qty, self.list[_name].virtualBalances[msg.sender]), self.list[_name].totalCapital));
     }
 }
