@@ -46,14 +46,14 @@
     "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/InitLib.sol",
     "exportedSymbols": {
       "InitLib": [
-        548
+        524
       ]
     },
-    "id": 549,
+    "id": 525,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 452,
+        "id": 428,
         "literals": [
           "solidity",
           "^",
@@ -66,10 +66,10 @@
       {
         "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
         "file": "../contracts/StructLib.sol",
-        "id": 453,
+        "id": 429,
         "nodeType": "ImportDirective",
-        "scope": 549,
-        "sourceUnit": 1018,
+        "scope": 525,
+        "sourceUnit": 1025,
         "src": "26:36:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -80,23 +80,23 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 548,
+        "id": 524,
         "linearizedBaseContracts": [
-          548
+          524
         ],
         "name": "InitLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 546,
+              "id": 522,
               "nodeType": "Block",
               "src": "243:856:2",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 475,
+                    "id": 451,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -109,39 +109,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 468,
+                            "id": 444,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "294:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 471,
+                          "id": 447,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "294:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 472,
+                        "id": 448,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 470,
+                          "id": 446,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "304:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -155,18 +155,18 @@
                         "nodeType": "IndexAccess",
                         "src": "294:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 473,
+                      "id": 449,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "name",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 989,
+                      "referencedDeclaration": 996,
                       "src": "294:21:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -177,11 +177,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 474,
+                      "id": 450,
                       "name": "_name",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 457,
+                      "referencedDeclaration": 433,
                       "src": "318:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -194,14 +194,14 @@
                       "typeString": "bytes32"
                     }
                   },
-                  "id": 476,
+                  "id": 452,
                   "nodeType": "ExpressionStatement",
                   "src": "294:29:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 484,
+                    "id": 460,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -214,39 +214,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 477,
+                            "id": 453,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "491:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 480,
+                          "id": 456,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "491:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 481,
+                        "id": 457,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 479,
+                          "id": 455,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "501:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -260,18 +260,18 @@
                         "nodeType": "IndexAccess",
                         "src": "491:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 482,
+                      "id": 458,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "fundOwner",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 991,
+                      "referencedDeclaration": 998,
                       "src": "491:26:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -282,11 +282,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 483,
+                      "id": 459,
                       "name": "_fundOwner",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 459,
+                      "referencedDeclaration": 435,
                       "src": "520:10:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -299,14 +299,14 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 485,
+                  "id": 461,
                   "nodeType": "ExpressionStatement",
                   "src": "491:39:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 493,
+                    "id": 469,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -319,39 +319,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 486,
+                            "id": 462,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "582:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 489,
+                          "id": 465,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "582:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 490,
+                        "id": 466,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 488,
+                          "id": 464,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "592:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -365,18 +365,18 @@
                         "nodeType": "IndexAccess",
                         "src": "582:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 491,
+                      "id": 467,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "totalBalance",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 993,
+                      "referencedDeclaration": 1000,
                       "src": "582:29:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -387,11 +387,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 492,
+                      "id": 468,
                       "name": "_investment",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 461,
+                      "referencedDeclaration": 437,
                       "src": "614:11:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -404,14 +404,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 494,
+                  "id": 470,
                   "nodeType": "ExpressionStatement",
                   "src": "582:43:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 502,
+                    "id": 478,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -424,39 +424,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 495,
+                            "id": 471,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "658:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 498,
+                          "id": 474,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "658:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 499,
+                        "id": 475,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 497,
+                          "id": 473,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "668:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -470,18 +470,18 @@
                         "nodeType": "IndexAccess",
                         "src": "658:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 500,
+                      "id": 476,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "feeRate",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 997,
+                      "referencedDeclaration": 1004,
                       "src": "658:24:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -492,11 +492,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 501,
+                      "id": 477,
                       "name": "_feeRate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 463,
+                      "referencedDeclaration": 439,
                       "src": "685:8:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -509,14 +509,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 503,
+                  "id": 479,
                   "nodeType": "ExpressionStatement",
                   "src": "658:35:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 511,
+                    "id": 487,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -529,39 +529,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 504,
+                            "id": 480,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "731:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 507,
+                          "id": 483,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "731:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 508,
+                        "id": 484,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 506,
+                          "id": 482,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "741:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -575,18 +575,18 @@
                         "nodeType": "IndexAccess",
                         "src": "731:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 509,
+                      "id": 485,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "paymentCycle",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 999,
+                      "referencedDeclaration": 1006,
                       "src": "731:29:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -597,11 +597,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 510,
+                      "id": 486,
                       "name": "_paymentCycle",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 465,
+                      "referencedDeclaration": 441,
                       "src": "763:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -614,14 +614,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 512,
+                  "id": 488,
                   "nodeType": "ExpressionStatement",
                   "src": "731:45:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 522,
+                    "id": 498,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -636,39 +636,39 @@
                             "argumentTypes": null,
                             "expression": {
                               "argumentTypes": null,
-                              "id": 513,
+                              "id": 489,
                               "name": "self",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 455,
+                              "referencedDeclaration": 431,
                               "src": "833:4:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
-                            "id": 516,
+                            "id": 492,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 986,
+                            "referencedDeclaration": 993,
                             "src": "833:9:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                               "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                             }
                           },
-                          "id": 517,
+                          "id": 493,
                           "indexExpression": {
                             "argumentTypes": null,
-                            "id": 515,
+                            "id": 491,
                             "name": "_name",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 457,
+                            "referencedDeclaration": 433,
                             "src": "843:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -682,32 +682,32 @@
                           "nodeType": "IndexAccess",
                           "src": "833:16:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1023_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
-                        "id": 518,
+                        "id": 494,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "investors",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1003,
+                        "referencedDeclaration": 1010,
                         "src": "833:26:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                           "typeString": "mapping(address => bool)"
                         }
                       },
-                      "id": 520,
+                      "id": 496,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 519,
+                        "id": 495,
                         "name": "_fundOwner",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 459,
+                        "referencedDeclaration": 435,
                         "src": "860:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -730,7 +730,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 521,
+                      "id": 497,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -751,14 +751,14 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 523,
+                  "id": 499,
                   "nodeType": "ExpressionStatement",
                   "src": "833:45:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 533,
+                    "id": 509,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -773,39 +773,39 @@
                             "argumentTypes": null,
                             "expression": {
                               "argumentTypes": null,
-                              "id": 524,
+                              "id": 500,
                               "name": "self",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 455,
+                              "referencedDeclaration": 431,
                               "src": "948:4:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
-                            "id": 527,
+                            "id": 503,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 986,
+                            "referencedDeclaration": 993,
                             "src": "948:9:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                               "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                             }
                           },
-                          "id": 528,
+                          "id": 504,
                           "indexExpression": {
                             "argumentTypes": null,
-                            "id": 526,
+                            "id": 502,
                             "name": "_name",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 457,
+                            "referencedDeclaration": 433,
                             "src": "958:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -819,32 +819,32 @@
                           "nodeType": "IndexAccess",
                           "src": "948:16:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1023_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
-                        "id": 529,
+                        "id": 505,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "virtualBalances",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1007,
+                        "referencedDeclaration": 1014,
                         "src": "948:32:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                           "typeString": "mapping(address => uint256)"
                         }
                       },
-                      "id": 531,
+                      "id": 507,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 530,
+                        "id": 506,
                         "name": "_fundOwner",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 459,
+                        "referencedDeclaration": 435,
                         "src": "981:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -866,11 +866,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 532,
+                      "id": 508,
                       "name": "_investment",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 461,
+                      "referencedDeclaration": 437,
                       "src": "995:11:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -883,14 +883,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 534,
+                  "id": 510,
                   "nodeType": "ExpressionStatement",
                   "src": "948:58:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 544,
+                    "id": 520,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -905,39 +905,39 @@
                             "argumentTypes": null,
                             "expression": {
                               "argumentTypes": null,
-                              "id": 535,
+                              "id": 511,
                               "name": "self",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 455,
+                              "referencedDeclaration": 431,
                               "src": "1055:4:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
-                            "id": 538,
+                            "id": 514,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 986,
+                            "referencedDeclaration": 993,
                             "src": "1055:9:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                               "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                             }
                           },
-                          "id": 539,
+                          "id": 515,
                           "indexExpression": {
                             "argumentTypes": null,
-                            "id": 537,
+                            "id": 513,
                             "name": "_name",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 457,
+                            "referencedDeclaration": 433,
                             "src": "1065:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -951,32 +951,32 @@
                           "nodeType": "IndexAccess",
                           "src": "1055:16:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1023_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
-                        "id": 540,
+                        "id": 516,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "fees",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1011,
+                        "referencedDeclaration": 1018,
                         "src": "1055:21:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                           "typeString": "mapping(address => uint256)"
                         }
                       },
-                      "id": 542,
+                      "id": 518,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 541,
+                        "id": 517,
                         "name": "_fundOwner",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 459,
+                        "referencedDeclaration": 435,
                         "src": "1077:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -999,7 +999,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 543,
+                      "id": 519,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1020,14 +1020,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 545,
+                  "id": 521,
                   "nodeType": "ExpressionStatement",
                   "src": "1055:37:2"
                 }
               ]
             },
             "documentation": null,
-            "id": 547,
+            "id": 523,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -1035,31 +1035,31 @@
             "name": "initializeFund",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 466,
+              "id": 442,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 455,
+                  "id": 431,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "110:27:2",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 454,
+                    "id": 430,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 987,
+                    "referencedDeclaration": 994,
                     "src": "110:14:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -1068,10 +1068,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 457,
+                  "id": 433,
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "139:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1080,7 +1080,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 456,
+                    "id": 432,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "139:7:2",
@@ -1094,10 +1094,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 459,
+                  "id": 435,
                   "name": "_fundOwner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "154:18:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1106,7 +1106,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 458,
+                    "id": 434,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "154:7:2",
@@ -1120,10 +1120,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 461,
+                  "id": 437,
                   "name": "_investment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "174:16:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1132,7 +1132,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 460,
+                    "id": 436,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "174:4:2",
@@ -1146,10 +1146,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 463,
+                  "id": 439,
                   "name": "_feeRate",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "192:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1158,7 +1158,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 462,
+                    "id": 438,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "192:4:2",
@@ -1172,10 +1172,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 465,
+                  "id": 441,
                   "name": "_paymentCycle",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "207:18:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1184,7 +1184,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 464,
+                    "id": 440,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "207:4:2",
@@ -1201,19 +1201,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 467,
+              "id": 443,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "243:0:2"
             },
-            "scope": 548,
+            "scope": 524,
             "src": "86:1013:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 549,
+        "scope": 525,
         "src": "64:1037:2"
       }
     ],
@@ -1223,14 +1223,14 @@
     "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/InitLib.sol",
     "exportedSymbols": {
       "InitLib": [
-        548
+        524
       ]
     },
-    "id": 549,
+    "id": 525,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 452,
+        "id": 428,
         "literals": [
           "solidity",
           "^",
@@ -1243,10 +1243,10 @@
       {
         "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
         "file": "../contracts/StructLib.sol",
-        "id": 453,
+        "id": 429,
         "nodeType": "ImportDirective",
-        "scope": 549,
-        "sourceUnit": 1018,
+        "scope": 525,
+        "sourceUnit": 1025,
         "src": "26:36:2",
         "symbolAliases": [],
         "unitAlias": ""
@@ -1257,23 +1257,23 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 548,
+        "id": 524,
         "linearizedBaseContracts": [
-          548
+          524
         ],
         "name": "InitLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 546,
+              "id": 522,
               "nodeType": "Block",
               "src": "243:856:2",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 475,
+                    "id": 451,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1286,39 +1286,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 468,
+                            "id": 444,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "294:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 471,
+                          "id": 447,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "294:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 472,
+                        "id": 448,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 470,
+                          "id": 446,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "304:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -1332,18 +1332,18 @@
                         "nodeType": "IndexAccess",
                         "src": "294:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 473,
+                      "id": 449,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "name",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 989,
+                      "referencedDeclaration": 996,
                       "src": "294:21:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -1354,11 +1354,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 474,
+                      "id": 450,
                       "name": "_name",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 457,
+                      "referencedDeclaration": 433,
                       "src": "318:5:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -1371,14 +1371,14 @@
                       "typeString": "bytes32"
                     }
                   },
-                  "id": 476,
+                  "id": 452,
                   "nodeType": "ExpressionStatement",
                   "src": "294:29:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 484,
+                    "id": 460,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1391,39 +1391,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 477,
+                            "id": 453,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "491:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 480,
+                          "id": 456,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "491:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 481,
+                        "id": 457,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 479,
+                          "id": 455,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "501:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -1437,18 +1437,18 @@
                         "nodeType": "IndexAccess",
                         "src": "491:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 482,
+                      "id": 458,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "fundOwner",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 991,
+                      "referencedDeclaration": 998,
                       "src": "491:26:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1459,11 +1459,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 483,
+                      "id": 459,
                       "name": "_fundOwner",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 459,
+                      "referencedDeclaration": 435,
                       "src": "520:10:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1476,14 +1476,14 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 485,
+                  "id": 461,
                   "nodeType": "ExpressionStatement",
                   "src": "491:39:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 493,
+                    "id": 469,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1496,39 +1496,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 486,
+                            "id": 462,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "582:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 489,
+                          "id": 465,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "582:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 490,
+                        "id": 466,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 488,
+                          "id": 464,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "592:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -1542,18 +1542,18 @@
                         "nodeType": "IndexAccess",
                         "src": "582:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 491,
+                      "id": 467,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "totalBalance",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 993,
+                      "referencedDeclaration": 1000,
                       "src": "582:29:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1564,11 +1564,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 492,
+                      "id": 468,
                       "name": "_investment",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 461,
+                      "referencedDeclaration": 437,
                       "src": "614:11:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1581,14 +1581,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 494,
+                  "id": 470,
                   "nodeType": "ExpressionStatement",
                   "src": "582:43:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 502,
+                    "id": 478,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1601,39 +1601,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 495,
+                            "id": 471,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "658:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 498,
+                          "id": 474,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "658:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 499,
+                        "id": 475,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 497,
+                          "id": 473,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "668:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -1647,18 +1647,18 @@
                         "nodeType": "IndexAccess",
                         "src": "658:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 500,
+                      "id": 476,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "feeRate",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 997,
+                      "referencedDeclaration": 1004,
                       "src": "658:24:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1669,11 +1669,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 501,
+                      "id": 477,
                       "name": "_feeRate",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 463,
+                      "referencedDeclaration": 439,
                       "src": "685:8:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1686,14 +1686,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 503,
+                  "id": 479,
                   "nodeType": "ExpressionStatement",
                   "src": "658:35:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 511,
+                    "id": 487,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1706,39 +1706,39 @@
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 504,
+                            "id": 480,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 455,
+                            "referencedDeclaration": 431,
                             "src": "731:4:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
-                          "id": 507,
+                          "id": 483,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 986,
+                          "referencedDeclaration": 993,
                           "src": "731:9:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                             "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                           }
                         },
-                        "id": 508,
+                        "id": 484,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 506,
+                          "id": 482,
                           "name": "_name",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 457,
+                          "referencedDeclaration": 433,
                           "src": "741:5:2",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -1752,18 +1752,18 @@
                         "nodeType": "IndexAccess",
                         "src": "731:16:2",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1023_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
-                      "id": 509,
+                      "id": 485,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "paymentCycle",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 999,
+                      "referencedDeclaration": 1006,
                       "src": "731:29:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1774,11 +1774,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 510,
+                      "id": 486,
                       "name": "_paymentCycle",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 465,
+                      "referencedDeclaration": 441,
                       "src": "763:13:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1791,14 +1791,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 512,
+                  "id": 488,
                   "nodeType": "ExpressionStatement",
                   "src": "731:45:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 522,
+                    "id": 498,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1813,39 +1813,39 @@
                             "argumentTypes": null,
                             "expression": {
                               "argumentTypes": null,
-                              "id": 513,
+                              "id": 489,
                               "name": "self",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 455,
+                              "referencedDeclaration": 431,
                               "src": "833:4:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
-                            "id": 516,
+                            "id": 492,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 986,
+                            "referencedDeclaration": 993,
                             "src": "833:9:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                               "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                             }
                           },
-                          "id": 517,
+                          "id": 493,
                           "indexExpression": {
                             "argumentTypes": null,
-                            "id": 515,
+                            "id": 491,
                             "name": "_name",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 457,
+                            "referencedDeclaration": 433,
                             "src": "843:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -1859,32 +1859,32 @@
                           "nodeType": "IndexAccess",
                           "src": "833:16:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1023_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
-                        "id": 518,
+                        "id": 494,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "investors",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1003,
+                        "referencedDeclaration": 1010,
                         "src": "833:26:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_bool_$",
                           "typeString": "mapping(address => bool)"
                         }
                       },
-                      "id": 520,
+                      "id": 496,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 519,
+                        "id": 495,
                         "name": "_fundOwner",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 459,
+                        "referencedDeclaration": 435,
                         "src": "860:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1907,7 +1907,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "74727565",
-                      "id": 521,
+                      "id": 497,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1928,14 +1928,14 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 523,
+                  "id": 499,
                   "nodeType": "ExpressionStatement",
                   "src": "833:45:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 533,
+                    "id": 509,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1950,39 +1950,39 @@
                             "argumentTypes": null,
                             "expression": {
                               "argumentTypes": null,
-                              "id": 524,
+                              "id": 500,
                               "name": "self",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 455,
+                              "referencedDeclaration": 431,
                               "src": "948:4:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
-                            "id": 527,
+                            "id": 503,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 986,
+                            "referencedDeclaration": 993,
                             "src": "948:9:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                               "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                             }
                           },
-                          "id": 528,
+                          "id": 504,
                           "indexExpression": {
                             "argumentTypes": null,
-                            "id": 526,
+                            "id": 502,
                             "name": "_name",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 457,
+                            "referencedDeclaration": 433,
                             "src": "958:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -1996,32 +1996,32 @@
                           "nodeType": "IndexAccess",
                           "src": "948:16:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1023_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
-                        "id": 529,
+                        "id": 505,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "virtualBalances",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1007,
+                        "referencedDeclaration": 1014,
                         "src": "948:32:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                           "typeString": "mapping(address => uint256)"
                         }
                       },
-                      "id": 531,
+                      "id": 507,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 530,
+                        "id": 506,
                         "name": "_fundOwner",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 459,
+                        "referencedDeclaration": 435,
                         "src": "981:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2043,11 +2043,11 @@
                     "operator": "=",
                     "rightHandSide": {
                       "argumentTypes": null,
-                      "id": 532,
+                      "id": 508,
                       "name": "_investment",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 461,
+                      "referencedDeclaration": 437,
                       "src": "995:11:2",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -2060,14 +2060,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 534,
+                  "id": 510,
                   "nodeType": "ExpressionStatement",
                   "src": "948:58:2"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 544,
+                    "id": 520,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2082,39 +2082,39 @@
                             "argumentTypes": null,
                             "expression": {
                               "argumentTypes": null,
-                              "id": 535,
+                              "id": 511,
                               "name": "self",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 455,
+                              "referencedDeclaration": 431,
                               "src": "1055:4:2",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
-                            "id": 538,
+                            "id": 514,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 986,
+                            "referencedDeclaration": 993,
                             "src": "1055:9:2",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1016_storage_$",
+                              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Fund_$1023_storage_$",
                               "typeString": "mapping(bytes32 => struct StructLib.Fund storage ref)"
                             }
                           },
-                          "id": 539,
+                          "id": 515,
                           "indexExpression": {
                             "argumentTypes": null,
-                            "id": 537,
+                            "id": 513,
                             "name": "_name",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 457,
+                            "referencedDeclaration": 433,
                             "src": "1065:5:2",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes32",
@@ -2128,32 +2128,32 @@
                           "nodeType": "IndexAccess",
                           "src": "1055:16:2",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1016_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1023_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
-                        "id": 540,
+                        "id": 516,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
                         "memberName": "fees",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1011,
+                        "referencedDeclaration": 1018,
                         "src": "1055:21:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                           "typeString": "mapping(address => uint256)"
                         }
                       },
-                      "id": 542,
+                      "id": 518,
                       "indexExpression": {
                         "argumentTypes": null,
-                        "id": 541,
+                        "id": 517,
                         "name": "_fundOwner",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 459,
+                        "referencedDeclaration": 435,
                         "src": "1077:10:2",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2176,7 +2176,7 @@
                     "rightHandSide": {
                       "argumentTypes": null,
                       "hexValue": "30",
-                      "id": 543,
+                      "id": 519,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2197,14 +2197,14 @@
                       "typeString": "uint256"
                     }
                   },
-                  "id": 545,
+                  "id": 521,
                   "nodeType": "ExpressionStatement",
                   "src": "1055:37:2"
                 }
               ]
             },
             "documentation": null,
-            "id": 547,
+            "id": 523,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -2212,31 +2212,31 @@
             "name": "initializeFund",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 466,
+              "id": 442,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 455,
+                  "id": 431,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "110:27:2",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 454,
+                    "id": 430,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 987,
+                    "referencedDeclaration": 994,
                     "src": "110:14:2",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$987_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$994_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -2245,10 +2245,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 457,
+                  "id": 433,
                   "name": "_name",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "139:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2257,7 +2257,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 456,
+                    "id": 432,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "139:7:2",
@@ -2271,10 +2271,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 459,
+                  "id": 435,
                   "name": "_fundOwner",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "154:18:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2283,7 +2283,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 458,
+                    "id": 434,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "154:7:2",
@@ -2297,10 +2297,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 461,
+                  "id": 437,
                   "name": "_investment",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "174:16:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2309,7 +2309,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 460,
+                    "id": 436,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "174:4:2",
@@ -2323,10 +2323,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 463,
+                  "id": 439,
                   "name": "_feeRate",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "192:13:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2335,7 +2335,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 462,
+                    "id": 438,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "192:4:2",
@@ -2349,10 +2349,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 465,
+                  "id": 441,
                   "name": "_paymentCycle",
                   "nodeType": "VariableDeclaration",
-                  "scope": 547,
+                  "scope": 523,
                   "src": "207:18:2",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2361,7 +2361,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 464,
+                    "id": 440,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "207:4:2",
@@ -2378,19 +2378,19 @@
             },
             "payable": false,
             "returnParameters": {
-              "id": 467,
+              "id": 443,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "243:0:2"
             },
-            "scope": 548,
+            "scope": 524,
             "src": "86:1013:2",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 549,
+        "scope": 525,
         "src": "64:1037:2"
       }
     ],
@@ -2409,5 +2409,5 @@
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2018-12-30T05:12:43.176Z"
+  "updatedAt": "2018-12-31T02:03:53.001Z"
 }

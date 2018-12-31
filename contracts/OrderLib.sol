@@ -27,4 +27,10 @@ library OrderLib{
     function compareStrings(bytes memory a, bytes memory b) public pure returns(bool){
         return keccak256(a) == keccak256(b);
     }
+
+    function calcQty(StructLib.Data storage self, bytes32 _name, uint qty) public view returns(uint) {
+        //Investor's capital as a percentage of total funds
+        //Need to incorporate Safe.Math for more robust solution
+        return ((qty * self.list[_name].virtualBalances[msg.sender])/self.list[_name].totalBalance);
+    }
 }

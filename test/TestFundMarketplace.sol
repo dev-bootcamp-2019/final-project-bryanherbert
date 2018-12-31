@@ -112,6 +112,16 @@ contract TestFundMarketplace {
         Assert.equal(capDeploy, price, "Capital was not successfully deployed");
     }
 
+    function testReceiveOrder() public {
+        bytes32 name = "alpha";
+        uint qty = 3;
+        uint actual = 2;
+
+        uint test = investor.calcQty(fm, name, qty);
+
+        Assert.equal(test, actual, "Wrong quantity returned");
+    }
+
     function testPayFees() public {
         bytes32 name = "alpha";
         //Paid monthly; 12 times in a year
@@ -216,6 +226,10 @@ contract Investor {
 
     function withdrawFunds(FundMarketplace fm, bytes32 _name) public {
         fm.withdrawFunds(_name);
+    }
+
+    function calcQty(FundMarketplace fm, bytes32 _name, uint qty) public view returns (uint) {
+        return fm.calcQty(_name, qty);
     }
 
     //Fallback function, accepts ether

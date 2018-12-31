@@ -5,7 +5,7 @@ import "../contracts/StructLib.sol";
 library WithdrawFundsLib {
 
     function withdrawFunds(StructLib.Data storage self, bytes32 _name, address _investor)
-    internal
+    public
     returns (uint, uint)
     {
         //Need to make sure this matches up with withdraw philosophy

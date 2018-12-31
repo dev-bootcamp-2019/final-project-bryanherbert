@@ -98,6 +98,14 @@ contract FundMarketplace {
         emit OrderPlaced(_name, _action, _ticker, qty, price);
     }
 
+    //Calculate quantity of shares to buy based on investor's % of fund
+    //Could we have investor directly access this
+    function calcQty(bytes32 _name, uint qty) 
+    external view
+    returns (uint) {
+        return OrderLib.calcQty(funds, _name, qty);
+    }
+
     //check Fee Rate - read operation from struct
     //was originally "public view" when not in library
     function checkFeeRate(bytes32 _name) public view returns (uint) {
@@ -110,12 +118,6 @@ contract FundMarketplace {
         PayFeeLib.payFee(funds, _name, _timePeriod);
         uint payment = (funds.list[_name].virtualBalances[msg.sender]/checkFeeRate(_name))/_timePeriod;
         emit FeesPaid (_name, msg.sender, payment);
-    }
-
-    function checkPaymentCycleStart(bytes32 _name, address _investor) public view
-    returns (uint)
-    {
-        return funds.list[_name].paymentCycleStart[_investor];
     }
 
     //Owner of Strategy Collects Fees
