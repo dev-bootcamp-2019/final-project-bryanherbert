@@ -47,8 +47,8 @@ contract TestFundMarketplace {
         uint paymentCycle = 0;
         quant.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
 
-        (a,b,c,d,e) = fm.getFundDetails(name);
-        (f,g,h,i) = fm. getFundDetails2(name, quantAddr);
+        (a,b,c,d,e,f) = fm.getFundDetails(name);
+        (g,h,i) = fm. getFundDetails2(name, quantAddr);
 
         //Tests
         Assert.equal(a, name, "Strategy name does not match test name");
@@ -68,8 +68,8 @@ contract TestFundMarketplace {
         bytes32 name = "alpha";
         uint investment = 2 ether;
 
-        (,,c,,) = fm.getFundDetails(name);
-        (,g,h,i) = fm.getFundDetails2(name, investorAddr);
+        (,,c,,,) = fm.getFundDetails(name);
+        (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
@@ -81,8 +81,8 @@ contract TestFundMarketplace {
         investor.makeInvestment(fm, name, investment);
 
         //Tests
-        (,,c,,) = fm.getFundDetails(name);
-        (,g,h,i) = fm.getFundDetails2(name, investorAddr);
+        (,,c,,,) = fm.getFundDetails(name);
+        (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
@@ -101,13 +101,13 @@ contract TestFundMarketplace {
 
         //Test to make sure deployed capital is zero
         uint capDeploy;
-        (,,,capDeploy,) = fm.getFundDetails(name);
+        (,,,capDeploy,,) = fm.getFundDetails(name);
         Assert.equal(capDeploy, 0, "Capital Deployed is not 0");
 
         quant.placeOrder(fm, name, action, ticker, qty, price);
 
         //Read Capital Deployed
-        (,,,capDeploy,) = fm.getFundDetails(name);
+        (,,,capDeploy,,) = fm.getFundDetails(name);
         //Check to make sure capital was deployed
         Assert.equal(capDeploy, price, "Capital was not successfully deployed");
     }
@@ -131,20 +131,20 @@ contract TestFundMarketplace {
 
         //Pre Fee Tests
         //Quant
-        (,,,i) = fm.getFundDetails2(name, quantAddr);
+        (,,i) = fm.getFundDetails2(name, quantAddr);
         Assert.equal(i, 0, "Quant's fees were not zero");
         //Investor
-        (,,,i) = fm.getFundDetails2(name, investorAddr);
+        (,,i) = fm.getFundDetails2(name, investorAddr);
         Assert.equal(i, fee, "Investor's fees are not valid");
 
         investor.payFee(fm, name, timePeriod);
 
         //Post Fee Tests
         //Quant
-        (,,,i) = fm.getFundDetails2(name, quantAddr);
+        (,,i) = fm.getFundDetails2(name, quantAddr);
         Assert.equal(i, fee/timePeriod, "Quant did not receive fee");
         //Investor
-        (,,,i) = fm.getFundDetails2(name, investorAddr);
+        (,,i) = fm.getFundDetails2(name, investorAddr);
         Assert.equal(i, fee - (fee/timePeriod), "Investor did not pay fee");
     }
 
@@ -172,8 +172,8 @@ contract TestFundMarketplace {
         uint postBalance = investorAddr.balance;
 
         //Tests
-        (,,c,,) = fm.getFundDetails(name);
-        (,g,h,i) = fm.getFundDetails2(name, investorAddr);
+        (,,c,,,) = fm.getFundDetails(name);
+        (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
         Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");

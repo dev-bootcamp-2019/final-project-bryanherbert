@@ -140,20 +140,20 @@ contract FundMarketplace {
 
     //Get fund information (for testing/verification purposes)
     
-    function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint, uint){
+    function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint, uint, uint){
         return (funds.list[_name].name, 
         funds.list[_name].fundOwner, 
         funds.list[_name].totalBalance,
         funds.list[_name].capitalDeployed,
-        funds.list[_name].feeRate);
+        funds.list[_name].feeRate,
+        funds.list[_name].paymentCycle);
     }
     //Both above
     //Delineate these two functions based on whether an address is needed or not
     //and below
     //need two functions because of stack height
-    function getFundDetails2(bytes32 _name, address _addr) public view returns (uint, bool, uint, uint){
-        return(funds.list[_name].paymentCycle,
-        funds.list[_name].investors[_addr], 
+    function getFundDetails2(bytes32 _name, address _addr) public view returns (bool, uint, uint){
+        return(funds.list[_name].investors[_addr], 
         funds.list[_name].virtualBalances[_addr],
         funds.list[_name].fees[_addr]);
     }
