@@ -213,10 +213,6 @@ contract Manager {
 
 contract Investor {
 
-    // function checkInvestmentStatus(FundMarketplace fm, bytes32 _name) public view returns (bool) {
-    //     return fm.isInvestor(_name, this);
-    // }
-
     function makeInvestment(FundMarketplace fm, bytes32 _name, uint _investment) public {
         uint fee = SafeMath.add(SafeMath.div(_investment, fm.checkFeeRate(_name)), 1);
         fm.Invest.value(fee)(_name, _investment);
