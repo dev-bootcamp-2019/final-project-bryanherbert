@@ -54,8 +54,8 @@ contract TestFundMarketplace {
         Assert.equal(a, name, "Strategy name does not match test name");
         Assert.equal(b, quantAddr, "Quant is not owner of strategy");
         Assert.equal(c, initialFund, "Strategy funds do not match test funds");
-        Assert.equal(d, feeRate, "Fee Rate does not match test rate");
-        Assert.equal(e, 0, "Deployed Capital is not equal to zero");
+        Assert.equal(d, 0, "Deployed Capital is not equal to zero");
+        Assert.equal(e, feeRate, "Fee Rate does not match test rate");
         Assert.equal(f, paymentCycle, "Payment Cycle does not match test cycle");
         Assert.equal(g, true, "Quant is not listed as investor");
         Assert.equal(h, initialFund, "Quant's funds are not listed");
@@ -66,14 +66,14 @@ contract TestFundMarketplace {
     function testIsInvestor() public{
         //Check to see if account is an investor in a certain strategy
         bytes32 name = "alpha";
-        bool isInvestor = investor.checkInvestmentStatus(fm, name);
+        //bool isInvestor = investor.checkInvestmentStatus(fm, name);
         uint investment = 2 ether;
 
         (,,c,,) = fm.getFundDetails(name);
         (,g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
-        Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
+        //Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
         Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
         Assert.equal(g, false, "Account is incorrectly listed as investor");
         Assert.equal(h, 0, "Investor's virtual balance is not zero");
@@ -82,14 +82,14 @@ contract TestFundMarketplace {
         //Make an actual investment
         investor.makeInvestment(fm, name, investment);
         //Store investment status
-        isInvestor = investor.checkInvestmentStatus(fm, name);
+        //isInvestor = investor.checkInvestmentStatus(fm, name);
 
         //Tests
         (,,c,,) = fm.getFundDetails(name);
         (,g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
-        Assert.equal(isInvestor, true, "Account is incorrectly listed as  a non-investor");
+        //Assert.equal(isInvestor, true, "Account is incorrectly listed as  a non-investor");
         Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
         Assert.equal(g, true, "Account is not listed as investor");
         Assert.equal(h, 2 ether, "Investor's virtual balance does not match investment");
@@ -111,6 +111,8 @@ contract TestFundMarketplace {
 
         quant.placeOrder(fm, name, action, ticker, qty, price);
 
+        //Read Capital Deployed
+        (,,,capDeploy,) = fm.getFundDetails(name);
         //Check to make sure capital was deployed
         Assert.equal(capDeploy, price, "Capital was not successfully deployed");
     }
@@ -204,9 +206,9 @@ contract Quant {
 
 contract Investor {
 
-    function checkInvestmentStatus(FundMarketplace fm, bytes32 _name) public view returns (bool) {
-        return fm.isInvestor(_name, this);
-    }
+    // function checkInvestmentStatus(FundMarketplace fm, bytes32 _name) public view returns (bool) {
+    //     return fm.isInvestor(_name, this);
+    // }
 
     function makeInvestment(FundMarketplace fm, bytes32 _name, uint _investment) public {
         uint fee = _investment/fm.checkFeeRate(_name) + 1;

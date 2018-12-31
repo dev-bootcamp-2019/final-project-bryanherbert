@@ -82,11 +82,11 @@ contract FundMarketplace {
 
     //Check to see if an account is an investor in a strategy
     //eventually change to only one parameter and use delegate call instead
-    function isInvestor(bytes32 _name, address _investor) public view returns (bool) {
-        bool result;
-        (,result,,) = getFundDetails2(_name, _investor);
-        return result;
-    }
+    // function isInvestor(bytes32 _name, address _investor) public view returns (bool) {
+    //     bool result;
+    //     (,result,,) = getFundDetails2(_name, _investor);
+    //     return result;
+    // }
 
     //Make investment into particular fund
     //Must have required funds
