@@ -8,9 +8,9 @@ contract TestFundMarketplace {
 
     //State Variables
     FundMarketplace fm;
-    Quant quant;
+    Manager manager;
     Investor investor;
-    address quantAddr;
+    address managerAddr;
     address investorAddr;
     uint public initialBalance = 10 ether;
     bytes32 a;
@@ -26,40 +26,40 @@ contract TestFundMarketplace {
     function beforeAll() public {
         //Deploy StrategyHub contracts
         fm = new FundMarketplace();
-        //Deploy Quant and Investor contracts
-        quant = new Quant();
-        //Give the quant some ether
-        address(quant).transfer(2 ether);
+        //Deploy Manager and Investor contracts
+        manager = new Manager();
+        //Give the manager some ether
+        address(manager).transfer(2 ether);
         investor = new Investor();
         //Give the investor some ether
         address(investor).transfer(3 ether);
-        quantAddr = address(quant);
+        managerAddr = address(manager);
         investorAddr = address(investor);
     }
   
     function testInitializeFund() public{
-        //Quant initializes new strategy
+        //Manager initializes new strategy
         bytes32 name = "alpha";
         uint initialFund = 1 ether;
         //feeRate is 2%
         uint feeRate = 2;
         //paymentCycle is in unit of days
         uint paymentCycle = 0;
-        quant.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
+        manager.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
 
         (a,b,c,d,e,f) = fm.getFundDetails(name);
-        (g,h,i) = fm. getFundDetails2(name, quantAddr);
+        (g,h,i) = fm. getFundDetails2(name, managerAddr);
 
         //Tests
         Assert.equal(a, name, "Strategy name does not match test name");
-        Assert.equal(b, quantAddr, "Quant is not owner of strategy");
+        Assert.equal(b, managerAddr, "Manager is not owner of strategy");
         Assert.equal(c, initialFund, "Strategy funds do not match test funds");
         Assert.equal(d, 0, "Deployed Capital is not equal to zero");
         Assert.equal(e, feeRate, "Fee Rate does not match test rate");
         Assert.equal(f, paymentCycle, "Payment Cycle does not match test cycle");
-        Assert.equal(g, true, "Quant is not listed as investor");
-        Assert.equal(h, initialFund, "Quant's funds are not listed");
-        Assert.equal(i, 0, "Quant's fees deposited are not zero");
+        Assert.equal(g, true, "Manager is not listed as investor");
+        Assert.equal(h, initialFund, "Manager's funds are not listed");
+        Assert.equal(i, 0, "Manager's fees deposited are not zero");
     }
 
 
@@ -104,7 +104,7 @@ contract TestFundMarketplace {
         (,,,capDeploy,,) = fm.getFundDetails(name);
         Assert.equal(capDeploy, 0, "Capital Deployed is not 0");
 
-        quant.placeOrder(fm, name, action, ticker, qty, price);
+        manager.placeOrder(fm, name, action, ticker, qty, price);
 
         //Read Capital Deployed
         (,,,capDeploy,,) = fm.getFundDetails(name);
@@ -130,9 +130,9 @@ contract TestFundMarketplace {
         uint fee = (investment/fm.checkFeeRate(name)+1);
 
         //Pre Fee Tests
-        //Quant
-        (,,i) = fm.getFundDetails2(name, quantAddr);
-        Assert.equal(i, 0, "Quant's fees were not zero");
+        //Manager
+        (,,i) = fm.getFundDetails2(name, managerAddr);
+        Assert.equal(i, 0, "Manager's fees were not zero");
         //Investor
         (,,i) = fm.getFundDetails2(name, investorAddr);
         Assert.equal(i, fee, "Investor's fees are not valid");
@@ -140,9 +140,9 @@ contract TestFundMarketplace {
         investor.payFee(fm, name, timePeriod);
 
         //Post Fee Tests
-        //Quant
-        (,,i) = fm.getFundDetails2(name, quantAddr);
-        Assert.equal(i, fee/timePeriod, "Quant did not receive fee");
+        //Manager
+        (,,i) = fm.getFundDetails2(name, managerAddr);
+        Assert.equal(i, fee/timePeriod, "Manager did not receive fee");
         //Investor
         (,,i) = fm.getFundDetails2(name, investorAddr);
         Assert.equal(i, fee - (fee/timePeriod), "Investor did not pay fee");
@@ -150,18 +150,18 @@ contract TestFundMarketplace {
 
     function testCollectFees() public {
         bytes32 name = "alpha";
-        uint quantBalance = 2 ether;
+        uint managerBalance = 2 ether;
         uint investment = 2 ether;
         uint timePeriod = 12;
         uint feePayment = (investment/fm.checkFeeRate(name)+1)/timePeriod;
         //Pre-collection tests
-        Assert.equal(quantAddr.balance, quantBalance, "Quant account pre-balance is incorrect");
+        Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
 
         //Collect Fees
-        quant.collectFees(fm, name);
+        manager.collectFees(fm, name);
 
         //Post-collection tests
-        Assert.equal(quantAddr.balance, quantBalance + feePayment, "Quant account post-balance is incorrect");
+        Assert.equal(managerAddr.balance, managerBalance + feePayment, "Manager account post-balance is incorrect");
     }
 
     function testWithdrawFunds() public {
@@ -187,7 +187,7 @@ contract TestFundMarketplace {
 }
 
 //change to manager
-contract Quant {
+contract Manager {
 
     function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
         fm.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);

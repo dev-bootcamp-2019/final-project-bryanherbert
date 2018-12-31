@@ -143,7 +143,7 @@ contract FundMarketplace {
     function getFundDetails(bytes32 _name) public view returns (bytes32, address, uint, uint, uint, uint){
         return (funds.list[_name].name, 
         funds.list[_name].fundOwner, 
-        funds.list[_name].totalBalance,
+        funds.list[_name].totalCapital,
         funds.list[_name].capitalDeployed,
         funds.list[_name].feeRate,
         funds.list[_name].paymentCycle);

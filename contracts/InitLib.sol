@@ -12,7 +12,7 @@ library InitLib {
         //Be careful of message sender here - might be the Fund Marketplace contract - might have to use delegatecall
         self.list[_name].fundOwner = _fundOwner;
         //Initial funds are the msg.value
-        self.list[_name].totalBalance = _investment;
+        self.list[_name].totalCapital = _investment;
         //Set fee rate
         self.list[_name].feeRate = _feeRate;
         //Set payment cycle

@@ -18,7 +18,7 @@ library PayFeeLib {
         //uint virtualBalance = self.list[_name].virtualBalances[msg.sender];
         //uint fees = self.list[_name].fees[msg.sender];
         //Get investor's virtual balance and fees deposited
-        //(,,virtualBalance,fees) = getFundDetails2(_name, msg.sender);
+        //(,virtualBalance,fees) = getFundDetails2(_name, msg.sender);
         //uint payment = (self.list[_name].virtualBalances[msg.sender]/checkFeeRate(self, _name))/_timePeriod;
         require(
             //Check that msg.sender has enough in fees to make payment installment

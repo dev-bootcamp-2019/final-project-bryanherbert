@@ -11,7 +11,7 @@ library OrderLib{
         
         if(compareStrings(_action, buy)){
             require(
-                self.list[_name].totalBalance > _price,
+                self.list[_name].totalCapital > _price,
                 "Cost of trade is greater than balance of fund"
             );
             self.list[_name].capitalDeployed += _price;
@@ -31,6 +31,6 @@ library OrderLib{
     function calcQty(StructLib.Data storage self, bytes32 _name, uint qty) public view returns(uint) {
         //Investor's capital as a percentage of total funds
         //Need to incorporate Safe.Math for more robust solution
-        return ((qty * self.list[_name].virtualBalances[msg.sender])/self.list[_name].totalBalance);
+        return ((qty * self.list[_name].virtualBalances[msg.sender])/self.list[_name].totalCapital);
     }
 }

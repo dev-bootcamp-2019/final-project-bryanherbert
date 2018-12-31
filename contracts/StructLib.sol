@@ -10,7 +10,7 @@ library StructLib{
         //Could be a multisig wallet
         address fundOwner;
         //amount of funds the strategy is virtually managing
-        uint totalBalance;
+        uint totalCapital;
         //Keep track of available capital
         uint capitalDeployed;
         //Add fee that quant can set- in whole number, i.e. 2% is represented as 2

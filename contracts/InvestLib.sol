@@ -29,7 +29,7 @@ library InvestLib {
     verifyBalance(self, _name, _investment)
     verifyFee(self, _name, _investment, _value)
     {
-        self.list[_name].totalBalance += _investment;
+        self.list[_name].totalCapital += _investment;
         self.list[_name].investors[_investor] = true;
         self.list[_name].virtualBalances[_investor] = _investment;
         self.list[_name].fees[_investor] = _value;

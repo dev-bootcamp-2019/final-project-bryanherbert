@@ -13,7 +13,7 @@ library WithdrawFundsLib {
         uint bal = self.list[_name].virtualBalances[_investor];
         uint fees = self.list[_name].fees[_investor];
         //subtract virtual balance from total funds
-        self.list[_name].totalBalance -= bal;
+        self.list[_name].totalCapital -= bal;
         //zero out virtual Balance
         self.list[_name].virtualBalances[_investor] = 0;
         //transfer fees back to investor
