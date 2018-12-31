@@ -63,17 +63,15 @@ contract TestFundMarketplace {
     }
 
 
-    function testIsInvestor() public{
+    function testInvestment() public{
         //Check to see if account is an investor in a certain strategy
         bytes32 name = "alpha";
-        //bool isInvestor = investor.checkInvestmentStatus(fm, name);
         uint investment = 2 ether;
 
         (,,c,,) = fm.getFundDetails(name);
         (,g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
-        //Assert.equal(isInvestor, false, "Account is incorrectly listed as investor");
         Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
         Assert.equal(g, false, "Account is incorrectly listed as investor");
         Assert.equal(h, 0, "Investor's virtual balance is not zero");
@@ -81,15 +79,12 @@ contract TestFundMarketplace {
 
         //Make an actual investment
         investor.makeInvestment(fm, name, investment);
-        //Store investment status
-        //isInvestor = investor.checkInvestmentStatus(fm, name);
 
         //Tests
         (,,c,,) = fm.getFundDetails(name);
         (,g,h,i) = fm.getFundDetails2(name, investorAddr);
 
         //Tests
-        //Assert.equal(isInvestor, true, "Account is incorrectly listed as  a non-investor");
         Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
         Assert.equal(g, true, "Account is not listed as investor");
         Assert.equal(h, 2 ether, "Investor's virtual balance does not match investment");

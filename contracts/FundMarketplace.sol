@@ -80,14 +80,6 @@ contract FundMarketplace {
         emit FundCreated(_name, fundCount, _fundOwner);
     }
 
-    //Check to see if an account is an investor in a strategy
-    //eventually change to only one parameter and use delegate call instead
-    // function isInvestor(bytes32 _name, address _investor) public view returns (bool) {
-    //     bool result;
-    //     (,result,,) = getFundDetails2(_name, _investor);
-    //     return result;
-    // }
-
     //Make investment into particular fund
     //Must have required funds
     function Invest(bytes32 _name, uint _investment) 
@@ -104,7 +96,6 @@ contract FundMarketplace {
     {
         OrderLib.placeOrder(funds, _name, _action, price);
         emit OrderPlaced(_name, _action, _ticker, qty, price);
-
     }
 
     //check Fee Rate - read operation from struct
@@ -154,9 +145,9 @@ contract FundMarketplace {
         funds.list[_name].capitalDeployed,
         funds.list[_name].feeRate);
     }
-
+    //Both above
     //Delineate these two functions based on whether an address is needed or not
-    
+    //and below
     //need two functions because of stack height
     function getFundDetails2(bytes32 _name, address _addr) public view returns (uint, bool, uint, uint){
         return(funds.list[_name].paymentCycle,

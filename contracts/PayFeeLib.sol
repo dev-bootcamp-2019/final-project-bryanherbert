@@ -8,7 +8,6 @@ library PayFeeLib {
     modifier verifyInvestmentStatus(StructLib.Data storage self, bytes32 _name){
         //check that msg.sender is an investor
         require(
-            //isInvestor(_name, msg.sender) == true,
             self.list[_name].investors[msg.sender] == true,
             "Message Sender is not an investor"
         );
