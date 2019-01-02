@@ -20,6 +20,7 @@ contract FundMarketplace {
     event FundCreated(
         //bytes32 indexed name,
         //have to think about how to search for value vs. how to see it
+        //Probably can still index name, just can't check for it in JS
         bytes32 name,
         uint fundCount,
         address fundOwner

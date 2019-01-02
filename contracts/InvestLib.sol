@@ -21,7 +21,7 @@ library InvestLib {
         //Verify that the msg.value > fee
         require(
             _proposedFee >= SafeMath.div(_investment,Misc.checkFeeRate(self, _name)),
-            "Fee is insufficent"
+            "Fee is insufficient"
         );
         _;
     }
