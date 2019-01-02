@@ -22,19 +22,22 @@ contract('FundMarketplace', function(accounts) {
         return str;
     }
 
-    function compareStrings(string_1, string_2) {
-        for (var c=0; c<string_1.length; c++) {
-            if (string_1.charCodeAt(c) != string_2.charCodeAt(c)){
-                console.log('c:'+c+' '+string_1.charCodeAt(c)+'!='+string_2.charCodeAt(c));
-            }
-        }
-    }
+    // function compareStrings(string_1, string_2) {
+    //     for (var c=0; c<string_1.length; c++) {
+    //         if (string_1.charCodeAt(c) != string_2.charCodeAt(c)){
+    //             console.log('c:'+c+' '+string_1.charCodeAt(c)+'!='+string_2.charCodeAt(c));
+    //         }
+    //     }
+    // }
 
     //Price equals 1 ether
     //const price = web3.toWei(1, "ether")
 
     it("should initialize a fund on the marketplace", async() => {
         const fundMarketplace = await FundMarketplace.deployed()
+
+        //Manager's Balance to measure Gas Costs
+        var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
 
         var eventEmitted = false
         //constants for comparison here
@@ -49,6 +52,11 @@ contract('FundMarketplace', function(accounts) {
             managerAddr = tx.logs[0].args.fundOwner
             eventEmitted = true;
         }
+
+        //Manager Account Balance Afterwards
+        var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
+        //Test for Gas Costs
+        assert.isBelow(managerBalanceAfter, managerBalanceBefore, "Manager's Account should be decreased by gas costs")
 
         //Event Testing
         fundName = hex2string(fundName);
@@ -84,6 +92,9 @@ contract('FundMarketplace', function(accounts) {
         //Set event emitted to be false
         var eventEmitted = false
 
+        //Investor's Balance
+        var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
+
         //local variables
         var investment = web3.toWei(2, "ether")
         const initialFund = web3.toWei(1, "ether")
@@ -112,6 +123,11 @@ contract('FundMarketplace', function(accounts) {
             eventEmitted = true;
         }
 
+        //Investor's Balance
+        var investorBalanceAfter = await web3.eth.getBalance(investor).toNumber()
+        //Account Balance Testing
+        assert.isBelow(investorBalanceAfter, investorBalanceBefore-fee, "Investor's Balance should be less than the initial balance minus the fee, due to gas costs")
+
         //Event Testing
         fundName = hex2string(fundName);
         //Confirm fundName is accurately broadcast in event
@@ -130,5 +146,6 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(result2[0], true, "Account is not listed as investor")
         assert.equal(result2[1], investment, "Investor's virtual balance does not match investment")
         assert.equal(result2[2], fee, "Investor's fees were not valid")
+
     })
 });
