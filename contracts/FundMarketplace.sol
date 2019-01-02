@@ -18,7 +18,9 @@ contract FundMarketplace {
 
     //Events
     event FundCreated(
-        bytes32 indexed name,
+        //bytes32 indexed name,
+        //have to think about how to search for value vs. how to see it
+        bytes32 name,
         uint fundCount,
         address fundOwner
     );
