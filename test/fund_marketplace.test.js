@@ -96,6 +96,7 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(result2[0], false, "Account is incorrectly listed as investor")
         assert.equal(result2[1], 0, "Investor's virtual balance is not zero")
         assert.equal(result2[2], 0, "Investor's fees are not zero")
+
         //Calculate Fee
         var feeRate = await fundMarketplace.checkFeeRate.call(name)
         var fee = (investment/feeRate) + 1
@@ -120,33 +121,14 @@ contract('FundMarketplace', function(accounts) {
         //Confirm manager address is accurately broadcast in event
         assert.equal(newInvestment, investment, "Manager is not listed as owner in event")
         assert.equal(eventEmitted, true, 'Initiating a fund should emit an event')
+
+        //Post-transaction testing
+        result = await fundMarketplace.getFundDetails.call(name)
+        result2 = await fundMarketplace.getFundDetails2.call(name, investor)
+        //Tests
+        assert.equal(result[2].toNumber(), web3.toWei(3, "ether"), "Total Capital does not match sum of initial fund and new investment")
+        assert.equal(result2[0], true, "Account is not listed as investor")
+        assert.equal(result2[1], investment, "Investor's virtual balance does not match investment")
+        assert.equal(result2[2], fee, "Investor's fees were not valid")
     })
-
-    // function testInvestment() public{
-    //     //Check to see if account is an investor in a certain strategy
-    //     bytes32 name = "alpha";
-    //     uint investment = 2 ether;
-
-    //     (,,c,,,) = fm.getFundDetails(name);
-    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
-
-    //     //Tests
-    //     Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
-    //     Assert.equal(g, false, "Account is incorrectly listed as investor");
-    //     Assert.equal(h, 0, "Investor's virtual balance is not zero");
-    //     Assert.equal(i, 0, "Investor's fees are not zero");
-
-    //     //Make an actual investment
-    //     investor.makeInvestment(fm, name, investment);
-
-    //     //Tests
-    //     (,,c,,,) = fm.getFundDetails(name);
-    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
-
-    //     //Tests
-    //     Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
-    //     Assert.equal(g, true, "Account is not listed as investor");
-    //     Assert.equal(h, 2 ether, "Investor's virtual balance does not match investment");
-    //     Assert.equal(i, SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), "Investor's fees were not valid");
-    // }
 });
