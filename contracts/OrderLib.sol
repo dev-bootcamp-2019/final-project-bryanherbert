@@ -4,7 +4,7 @@ import "../contracts/StructLib.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 library OrderLib{
-    function placeOrder(StructLib.Data storage self, bytes32 _name, bytes memory _action, uint _price)
+    function placeOrder(StructLib.Data storage self, bytes32 _name, bytes memory _action, uint _qty, uint _price)
     public
     {
         bytes memory buy = "buy";
@@ -12,13 +12,14 @@ library OrderLib{
         
         if(compareStrings(_action, buy)){
             require(
-                self.list[_name].totalCapital > _price,
+                //Cost of trade is price * qty
+                self.list[_name].totalCapital > SafeMath.mul(_price,_qty),
                 "Cost of trade is greater than balance of fund"
             );
-            self.list[_name].capitalDeployed += _price;
+            self.list[_name].capitalDeployed += SafeMath.mul(_price, _qty);
         }
         else if(compareStrings(_action, sell)){
-            self.list[_name].capitalDeployed -= _price;
+            self.list[_name].capitalDeployed -= SafeMath.mul(_price, _qty);
         }
         else{
             revert("Not a valid action");

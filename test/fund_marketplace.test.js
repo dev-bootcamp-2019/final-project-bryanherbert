@@ -123,11 +123,6 @@ contract('FundMarketplace', function(accounts) {
             eventEmitted = true;
         }
 
-        //Investor's Balance
-        var investorBalanceAfter = await web3.eth.getBalance(investor).toNumber()
-        //Account Balance Testing
-        assert.isBelow(investorBalanceAfter, investorBalanceBefore-fee, "Investor's Balance should be less than the initial balance minus the fee, due to gas costs")
-
         //Event Testing
         fundName = hex2string(fundName);
         //Confirm fundName is accurately broadcast in event
@@ -138,6 +133,11 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(newInvestment, investment, "Manager is not listed as owner in event")
         assert.equal(eventEmitted, true, 'Initiating a fund should emit an event')
 
+        //Investor's Balance
+        var investorBalanceAfter = await web3.eth.getBalance(investor).toNumber()
+        //Account Balance Testing
+        assert.isBelow(investorBalanceAfter, investorBalanceBefore-fee, "Investor's Balance should be less than the initial balance minus the fee, due to gas costs")
+
         //Post-transaction testing
         result = await fundMarketplace.getFundDetails.call(name)
         result2 = await fundMarketplace.getFundDetails2.call(name, investor)
@@ -146,6 +146,63 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(result2[0], true, "Account is not listed as investor")
         assert.equal(result2[1], investment, "Investor's virtual balance does not match investment")
         assert.equal(result2[2], fee, "Investor's fees were not valid")
+
+    })
+
+    it("should allow a fund manager to place an order", async() => {
+        //Deployed fundMarketplace
+        const fundMarketplace = await FundMarketplace.deployed()
+
+        //Set event emitted to be false
+        var eventEmitted = false
+
+        //Manager's Balance
+        var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
+
+        //local variables
+        const name = "alpha"
+        const action = "buy"
+        const ticker = "PLNT"
+        const qty = 3
+        const price = web3.toWei(100, "szabo") //0.0001 ether
+
+        //Pre-transaction Testing
+        result = await fundMarketplace.getFundDetails.call(name)
+        //Make sure Capital Deployed is 0
+        assert.equal(result[3], 0, "capital deployed is not zero")
+
+        //Place Order
+        const tx = await fundMarketplace.placeOrder(name, action, ticker, qty, price, {from: manager})
+        //Check for Event
+        if(tx.logs[0].event === "OrderPlaced"){
+            //name, action, ticker, qty, price
+            fundName = tx.logs[0].args.name
+            fundAction = tx.logs[0].args.action
+            fundTicker = tx.logs[0].args.ticker
+            fundQty = tx.logs[0].args.qty
+            fundPrice = tx.logs[0].args.price            
+            eventEmitted = true
+        }
+
+        //Event Testing
+        fundName = hex2string(fundName) //Convert to string format
+        fundAction = hex2string(fundAction)
+        fundTicker = hex2string(fundTicker)
+        assert.equal(fundName, name, "Fund name does not match test name")
+        assert.equal(fundAction, action, "fund action does not match test action")
+        assert.equal(fundTicker, ticker, "fund ticker does not match test ticker")
+        assert.equal(fundQty, qty, "fund quantity does not match test quantity")
+        assert.equal(fundPrice, price, "fund price does not match test price")
+        assert.equal(eventEmitted, true, "Placing an Order should emit an event")
+
+        //Account Balance Testing
+        var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
+        assert.isBelow(managerBalanceAfter, managerBalanceBefore, "Investor's Balance should be less than the initial balance minus the fee, due to gas costs")
+
+        //Post-transaction Testing
+        result = await fundMarketplace.getFundDetails.call(name)
+        //Make sure Capital Deployed is equal to cost of trade (price * quantity)
+        assert.equal(result[3], web3.toWei(300, "szabo"), "capital was not successfully deployed")
 
     })
 });

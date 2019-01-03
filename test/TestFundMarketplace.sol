@@ -99,6 +99,7 @@ contract TestFundMarketplace {
         bytes memory action = "buy";
         bytes32 ticker = "PLNT";
         uint qty = 3;
+        //Price of individual security
         uint price = 100 szabo; //0.0001 ether
 
         //Test to make sure deployed capital is zero
@@ -111,7 +112,7 @@ contract TestFundMarketplace {
         //Read Capital Deployed
         (,,,capDeploy,,) = fm.getFundDetails(name);
         //Check to make sure capital was deployed
-        Assert.equal(capDeploy, price, "Capital was not successfully deployed");
+        Assert.equal(capDeploy, SafeMath.mul(price,qty), "Capital was not successfully deployed");
     }
 
     function testReceiveOrder() public {

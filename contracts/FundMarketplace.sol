@@ -18,19 +18,19 @@ contract FundMarketplace {
 
     //Events
     event FundCreated(
-        //bytes32 indexed name,
+        bytes32 indexed name,
         //have to think about how to search for value vs. how to see it
         //Probably can still index name, just can't check for it in JS
-        bytes32 name,
+        //bytes32 name,
         uint fundCount,
         address fundOwner
     );
 
     event Investment(
-        // bytes32 indexed name,
-        // address indexed investor,
-        bytes32 name,
-        address investor,
+        bytes32 indexed name,
+        address indexed investor,
+        // bytes32 name,
+        // address investor,
         uint investment
     );
     
@@ -96,11 +96,11 @@ contract FundMarketplace {
 
     //Place order for a trade
     //Not sure what calldata is exactly for _action
-    function placeOrder(bytes32 _name, bytes _action, bytes32 _ticker, uint qty, uint price)
+    function placeOrder(bytes32 _name, bytes _action, bytes32 _ticker, uint _qty, uint _price)
     external 
     {
-        OrderLib.placeOrder(funds, _name, _action, price);
-        emit OrderPlaced(_name, _action, _ticker, qty, price);
+        OrderLib.placeOrder(funds, _name, _action, _qty, _price);
+        emit OrderPlaced(_name, _action, _ticker, _qty, _price);
     }
 
     //Calculate quantity of shares to buy based on investor's % of fund
