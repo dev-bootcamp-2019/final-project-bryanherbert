@@ -149,7 +149,7 @@ contract('FundMarketplace', function(accounts) {
 
     })
 
-    it("should allow a fund manager to place an order", async() => {
+    it("should allow a fund manager to place and an investor to receive an order", async() => {
         //Deployed fundMarketplace
         const fundMarketplace = await FundMarketplace.deployed()
 
@@ -158,21 +158,29 @@ contract('FundMarketplace', function(accounts) {
 
         //Manager's Balance
         var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
+        var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
 
         //local variables
-        const name = "alpha"
+        const _name = "alpha"
         const action = "buy"
         const ticker = "PLNT"
         const qty = 3
         const price = web3.toWei(100, "szabo") //0.0001 ether
 
+        //Watch for Place Order Event (Investor)
+        var event = fundMarketplace.OrderPlaced({name: "alpha".toString(16)})
+        event.watch(function(error,result){
+            if(!error)
+                console.log(result)
+        })
+
         //Pre-transaction Testing
-        result = await fundMarketplace.getFundDetails.call(name)
+        result = await fundMarketplace.getFundDetails.call(_name)
         //Make sure Capital Deployed is 0
         assert.equal(result[3], 0, "capital deployed is not zero")
 
         //Place Order
-        const tx = await fundMarketplace.placeOrder(name, action, ticker, qty, price, {from: manager})
+        const tx = await fundMarketplace.placeOrder(_name, action, ticker, qty, price, {from: manager})
         //Check for Event
         if(tx.logs[0].event === "OrderPlaced"){
             //name, action, ticker, qty, price
@@ -184,20 +192,32 @@ contract('FundMarketplace', function(accounts) {
             eventEmitted = true
         }
 
-        //Event Testing
+        //Should investor's balance change
+        //How does the investor receive the event information - check contracts documentation
+
+        //Event Testing- verify investor can receive information
         fundName = hex2string(fundName) //Convert to string format
         fundAction = hex2string(fundAction)
         fundTicker = hex2string(fundTicker)
-        assert.equal(fundName, name, "Fund name does not match test name")
+        fundQty = fundQty.toNumber()
+        assert.equal(fundName, _name, "Fund name does not match test name")
         assert.equal(fundAction, action, "fund action does not match test action")
         assert.equal(fundTicker, ticker, "fund ticker does not match test ticker")
         assert.equal(fundQty, qty, "fund quantity does not match test quantity")
         assert.equal(fundPrice, price, "fund price does not match test price")
         assert.equal(eventEmitted, true, "Placing an Order should emit an event")
 
+        //Investor account reads event information
+        //Must change where the investor gets the data from
+        const tx2 = await fundMarketplace.calcQty.call(fundName, fundQty, {from: investor})
+        //Quantity should be 2 (investor controls 2/3 of the capital in the fund and the total order is 2)
+        assert.equal(tx2, 2, "Quantity in order is not proportional to investor's share of capital in the fund")
+
         //Account Balance Testing
         var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
-        assert.isBelow(managerBalanceAfter, managerBalanceBefore, "Investor's Balance should be less than the initial balance minus the fee, due to gas costs")
+        var investorBalanceAfter = await web3.eth.getBalance(investor).toNumber()
+        assert.isBelow(managerBalanceAfter, managerBalanceBefore, "Manager's Balance should be less than the initial balance due to gas costs")
+        assert.equal(investorBalanceAfter, investorBalanceBefore, "Investor's Balance should not change")
 
         //Post-transaction Testing
         result = await fundMarketplace.getFundDetails.call(name)
@@ -206,3 +226,13 @@ contract('FundMarketplace', function(accounts) {
 
     })
 });
+
+//  function testReceiveOrder() public {
+//         bytes32 name = "alpha";
+//         uint qty = 3;
+//         uint actual = 2;
+
+//         uint test = investor.calcQty(fm, name, qty);
+
+//         Assert.equal(test, actual, "Wrong quantity returned");
+//     }
