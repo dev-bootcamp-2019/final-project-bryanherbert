@@ -167,17 +167,14 @@ contract('FundMarketplace', function(accounts) {
         const qty = 3
         const price = web3.toWei(100, "szabo") //0.0001 ether
 
-        //Watch for Place Order Event (Investor)
-        var event = fundMarketplace.OrderPlaced({name: "alpha".toString(16)})
-        event.watch(function(error,result){
-            if(!error)
-                console.log(result)
-        })
-
         //Pre-transaction Testing
         result = await fundMarketplace.getFundDetails.call(_name)
         //Make sure Capital Deployed is 0
         assert.equal(result[3], 0, "capital deployed is not zero")
+
+        //Define event that investor watches
+        //Only watch for events filtered by fund
+        let event = fundMarketplace.OrderPlaced({name: _name})
 
         //Place Order
         const tx = await fundMarketplace.placeOrder(_name, action, ticker, qty, price, {from: manager})
@@ -192,7 +189,6 @@ contract('FundMarketplace', function(accounts) {
             eventEmitted = true
         }
 
-        //Should investor's balance change
         //How does the investor receive the event information - check contracts documentation
 
         //Event Testing- verify investor can receive information
@@ -208,10 +204,22 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(eventEmitted, true, "Placing an Order should emit an event")
 
         //Investor account reads event information
-        //Must change where the investor gets the data from
-        const tx2 = await fundMarketplace.calcQty.call(fundName, fundQty, {from: investor})
-        //Quantity should be 2 (investor controls 2/3 of the capital in the fund and the total order is 2)
-        assert.equal(tx2, 2, "Quantity in order is not proportional to investor's share of capital in the fund")
+        event.watch(function(error, result){
+            if(error){
+                //What should the error be, if any
+                console.log(error)
+            } else {
+                let eventName = hex2string(result.args.name)
+                let eventQty = result.args.qty.toNumber()
+                //Use Event Data to calculate quantity to buy
+                //Probably better way to do this
+                let tx2 =  fundMarketplace.calcQty.call(eventName, eventQty, {from: investor})
+                console.log(tx2)
+                //Quantity should be 2 (investor controls 2/3 of the capital in the fund and the total order is 2)
+                assert.equal(tx2, 2, "Quantity in order is not proportional to investor's share of capital in the fund")
+            }
+            event.stopWatching()
+        })
 
         //Account Balance Testing
         var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
@@ -226,13 +234,3 @@ contract('FundMarketplace', function(accounts) {
 
     })
 });
-
-//  function testReceiveOrder() public {
-//         bytes32 name = "alpha";
-//         uint qty = 3;
-//         uint actual = 2;
-
-//         uint test = investor.calcQty(fm, name, qty);
-
-//         Assert.equal(test, actual, "Wrong quantity returned");
-//     }
