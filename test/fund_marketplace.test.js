@@ -156,7 +156,7 @@ contract('FundMarketplace', function(accounts) {
         //Set event emitted to be false
         var eventEmitted = false
 
-        //Manager's Balance
+        //Account Balances
         var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
         var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
 
@@ -210,13 +210,13 @@ contract('FundMarketplace', function(accounts) {
                 //console.log(result)
                 let eventName = hex2string(result.args.name)
                 let eventQty = result.args.qty.toNumber()
-                //console.log("Event Name: "+eventName)
-                //console.log("Event Quantity: "+eventQty)
-                //IMPORTANT, THE BELOW CODE IS NOT BEING EVALUATED- IT IS WRONG
+                // console.log("Event Name: "+eventName)
+                // console.log("Event Quantity: "+eventQty)
+                //Code works, but takes time into next test to work, try to make sure this executes before this specific test finishes
                 let outcome = fundMarketplace.calcQty.call(eventName, eventQty, {from: investor})
                 outcome.then(function (result){
                         //Can change test value to 2, when the code is working
-                        assert.equal(result.toNumber(), 3, "Quantity in order is not proportional to investor's share of capital in the fund")
+                        assert.equal(result.toNumber(), 2, "Quantity in order is not proportional to investor's share of capital in the fund")
                     }, function (error){
                         console.error("Something went wrong", error)
                     }
@@ -238,4 +238,56 @@ contract('FundMarketplace', function(accounts) {
         //Make sure Capital Deployed is equal to cost of trade (price * quantity)
         assert.equal(result[3], web3.toWei(300, "szabo"), "capital was not successfully deployed")
     })
+
+    it("should allow investors to pay fees", async() => {
+        //Deployed fundMarketplace
+        const fundMarketplace = await FundMarketplace.deployed()
+
+        //Set event emitted to be false
+        var eventEmitted = false
+
+        //Account Balances
+        var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
+        var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
+
+        //local variables
+        const _name = "alpha"
+        const _timePeriod = 12
+        const investment = web3.toWei(2, "ether")
+        const feeRate = await fundMarketplace.checkFeeRate.call(name)
+        const fee = (investment/feeRate) + 1
+
+        //Pre-transaction testing
+        resultMan = await fundMarketplace.getFundDetails2.call(name, manager)
+        resultInv = await fundMarketplace.getFundDetails2.call(name, investor)
+        assert.equal(resultMan[2], 0, "Manager's fees received were not zero")
+        assert.equal(resultInv[2], fee, "Investor's fees are not valid")
+
+    })
 });
+
+// function testPayFees() public {
+//     bytes32 name = "alpha";
+//     //Paid monthly; 12 times in a year
+//     uint timePeriod = 12;
+//     uint investment = 2 ether;
+//     uint fee = SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)),1);
+
+//     //Pre Fee Tests
+//     //Manager
+//     (,,i) = fm.getFundDetails2(name, managerAddr);
+//     Assert.equal(i, 0, "Manager's fees were not zero");
+//     //Investor
+//     (,,i) = fm.getFundDetails2(name, investorAddr);
+//     Assert.equal(i, fee, "Investor's fees are not valid");
+
+//     investor.payFee(fm, name, timePeriod);
+
+//     //Post Fee Tests
+//     //Manager
+//     (,,i) = fm.getFundDetails2(name, managerAddr);
+//     Assert.equal(i, SafeMath.div(fee,timePeriod), "Manager did not receive fee");
+//     //Investor
+//     (,,i) = fm.getFundDetails2(name, investorAddr);
+//     Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
+// }
