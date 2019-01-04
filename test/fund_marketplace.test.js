@@ -204,23 +204,25 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(eventEmitted, true, "Placing an Order should emit an event")
 
         //Investor account reads event information
-        event.watch(function(error, result){
+        event.watch(async function(error, result) {
             if(!error){
                 //What should the error be, if any
                 //console.log(result)
-                let eventName = hex2string(result.args.name)
-                let eventQty = result.args.qty.toNumber()
+                let eventName = await hex2string(result.args.name)
+                let eventQty = await result.args.qty.toNumber()
                 // console.log("Event Name: "+eventName)
                 // console.log("Event Quantity: "+eventQty)
                 //Code works, but takes time into next test to work, try to make sure this executes before this specific test finishes
-                let outcome = fundMarketplace.calcQty.call(eventName, eventQty, {from: investor})
-                outcome.then(function (result){
-                        //Can change test value to 2, when the code is working
-                        assert.equal(result.toNumber(), 2, "Quantity in order is not proportional to investor's share of capital in the fund")
-                    }, function (error){
-                        console.error("Something went wrong", error)
-                    }
-                )
+                let outcome =  await fundMarketplace.calcQty.call(eventName, eventQty, {from: investor})
+                outcome = await outcome.toNumber()
+                assert.equal(outcome, 2, "Quantity in order is not proportional to investor's share of capital in the fund")
+                // outcome.then(function (result){
+                //         //Can change test value to 2, when the code is working
+                //         assert.equal(result.toNumber(), 3, "Quantity in order is not proportional to investor's share of capital in the fund")
+                //     }, function (error){
+                //         console.error("Something went wrong", error)
+                //     }
+                // )
             } else {
                 console.log(error)
             }
@@ -297,4 +299,5 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(resultMan[2].toNumber(), Math.floor(fee/_timePeriod), "Manager did not receive fee")
         assert.equal(resultInv[2].toNumber(), Math.floor(fee-fee/_timePeriod), "Investor did not pay fee")   
     })
+
 });
