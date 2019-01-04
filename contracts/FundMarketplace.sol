@@ -48,7 +48,8 @@ contract FundMarketplace {
     );
 
     event FundsWithdrawn(
-        bytes32 indexed name,
+        //bytes32 indexed name,
+        bytes32 name,
         address investor,
         uint investment,
         uint fees
@@ -127,23 +128,23 @@ contract FundMarketplace {
         emit FeesPaid (_name, msg.sender, payment);
     }
 
-    //Owner of Strategy Collects Fees
-    function collectFees(bytes32 _name) external
-    //isOwner(_name)
-    {
-        uint fees = CollectFeesLib.collectFees(funds, _name, msg.sender);
-        emit FeesCollected(_name, fees);
-    }
-
-    // function withdrawFunds(bytes32 _name) public
-    // //verifyInvestmentStatus(_name) 
+    // //Owner of Strategy Collects Fees
+    // function collectFees(bytes32 _name) external
+    // //isOwner(_name)
     // {
-    //     //Need to make sure this matches up with withdraw philosophy
-    //     uint investment;
-    //     uint fees;
-    //     (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender);
-    //     emit FundsWithdrawn(_name, msg.sender, investment, fees);
+    //     uint fees = CollectFeesLib.collectFees(funds, _name, msg.sender);
+    //     emit FeesCollected(_name, fees);
     // }
+
+    function withdrawFunds(bytes32 _name) public
+    //verifyInvestmentStatus(_name) 
+    {
+        //Need to make sure this matches up with withdraw philosophy
+        uint investment;
+        uint fees;
+        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender);
+        emit FundsWithdrawn(_name, msg.sender, investment, fees);
+    }
 
     //Get fund information (for testing/verification purposes)
     

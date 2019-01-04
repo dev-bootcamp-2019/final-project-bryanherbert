@@ -151,41 +151,41 @@ contract TestFundMarketplace {
         Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
     }
 
-    function testCollectFees() public {
-        bytes32 name = "alpha";
-        uint managerBalance = 2 ether;
-        uint investment = 2 ether;
-        uint timePeriod = 12;
-        uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), timePeriod);
-        //Pre-collection tests
-        Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
-
-        //Collect Fees
-        manager.collectFees(fm, name);
-
-        //Post-collection tests
-        Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
-    }
-
-    // function testWithdrawFunds() public {
+    // function testCollectFees() public {
     //     bytes32 name = "alpha";
-    //     uint preBalance = investorAddr.balance;
-    //     //investor withdraws funds
-    //     investor.withdrawFunds(fm, name);
-    //     uint postBalance = investorAddr.balance;
+    //     uint managerBalance = 2 ether;
+    //     uint investment = 2 ether;
+    //     uint timePeriod = 12;
+    //     uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), timePeriod);
+    //     //Pre-collection tests
+    //     Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
 
-    //     //Tests
-    //     (,,c,,,) = fm.getFundDetails(name);
-    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
+    //     //Collect Fees
+    //     manager.collectFees(fm, name);
 
-    //     //Tests
-    //     Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
-    //     Assert.equal(g, false, "Account falsely remain an investor");
-    //     Assert.equal(h, 0, "Investor's virtual balance is not zeroed out");
-    //     Assert.equal(i, 0, "Investor's fees are not zeroed out");
-    //     //confirm fees were refunded
-    //     Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
+    //     //Post-collection tests
+    //     Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
     // }
+
+    function testWithdrawFunds() public {
+        bytes32 name = "alpha";
+        uint preBalance = investorAddr.balance;
+        //investor withdraws funds
+        investor.withdrawFunds(fm, name);
+        uint postBalance = investorAddr.balance;
+
+        //Tests
+        (,,c,,,) = fm.getFundDetails(name);
+        (g,h,i) = fm.getFundDetails2(name, investorAddr);
+
+        //Tests
+        Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
+        Assert.equal(g, false, "Account falsely remain an investor");
+        Assert.equal(h, 0, "Investor's virtual balance is not zeroed out");
+        Assert.equal(i, 0, "Investor's fees are not zeroed out");
+        //confirm fees were refunded
+        Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
+    }
 
 }
 
@@ -196,9 +196,9 @@ contract Manager {
         fm.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);
     }
 
-    function collectFees(FundMarketplace fm, bytes32 _name) public {
-        fm.collectFees(_name);
-    }
+    // function collectFees(FundMarketplace fm, bytes32 _name) public {
+    //     fm.collectFees(_name);
+    // }
 
     function placeOrder(FundMarketplace fm, bytes32 _name, bytes _action, bytes32 _ticker, uint _qty, uint _price)
     public
@@ -223,9 +223,9 @@ contract Investor {
         fm.payFee(_name, _timePeriod);
     }
 
-    // function withdrawFunds(FundMarketplace fm, bytes32 _name) public {
-    //     fm.withdrawFunds(_name);
-    // }
+    function withdrawFunds(FundMarketplace fm, bytes32 _name) public {
+        fm.withdrawFunds(_name);
+    }
 
     function calcQty(FundMarketplace fm, bytes32 _name, uint qty) public view returns (uint) {
         return fm.calcQty(_name, qty);
