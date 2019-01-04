@@ -258,36 +258,43 @@ contract('FundMarketplace', function(accounts) {
         const fee = (investment/feeRate) + 1
 
         //Pre-transaction testing
-        resultMan = await fundMarketplace.getFundDetails2.call(name, manager)
-        resultInv = await fundMarketplace.getFundDetails2.call(name, investor)
+        resultMan = await fundMarketplace.getFundDetails2.call(_name, manager)
+        resultInv = await fundMarketplace.getFundDetails2.call(_name, investor)
         assert.equal(resultMan[2], 0, "Manager's fees received were not zero")
         assert.equal(resultInv[2], fee, "Investor's fees are not valid")
 
+        //Calculate actual payment
+        const payment = Math.floor((resultInv[1]/feeRate)/_timePeriod)
+
+        //Pay Fee
+        const tx = await fundMarketplace.payFee(_name, _timePeriod, {from: investor})
+        //Check for Event
+        if(tx.logs[0].event === "FeesPaid"){
+            //name, investor, fee
+            fundName = tx.logs[0].args.name
+            payingInvestor = tx.logs[0].args.investor
+            feePaid = tx.logs[0].args.fee         
+            eventEmitted = true
+        }
+
+        //Event Testing
+        fundName = hex2string(fundName)
+        feePaid = feePaid.toNumber()
+        assert.equal(fundName, _name, "Fund name does not match test name")
+        assert.equal(payingInvestor, investor, "Investor does not match fee paying investor")
+        assert.equal(feePaid, payment, "Fees paid does not match test payment")
+        assert.equal(eventEmitted, true, "Placing an Order should emit an event")
+
+        //Account Balance Testing
+        var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
+        var investorBalanceAfter = await web3.eth.getBalance(investor).toNumber()
+        assert.equal(managerBalanceAfter, managerBalanceBefore, "Manager's Balance should not change")
+        assert.isBelow(investorBalanceAfter, investorBalanceBefore, "Investor's Balance should be less than the initial balance due to gas costs")
+    
+        //Post-transaction testing
+        resultMan = await fundMarketplace.getFundDetails2.call(_name, manager)
+        resultInv = await fundMarketplace.getFundDetails2.call(_name, investor)
+        assert.equal(resultMan[2].toNumber(), Math.floor(fee/_timePeriod), "Manager did not receive fee")
+        assert.equal(resultInv[2].toNumber(), Math.floor(fee-fee/_timePeriod), "Investor did not pay fee")   
     })
 });
-
-// function testPayFees() public {
-//     bytes32 name = "alpha";
-//     //Paid monthly; 12 times in a year
-//     uint timePeriod = 12;
-//     uint investment = 2 ether;
-//     uint fee = SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)),1);
-
-//     //Pre Fee Tests
-//     //Manager
-//     (,,i) = fm.getFundDetails2(name, managerAddr);
-//     Assert.equal(i, 0, "Manager's fees were not zero");
-//     //Investor
-//     (,,i) = fm.getFundDetails2(name, investorAddr);
-//     Assert.equal(i, fee, "Investor's fees are not valid");
-
-//     investor.payFee(fm, name, timePeriod);
-
-//     //Post Fee Tests
-//     //Manager
-//     (,,i) = fm.getFundDetails2(name, managerAddr);
-//     Assert.equal(i, SafeMath.div(fee,timePeriod), "Manager did not receive fee");
-//     //Investor
-//     (,,i) = fm.getFundDetails2(name, investorAddr);
-//     Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
-// }

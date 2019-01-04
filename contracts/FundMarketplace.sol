@@ -37,6 +37,8 @@ contract FundMarketplace {
     event FeesPaid(
         bytes32 indexed name,
         address indexed investor,
+        // bytes32 name,
+        // address investor,
         uint fee
     );
 
