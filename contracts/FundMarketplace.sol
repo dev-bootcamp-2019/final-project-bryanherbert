@@ -128,21 +128,21 @@ contract FundMarketplace {
         emit FeesPaid (_name, msg.sender, payment);
     }
 
-    // //Owner of Strategy Collects Fees
-    // function collectFees(bytes32 _name) external
-    // //isOwner(_name)
-    // {
-    //     uint fees = CollectFeesLib.collectFees(funds, _name, msg.sender);
-    //     emit FeesCollected(_name, fees);
-    // }
+    //Owner of Strategy Collects Fees
+    function collectFees(bytes32 _name) external
+    //isOwner(_name)
+    {
+        uint fees = CollectFeesLib.collectFees(funds, _name, msg.sender);
+        emit FeesCollected(_name, fees);
+    }
 
-    function withdrawFunds(bytes32 _name) public
+    function withdrawFunds(bytes32 _name, uint _amount) public
     //verifyInvestmentStatus(_name) 
     {
         //Need to make sure this matches up with withdraw philosophy
         uint investment;
         uint fees;
-        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender);
+        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender, _amount);
         emit FundsWithdrawn(_name, msg.sender, investment, fees);
     }
 

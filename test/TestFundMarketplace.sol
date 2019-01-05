@@ -151,27 +151,46 @@ contract TestFundMarketplace {
         Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
     }
 
-    // function testCollectFees() public {
-    //     bytes32 name = "alpha";
-    //     uint managerBalance = 2 ether;
-    //     uint investment = 2 ether;
-    //     uint timePeriod = 12;
-    //     uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), timePeriod);
-    //     //Pre-collection tests
-    //     Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
+    function testCollectFees() public {
+        bytes32 name = "alpha";
+        uint managerBalance = 2 ether;
+        uint investment = 2 ether;
+        uint timePeriod = 12;
+        uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), timePeriod);
+        //Pre-collection tests
+        Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
 
-    //     //Collect Fees
-    //     manager.collectFees(fm, name);
+        //Collect Fees
+        manager.collectFees(fm, name);
 
-    //     //Post-collection tests
-    //     Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
-    // }
+        //Post-collection tests
+        Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
+    }
 
     function testWithdrawFunds() public {
         bytes32 name = "alpha";
         uint preBalance = investorAddr.balance;
-        //investor withdraws funds
-        investor.withdrawFunds(fm, name);
+        uint amount = 1 ether;
+        uint currentFees;
+        (,,currentFees) = fm.getFundDetails2(name, investorAddr);
+
+        //investor withdraw a portion of his funds
+        investor.withdrawFunds(fm, name, amount);
+        uint midBalance = investorAddr.balance;
+
+        //Tests
+        (,,c,,,) = fm.getFundDetails(name);
+        (g,h,i) = fm.getFundDetails2(name, investorAddr);
+
+        Assert.equal(c, 2 ether, "Funds do not match sum of virtual balances");
+        Assert.equal(g, true, "Account should still be listed as an investor");
+        Assert.equal(h, 1 ether, "Investor's should not be zeroed out");
+        Assert.equal(i, currentFees, "Investor's fees should not change");
+        //Not sure why gas costs aren't lowering midBalance compared to preBalance
+        Assert.equal(midBalance, preBalance, "Midbalance should be equal to preBalance");
+
+        //investor withdraws remainder of funds
+        investor.withdrawFunds(fm, name, amount);
         uint postBalance = investorAddr.balance;
 
         //Tests
@@ -223,8 +242,8 @@ contract Investor {
         fm.payFee(_name, _timePeriod);
     }
 
-    function withdrawFunds(FundMarketplace fm, bytes32 _name) public {
-        fm.withdrawFunds(_name);
+    function withdrawFunds(FundMarketplace fm, bytes32 _name, uint _amount) public {
+        fm.withdrawFunds(_name, _amount);
     }
 
     function calcQty(FundMarketplace fm, bytes32 _name, uint qty) public view returns (uint) {

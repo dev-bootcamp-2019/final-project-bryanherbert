@@ -352,19 +352,20 @@ contract('FundMarketplace', function(accounts) {
         
         //local variables
         const _name = "alpha"
-        const _result = await fundMarketplace.getFundDetails2(_name, investor)
-        const _balance = _result[1].toNumber()
-        const _fees = _result[2].toNumber()
+        var _result = await fundMarketplace.getFundDetails2(_name, investor)
+        var _balance = _result[1].toNumber()
+        var _fees = _result[2].toNumber()
+        var _amount = web3.toWei(1, "ether")
 
-        //Withdraw Funds
-        const tx = await fundMarketplace.withdrawFunds(_name, {from: investor})
+        //withdraw partial amount of funds
+        const tx1 = await fundMarketplace.withdrawFunds(_name, _amount, {from: investor})
 
-        if(tx.logs[0].event === "FundsWithdrawn"){
+        if(tx1.logs[0].event === "FundsWithdrawn"){
             //name, investor, investment, fees
-            fundName = tx.logs[0].args.name
-            withdrawnInvestor = tx.logs[0].args.investor
-            withdrawnCapital = tx.logs[0].args.investment
-            withdrawnFees = tx.logs[0].args.fees
+            fundName = tx1.logs[0].args.name
+            withdrawnInvestor = tx1.logs[0].args.investor
+            withdrawnCapital = tx1.logs[0].args.investment
+            withdrawnFees = tx1.logs[0].args.fees
             eventEmitted = true;
         }
 
@@ -374,7 +375,54 @@ contract('FundMarketplace', function(accounts) {
         withdrawnFees = withdrawnFees.toNumber()
         assert.equal(fundName, _name, "Fundname does not match test name")
         assert.equal(withdrawnInvestor, investor, "Withdrawn investor is not correctly listed")
-        assert.equal(withdrawnCapital, _balance, "Balance was not correctly withdrawn")
+        assert.equal(withdrawnCapital, _amount, "Balance was not correctly withdrawn")
+        assert.equal(withdrawnFees, 0, "Fees were not correctly withdrawn")
+        assert.equal(eventEmitted, true, "Withdrawing fees should emit an event")
+
+        //Account Testing
+        var investorBalanceMiddle = await web3.eth.getBalance(investor).toNumber()
+        //Not sure why equal in .sol file - might be which contract is paying gas costs - investigate more
+        assert.isBelow(investorBalanceMiddle, investorBalanceBefore, "Investor middle balance should be equal to original balance")
+
+        //Post-Transaction Testing
+        //General fund details
+        let resultFund = await fundMarketplace.getFundDetails(_name)
+        //Fund Details for Investor
+        let resultInv = await fundMarketplace.getFundDetails2(_name, investor)
+        //fund Detials for Manager
+        let resultMan = await fundMarketplace.getFundDetails2(_name, manager)
+        assert.equal(resultFund[2].toNumber(), resultMan[1].toNumber() + resultInv[1].toNumber(), "Total Capital should be equal to sum of virtual balances")
+        assert.equal(resultInv[0], true, "Investor should still be listed as an investor")
+        assert.equal(resultInv[1].toNumber(), _balance - _amount, "Investor's virtual balance should be the initial balance - the amount withdrawn")
+        assert.equal(resultInv[2].toNumber(), _fees, "Investor's fees should not change")
+
+        //Withdraw Remainder of Funds
+        _result = await fundMarketplace.getFundDetails2(_name, investor)
+        //Update balance
+        _balance = _result[1].toNumber()
+        //Update fees- not necessary right now for current functionality
+        _fees = _result[2].toNumber()
+        //Set eventEmitted to false
+        eventEmitted = false
+
+        const tx2 = await fundMarketplace.withdrawFunds(_name, _amount, {from: investor})
+
+        if(tx2.logs[0].event === "FundsWithdrawn"){
+            //name, investor, investment, fees
+            fundName = tx2.logs[0].args.name
+            withdrawnInvestor = tx2.logs[0].args.investor
+            withdrawnCapital = tx2.logs[0].args.investment
+            withdrawnFees = tx2.logs[0].args.fees
+            eventEmitted = true;
+        }
+
+        //Event Testing
+        fundName = hex2string(fundName)
+        withdrawnCapital = withdrawnCapital.toNumber()
+        withdrawnFees = withdrawnFees.toNumber()
+        assert.equal(fundName, _name, "Fundname does not match test name")
+        assert.equal(withdrawnInvestor, investor, "Withdrawn investor is not correctly listed")
+        assert.equal(withdrawnCapital, _amount, "Balance was not correctly withdrawn")
         assert.equal(withdrawnFees, _fees, "Fees were not correctly withdrawn")
         assert.equal(eventEmitted, true, "Withdrawing fees should emit an event")
 
@@ -384,17 +432,14 @@ contract('FundMarketplace', function(accounts) {
 
         //Post-transaction Testing
         //General fund details
-        const resultFund = await fundMarketplace.getFundDetails(_name)
+        resultFund = await fundMarketplace.getFundDetails(_name)
         //Fund Details for Investor
-        const resultInv = await fundMarketplace.getFundDetails2(_name, investor)
+        resultInv = await fundMarketplace.getFundDetails2(_name, investor)
         //fund Detials for Manager
-        const resultMan = await fundMarketplace.getFundDetails2(_name, manager)
-        assert.equal(resultFund[2].toNumber(), resultMan[1].toNumber(), "Total Capital should be equal to manager's capital contribution")
+        resultMan = await fundMarketplace.getFundDetails2(_name, manager)
+        assert.equal(resultFund[2].toNumber(), resultMan[1].toNumber() + resultInv[1].toNumber(), "Total Capital should be equal to manager's capital contribution")
         assert.equal(resultInv[0], false, "Investor is incorrectly listed as active in fund")
         assert.equal(resultInv[1].toNumber(), 0, "Investor's virutal balance is not zeroed out")
         assert.equal(resultInv[2].toNumber(), 0, "Investor's fees are not zeroed out")
-
-
-
     })
 });
