@@ -6,7 +6,7 @@ import truffleContract from "truffle-contract";
 import "./App.css";
 
 class App extends Component {
-  state = { storageValue: 0, web3: null, accounts: null, contract: null };
+  state = { name: null, manager: null, investment: null, feeRate: null, paymentCycle: null, web3: null, accounts: null, contract: null };
 
   componentDidMount = async () => {
     try {
@@ -34,16 +34,29 @@ class App extends Component {
   };
 
   runExample = async () => {
-    const { accounts, contract } = this.state;
+    //Add web3 here
+    const { web3, accounts, contract } = this.state;
 
-    // Stores a given value, 5 by default.
-    await contract.set(5, { from: accounts[0] });
+    //Initializes fund with account[0]
+    let name = web3.utils.asciiToHex("alpha");
+    const manager = accounts[0];
+    let amount = 1;
+    let investment = web3.utils.toWei(amount.toString(), "ether");
+    let feeRate = 2;
+    let paymentCycle = 0;
 
-    // Get the value from the contract to prove it worked.
-    const response = await contract.get();
+    await contract.initializeFund(name, manager, investment, feeRate, paymentCycle, { from: manager });
 
-    // Update state with the result.
-    this.setState({ storageValue: response.toNumber() });
+    //Get the information from the newly established fund
+    const response = await contract.getFundDetails(name);
+
+    //Update state with result
+    this.setState({ 
+      name: web3.utils.hexToAscii(response[0]), 
+      manager: response[1], 
+      investment: web3.utils.fromWei(response[2].toString(), "ether"), 
+      feeRate: response[4].toNumber(), 
+      paymentCycle: response[5].toNumber(),});
   };
 
   render() {
@@ -52,17 +65,17 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Good to Go!</h1>
-        <p>Your Truffle Box is installed and ready.</p>
-        <h2>Smart Contract Example</h2>
+        <h1>Welcome to Mimic</h1>
+        <p>Your one stop shop for wealth management guidance</p>
+        <h2>Fund Marketplace</h2>
         <p>
-          If your contracts compiled and migrated successfully, below will show
-          a stored value of 5 (by default).
+          If your contracts compiled and migrated successfully, below will display the name of the alpha fund.
         </p>
-        <p>
-          Try changing the value stored on <strong>line 40</strong> of App.js.
-        </p>
-        <div>The stored value is: {this.state.storageValue}</div>
+        <div>The name of the fund is: <strong>{this.state.name}</strong></div>
+        <div>The manager of the fund is: <strong>{this.state.manager}</strong></div>
+        <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
+        <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
+        <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
       </div>
     );
   }
