@@ -3,8 +3,20 @@ pragma solidity ^0.4.24;
 import "../contracts/StructLib.sol";
 
 library InitLib {
+    
+    //Modifiers
+    //Make sure there are no funds with the same name
+    modifier noDupName(StructLib.Data storage self, bytes32 _name) {
+        require(
+            self.list[_name].name != _name,
+            "Fund already exists with that name, please try another"
+        );
+        _;
+    }
+    
     function initializeFund(StructLib.Data storage self, bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     public
+    noDupName(self, _name)
     {
         //initialize strat name to _name
         self.list[_name].name = _name;
