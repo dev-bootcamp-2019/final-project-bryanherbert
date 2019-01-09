@@ -6,7 +6,7 @@ import truffleContract from "truffle-contract";
 import "./App.css";
 
 class App extends Component {
-  state = { name: null, manager: null, investment: null, feeRate: null, paymentCycle: null, web3: null, accounts: null, contract: null };
+  state = { name: null, manager: null, investment: null, feeRate: null, paymentCycle: null, fundCount: null, web3: null, accounts: null, contract: null };
 
   componentDidMount = async () => {
     try {
@@ -50,13 +50,18 @@ class App extends Component {
     //Get the information from the newly established fund
     const response = await contract.getFundDetails(name);
 
+    //Test for getting the fundCount
+    const fundCount = await contract.fundCount();
+
     //Update state with result
     this.setState({ 
       name: web3.utils.hexToAscii(response[0]), 
       manager: response[1], 
       investment: web3.utils.fromWei(response[2].toString(), "ether"), 
       feeRate: response[4].toNumber(), 
-      paymentCycle: response[5].toNumber(),});
+      paymentCycle: response[5].toNumber(),
+      fundCount: fundCount.toNumber()
+    });
   };
 
   render() {
@@ -65,7 +70,7 @@ class App extends Component {
     }
     return (
       <div className="App">
-        <h1>Welcome to Mimic</h1>
+        <h1>Welcome to the Mimic</h1>
         <p>Your one stop shop for wealth management guidance</p>
         <h2>Fund Marketplace</h2>
         <p>
@@ -76,6 +81,9 @@ class App extends Component {
         <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
         <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
         <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
+        <p>
+          Total Fund Count: <strong>{this.state.fundCount}</strong>
+        </p>
       </div>
     );
   }

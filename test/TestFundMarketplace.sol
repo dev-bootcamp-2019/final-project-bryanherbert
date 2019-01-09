@@ -64,147 +64,146 @@ contract TestFundMarketplace {
         Assert.equal(i, 0, "Manager's fees deposited are not zero");
     }
 
+    // function testInvestment() public{
+    //     //Check to see if account is an investor in a certain strategy
+    //     bytes32 name = "alpha";
+    //     uint investment = 2 ether;
 
-    function testInvestment() public{
-        //Check to see if account is an investor in a certain strategy
-        bytes32 name = "alpha";
-        uint investment = 2 ether;
+    //     (,,c,,,) = fm.getFundDetails(name);
+    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
-        (,,c,,,) = fm.getFundDetails(name);
-        (g,h,i) = fm.getFundDetails2(name, investorAddr);
+    //     //Tests
+    //     Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
+    //     Assert.equal(g, false, "Account is incorrectly listed as investor");
+    //     Assert.equal(h, 0, "Investor's virtual balance is not zero");
+    //     Assert.equal(i, 0, "Investor's fees are not zero");
 
-        //Tests
-        Assert.equal(c, 1 ether, "Initial account fund does not match initial balance");
-        Assert.equal(g, false, "Account is incorrectly listed as investor");
-        Assert.equal(h, 0, "Investor's virtual balance is not zero");
-        Assert.equal(i, 0, "Investor's fees are not zero");
+    //     //Make an actual investment
+    //     investor.makeInvestment(fm, name, investment);
 
-        //Make an actual investment
-        investor.makeInvestment(fm, name, investment);
+    //     //Tests
+    //     (,,c,,,) = fm.getFundDetails(name);
+    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
-        //Tests
-        (,,c,,,) = fm.getFundDetails(name);
-        (g,h,i) = fm.getFundDetails2(name, investorAddr);
-
-        //Tests
-        Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
-        Assert.equal(g, true, "Account is not listed as investor");
-        Assert.equal(h, 2 ether, "Investor's virtual balance does not match investment");
-        Assert.equal(i, SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), "Investor's fees were not valid");
-    }
+    //     //Tests
+    //     Assert.equal(c, 3 ether, "Funds do not match sum of virtual balances");
+    //     Assert.equal(g, true, "Account is not listed as investor");
+    //     Assert.equal(h, 2 ether, "Investor's virtual balance does not match investment");
+    //     Assert.equal(i, SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), "Investor's fees were not valid");
+    // }
     
-    function testPlaceOrder() public {
-        bytes32 name = "alpha";
-        //bytes used for string comparison in OrderLib compareStrings()
-        bytes memory action = "buy";
-        bytes32 ticker = "PLNT";
-        uint qty = 3;
-        //Price of individual security
-        uint price = 100 szabo; //0.0001 ether
+    // function testPlaceOrder() public {
+    //     bytes32 name = "alpha";
+    //     //bytes used for string comparison in OrderLib compareStrings()
+    //     bytes memory action = "buy";
+    //     bytes32 ticker = "PLNT";
+    //     uint qty = 3;
+    //     //Price of individual security
+    //     uint price = 100 szabo; //0.0001 ether
 
-        //Test to make sure deployed capital is zero
-        uint capDeploy;
-        (,,,capDeploy,,) = fm.getFundDetails(name);
-        Assert.equal(capDeploy, 0, "Capital Deployed is not 0");
+    //     //Test to make sure deployed capital is zero
+    //     uint capDeploy;
+    //     (,,,capDeploy,,) = fm.getFundDetails(name);
+    //     Assert.equal(capDeploy, 0, "Capital Deployed is not 0");
 
-        manager.placeOrder(fm, name, action, ticker, qty, price);
+    //     manager.placeOrder(fm, name, action, ticker, qty, price);
 
-        //Read Capital Deployed
-        (,,,capDeploy,,) = fm.getFundDetails(name);
-        //Check to make sure capital was deployed
-        Assert.equal(capDeploy, SafeMath.mul(price,qty), "Capital was not successfully deployed");
-    }
+    //     //Read Capital Deployed
+    //     (,,,capDeploy,,) = fm.getFundDetails(name);
+    //     //Check to make sure capital was deployed
+    //     Assert.equal(capDeploy, SafeMath.mul(price,qty), "Capital was not successfully deployed");
+    // }
 
-    function testReceiveOrder() public {
-        bytes32 name = "alpha";
-        uint qty = 3;
-        uint actual = 2;
+    // function testReceiveOrder() public {
+    //     bytes32 name = "alpha";
+    //     uint qty = 3;
+    //     uint actual = 2;
 
-        uint test = investor.calcQty(fm, name, qty);
+    //     uint test = investor.calcQty(fm, name, qty);
 
-        Assert.equal(test, actual, "Wrong quantity returned");
-    }
+    //     Assert.equal(test, actual, "Wrong quantity returned");
+    // }
 
-    function testPayFees() public {
-        bytes32 name = "alpha";
-        //Paid monthly; 12 times in a year
-        uint timePeriod = 12;
-        uint investment = 2 ether;
-        uint fee = SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)),1);
+    // function testPayFees() public {
+    //     bytes32 name = "alpha";
+    //     //Paid monthly; 12 times in a year
+    //     uint timePeriod = 12;
+    //     uint investment = 2 ether;
+    //     uint fee = SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)),1);
 
-        //Pre Fee Tests
-        //Manager
-        (,,i) = fm.getFundDetails2(name, managerAddr);
-        Assert.equal(i, 0, "Manager's fees were not zero");
-        //Investor
-        (,,i) = fm.getFundDetails2(name, investorAddr);
-        Assert.equal(i, fee, "Investor's fees are not valid");
+    //     //Pre Fee Tests
+    //     //Manager
+    //     (,,i) = fm.getFundDetails2(name, managerAddr);
+    //     Assert.equal(i, 0, "Manager's fees were not zero");
+    //     //Investor
+    //     (,,i) = fm.getFundDetails2(name, investorAddr);
+    //     Assert.equal(i, fee, "Investor's fees are not valid");
 
-        investor.payFee(fm, name, timePeriod);
+    //     investor.payFee(fm, name, timePeriod);
 
-        //Post Fee Tests
-        //Manager
-        (,,i) = fm.getFundDetails2(name, managerAddr);
-        Assert.equal(i, SafeMath.div(fee,timePeriod), "Manager did not receive fee");
-        //Investor
-        (,,i) = fm.getFundDetails2(name, investorAddr);
-        Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
-    }
+    //     //Post Fee Tests
+    //     //Manager
+    //     (,,i) = fm.getFundDetails2(name, managerAddr);
+    //     Assert.equal(i, SafeMath.div(fee,timePeriod), "Manager did not receive fee");
+    //     //Investor
+    //     (,,i) = fm.getFundDetails2(name, investorAddr);
+    //     Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
+    // }
 
-    function testCollectFees() public {
-        bytes32 name = "alpha";
-        uint managerBalance = 2 ether;
-        uint investment = 2 ether;
-        uint timePeriod = 12;
-        uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), timePeriod);
-        //Pre-collection tests
-        Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
+    // function testCollectFees() public {
+    //     bytes32 name = "alpha";
+    //     uint managerBalance = 2 ether;
+    //     uint investment = 2 ether;
+    //     uint timePeriod = 12;
+    //     uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(name)), 1), timePeriod);
+    //     //Pre-collection tests
+    //     Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
 
-        //Collect Fees
-        manager.collectFees(fm, name);
+    //     //Collect Fees
+    //     manager.collectFees(fm, name);
 
-        //Post-collection tests
-        Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
-    }
+    //     //Post-collection tests
+    //     Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
+    // }
 
-    function testWithdrawFunds() public {
-        bytes32 name = "alpha";
-        uint preBalance = investorAddr.balance;
-        uint amount = 1 ether;
-        uint currentFees;
-        (,,currentFees) = fm.getFundDetails2(name, investorAddr);
+    // function testWithdrawFunds() public {
+    //     bytes32 name = "alpha";
+    //     uint preBalance = investorAddr.balance;
+    //     uint amount = 1 ether;
+    //     uint currentFees;
+    //     (,,currentFees) = fm.getFundDetails2(name, investorAddr);
 
-        //investor withdraw a portion of his funds
-        investor.withdrawFunds(fm, name, amount);
-        uint midBalance = investorAddr.balance;
+    //     //investor withdraw a portion of his funds
+    //     investor.withdrawFunds(fm, name, amount);
+    //     uint midBalance = investorAddr.balance;
 
-        //Tests
-        (,,c,,,) = fm.getFundDetails(name);
-        (g,h,i) = fm.getFundDetails2(name, investorAddr);
+    //     //Tests
+    //     (,,c,,,) = fm.getFundDetails(name);
+    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
-        Assert.equal(c, 2 ether, "Funds do not match sum of virtual balances");
-        Assert.equal(g, true, "Account should still be listed as an investor");
-        Assert.equal(h, 1 ether, "Investor's should not be zeroed out");
-        Assert.equal(i, currentFees, "Investor's fees should not change");
-        //Not sure why gas costs aren't lowering midBalance compared to preBalance
-        Assert.equal(midBalance, preBalance, "Midbalance should be equal to preBalance");
+    //     Assert.equal(c, 2 ether, "Funds do not match sum of virtual balances");
+    //     Assert.equal(g, true, "Account should still be listed as an investor");
+    //     Assert.equal(h, 1 ether, "Investor's should not be zeroed out");
+    //     Assert.equal(i, currentFees, "Investor's fees should not change");
+    //     //Not sure why gas costs aren't lowering midBalance compared to preBalance
+    //     Assert.equal(midBalance, preBalance, "Midbalance should be equal to preBalance");
 
-        //investor withdraws remainder of funds
-        investor.withdrawFunds(fm, name, amount);
-        uint postBalance = investorAddr.balance;
+    //     //investor withdraws remainder of funds
+    //     investor.withdrawFunds(fm, name, amount);
+    //     uint postBalance = investorAddr.balance;
 
-        //Tests
-        (,,c,,,) = fm.getFundDetails(name);
-        (g,h,i) = fm.getFundDetails2(name, investorAddr);
+    //     //Tests
+    //     (,,c,,,) = fm.getFundDetails(name);
+    //     (g,h,i) = fm.getFundDetails2(name, investorAddr);
 
-        //Tests
-        Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
-        Assert.equal(g, false, "Account falsely remain an investor");
-        Assert.equal(h, 0, "Investor's virtual balance is not zeroed out");
-        Assert.equal(i, 0, "Investor's fees are not zeroed out");
-        //confirm fees were refunded
-        Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
-    }
+    //     //Tests
+    //     Assert.equal(c, 1 ether, "Funds do not match sum of virtual balances");
+    //     Assert.equal(g, false, "Account falsely remain an investor");
+    //     Assert.equal(h, 0, "Investor's virtual balance is not zeroed out");
+    //     Assert.equal(i, 0, "Investor's fees are not zeroed out");
+    //     //confirm fees were refunded
+    //     Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
+    // }
 
 }
 
@@ -219,36 +218,35 @@ contract Manager {
     //     fm.collectFees(_name);
     // }
 
-    function placeOrder(FundMarketplace fm, bytes32 _name, bytes _action, bytes32 _ticker, uint _qty, uint _price)
-    public
-    {
-        fm.placeOrder(_name, _action, _ticker, _qty, _price);
-    }
+    // function placeOrder(FundMarketplace fm, bytes32 _name, bytes _action, bytes32 _ticker, uint _qty, uint _price)
+    // public
+    // {
+    //     fm.placeOrder(_name, _action, _ticker, _qty, _price);
+    // }
 
     //Fallback function, accepts ether
     function() public payable {
-
     }
 }
 
 contract Investor {
 
-    function makeInvestment(FundMarketplace fm, bytes32 _name, uint _investment) public {
-        uint fee = SafeMath.add(SafeMath.div(_investment, fm.checkFeeRate(_name)), 1);
-        fm.Invest.value(fee)(_name, _investment);
-    }
+    // function makeInvestment(FundMarketplace fm, bytes32 _name, uint _investment) public {
+    //     uint fee = SafeMath.add(SafeMath.div(_investment, fm.checkFeeRate(_name)), 1);
+    //     fm.Invest.value(fee)(_name, _investment);
+    // }
 
-    function payFee(FundMarketplace fm, bytes32 _name, uint _timePeriod) public {
-        fm.payFee(_name, _timePeriod);
-    }
+    // function payFee(FundMarketplace fm, bytes32 _name, uint _timePeriod) public {
+    //     fm.payFee(_name, _timePeriod);
+    // }
 
-    function withdrawFunds(FundMarketplace fm, bytes32 _name, uint _amount) public {
-        fm.withdrawFunds(_name, _amount);
-    }
+    // function withdrawFunds(FundMarketplace fm, bytes32 _name, uint _amount) public {
+    //     fm.withdrawFunds(_name, _amount);
+    // }
 
-    function calcQty(FundMarketplace fm, bytes32 _name, uint qty) public view returns (uint) {
-        return fm.calcQty(_name, qty);
-    }
+    // function calcQty(FundMarketplace fm, bytes32 _name, uint qty) public view returns (uint) {
+    //     return fm.calcQty(_name, qty);
+    // }
 
     //Fallback function, accepts ether
     function() public payable{

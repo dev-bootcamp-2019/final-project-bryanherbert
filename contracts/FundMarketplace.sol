@@ -14,7 +14,7 @@ contract FundMarketplace {
     //State Variables
     address internal admin;
     StructLib.Data funds;
-    uint fundCount;
+    uint public fundCount;
 
     //Events
     event FundCreated(
