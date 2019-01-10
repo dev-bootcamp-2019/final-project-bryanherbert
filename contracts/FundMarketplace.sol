@@ -18,45 +18,45 @@ contract FundMarketplace {
 
     //Events
     event FundCreated(
-        bytes32 indexed name,
+        uint indexed fundNum,
+        bytes32 name,
         //have to think about how to search for value vs. how to see it
         //Probably can still index name, just can't check for it in JS
         //bytes32 name,
-        uint fundCount,
         address fundOwner
     );
 
     event Investment(
-        bytes32 indexed name,
+        uint indexed fundNum,
         address indexed investor,
-        // bytes32 name,
+        // uint fundNum,
         // address investor,
         uint investment
     );
     
     event FeesPaid(
-        bytes32 indexed name,
+        uint indexed fundNum,
         address indexed investor,
-        // bytes32 name,
+        // uint fundNum,
         // address investor,
         uint fee
     );
 
     event FeesCollected(
-        bytes32 indexed name,
+        uint indexed fundNum,
         uint fee
     );
 
     event FundsWithdrawn(
-        //bytes32 indexed name,
-        bytes32 name,
+        //uint fundNum,,
+        uint indexed fundNum,
         address investor,
         uint investment,
         uint fees
     );
 
     event OrderPlaced(
-        bytes32 indexed name,
+        uint indexed fundNum,
         bytes action,
         bytes32 ticker,
         uint qty,
@@ -82,85 +82,85 @@ contract FundMarketplace {
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable {
-        InitLib.initializeFund(funds, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
+        InitLib.initializeFund(funds, fundCount+1, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
         fundCount++;
-        emit FundCreated(_name, fundCount, _fundOwner);
+        emit FundCreated(fundCount, _name, _fundOwner);
     }
 
     //Make investment into particular fund
     //Must have required funds
-    function Invest(bytes32 _name, uint _investment) 
+    function Invest(uint _fundNum, uint _investment) 
     external payable  
     {
-        InvestLib.Invest(funds, _name, _investment, msg.sender, msg.value);
-        emit Investment(_name, msg.sender, _investment);
+        InvestLib.Invest(funds, _fundNum, _investment, msg.sender, msg.value);
+        emit Investment(_fundNum, msg.sender, _investment);
     }
 
     //Place order for a trade
     //Not sure what calldata is exactly for _action
-    function placeOrder(bytes32 _name, bytes _action, bytes32 _ticker, uint _qty, uint _price)
+    function placeOrder(uint _fundNum, bytes _action, bytes32 _ticker, uint _qty, uint _price)
     external 
     {
-        OrderLib.placeOrder(funds, _name, _action, _qty, _price);
-        emit OrderPlaced(_name, _action, _ticker, _qty, _price);
+        OrderLib.placeOrder(funds, _fundNum, _action, _qty, _price);
+        emit OrderPlaced(_fundNum, _action, _ticker, _qty, _price);
     }
 
     //Calculate quantity of shares to buy based on investor's % of fund
     //Could we have investor directly access this
-    function calcQty(bytes32 _name, uint qty) 
+    function calcQty(uint _fundNum, uint _qty) 
     external view
     returns (uint) {
-        return OrderLib.calcQty(funds, _name, qty);
+        return OrderLib.calcQty(funds, _fundNum, _qty);
     }
 
     //check Fee Rate - read operation from struct
     //was originally "public view" when not in library
-    function checkFeeRate(bytes32 _name) public view returns (uint) {
-        return Misc.checkFeeRate(funds, _name);
+    function checkFeeRate(uint _fundNum) public view returns (uint) {
+        return Misc.checkFeeRate(funds, _fundNum);
     }
 
     //One-time pay fee function
-    function payFee(bytes32 _name, uint _timePeriod) external
+    function payFee(uint _fundNum, uint _timePeriod) external
     {
-        PayFeeLib.payFee(funds, _name, _timePeriod);
-        uint payment = SafeMath.div(SafeMath.div(funds.list[_name].virtualBalances[msg.sender], checkFeeRate(_name)), _timePeriod);
-        emit FeesPaid (_name, msg.sender, payment);
+        PayFeeLib.payFee(funds, _fundNum, _timePeriod);
+        uint payment = SafeMath.div(SafeMath.div(funds.list[_fundNum].virtualBalances[msg.sender], checkFeeRate(_fundNum)), _timePeriod);
+        emit FeesPaid (_fundNum, msg.sender, payment);
     }
 
     //Owner of Strategy Collects Fees
-    function collectFees(bytes32 _name) external
+    function collectFees(uint _fundNum) external
     //isOwner(_name)
     {
-        uint fees = CollectFeesLib.collectFees(funds, _name, msg.sender);
-        emit FeesCollected(_name, fees);
+        uint fees = CollectFeesLib.collectFees(funds, _fundNum, msg.sender);
+        emit FeesCollected(_fundNum, fees);
     }
 
-    function withdrawFunds(bytes32 _name, uint _amount) public
+    function withdrawFunds(uint _fundNum, uint _amount) public
     //verifyInvestmentStatus(_name) 
     {
         //Need to make sure this matches up with withdraw philosophy
         uint investment;
         uint fees;
-        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _name, msg.sender, _amount);
-        emit FundsWithdrawn(_name, msg.sender, investment, fees);
+        (investment, fees) = WithdrawFundsLib.withdrawFunds(funds, _fundNum, msg.sender, _amount);
+        emit FundsWithdrawn(_fundNum, msg.sender, investment, fees);
     }
 
     //Get fund information (for testing/verification purposes)
     
-    function getFundDetails(bytes32 _name) external view returns (bytes32, address, uint, uint, uint, uint){
-        return (funds.list[_name].name, 
-        funds.list[_name].fundOwner, 
-        funds.list[_name].totalCapital,
-        funds.list[_name].capitalDeployed,
-        funds.list[_name].feeRate,
-        funds.list[_name].paymentCycle);
+    function getFundDetails(uint _fundNum) external view returns (bytes32, address, uint, uint, uint, uint){
+        return (funds.list[_fundNum].name, 
+        funds.list[_fundNum].fundOwner, 
+        funds.list[_fundNum].totalCapital,
+        funds.list[_fundNum].capitalDeployed,
+        funds.list[_fundNum].feeRate,
+        funds.list[_fundNum].paymentCycle);
     }
 
     //need two functions because of stack height
-    function getFundDetails2(bytes32 _name, address _addr) external view returns (bool, uint, uint){
-        return(funds.list[_name].investors[_addr], 
-        funds.list[_name].virtualBalances[_addr],
-        funds.list[_name].fees[_addr]);
+    function getFundDetails2(uint _fundNum, address _addr) external view returns (bool, uint, uint){
+        return(funds.list[_fundNum].investors[_addr], 
+        funds.list[_fundNum].virtualBalances[_addr],
+        funds.list[_fundNum].fees[_addr]);
     }
 }

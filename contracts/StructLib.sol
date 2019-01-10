@@ -1,9 +1,11 @@
 pragma solidity ^0.4.24;
 
 library StructLib{
-    struct Data { mapping(bytes32 => Fund) list; }
+    struct Data { mapping(uint => Fund) list; }
 
     struct Fund {
+        //Fund Number
+        uint fundNum;
         //Name of fund
         bytes32 name;
         //Partner who Initialized the strategy

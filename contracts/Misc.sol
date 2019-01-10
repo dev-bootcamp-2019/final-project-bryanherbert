@@ -5,9 +5,9 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 library Misc {
     //check Fee Rate - read operation from struct
-    function checkFeeRate(StructLib.Data storage self, bytes32 _name) 
+    function checkFeeRate(StructLib.Data storage self, uint _fundNum) 
     public view
     returns (uint) {
-        return SafeMath.div(100,self.list[_name].feeRate);
+        return SafeMath.div(100,self.list[_fundNum].feeRate);
     }
 }

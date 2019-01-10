@@ -4,31 +4,31 @@ import "../contracts/StructLib.sol";
 
 library WithdrawFundsLib {
 
-    modifier maxWithdraw(StructLib.Data storage self, bytes32 _name, address _investor, uint _amount){
+    modifier maxWithdraw(StructLib.Data storage self, uint _fundNum, address _investor, uint _amount){
         require(
             //amount to withdraw is not more than balance in account
-            _amount <= self.list[_name].virtualBalances[_investor],
+            _amount <= self.list[_fundNum].virtualBalances[_investor],
             "Error: Investor is trying to withdraw more than account balance"
         );
         _;
     }
 
-    function withdrawFunds(StructLib.Data storage self, bytes32 _name, address _investor, uint _amount)
+    function withdrawFunds(StructLib.Data storage self, uint _fundNum, address _investor, uint _amount)
     public
-    maxWithdraw(self, _name, _investor, _amount)
+    maxWithdraw(self, _fundNum, _investor, _amount)
     returns (uint, uint)
     {
         uint bal;
         uint fees;
         //Check for total or partial withdrawal
         //total withdrawal
-        if(_amount == self.list[_name].virtualBalances[_investor]){
+        if(_amount == self.list[_fundNum].virtualBalances[_investor]){
             //Need to make sure this matches up with withdraw philosophy
             //Temporary Balance and Fees
-            bal = self.list[_name].virtualBalances[_investor];
-            fees = self.list[_name].fees[_investor];
+            bal = self.list[_fundNum].virtualBalances[_investor];
+            fees = self.list[_fundNum].fees[_investor];
             //set investor status to faslse
-            self.list[_name].investors[_investor] = false;
+            self.list[_fundNum].investors[_investor] = false;
         } else{
             //partial withdrawal
             bal = _amount;
@@ -37,13 +37,13 @@ library WithdrawFundsLib {
             fees = 0;
         }
         //subtract virtual balance from total funds
-        self.list[_name].totalCapital -= bal;
+        self.list[_fundNum].totalCapital -= bal;
         //Subtract out balance
-        self.list[_name].virtualBalances[_investor] -= bal;
+        self.list[_fundNum].virtualBalances[_investor] -= bal;
         //transfer fees back to investor
         _investor.transfer(fees);
         //Substract out fees
-        self.list[_name].fees[_investor] -= fees;
+        self.list[_fundNum].fees[_investor] -= fees;
         return (bal, fees);
     }
 }

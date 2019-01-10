@@ -1,12 +1,12 @@
 const FundMarketplace = artifacts.require("./FundMarketplace.sol");
 
-//SimpleStorage model
 contract('FundMarketplace', function(accounts) {
     const owner = accounts[0]
     const manager = accounts[1]
     const investor = accounts[2]
 
     var fundName
+    var fundNum
     const name = "alpha"
     //Read results from getFundDetails
     var result
@@ -47,8 +47,8 @@ contract('FundMarketplace', function(accounts) {
         //Transaction from Manager account
         const tx = await fundMarketplace.initializeFund(name, manager, initialFund, feeRate, paymentCycle, {from: manager})
         if (tx.logs[0].event === "FundCreated") {
+            fundNum = tx.logs[0].args.fundNum
             fundName = tx.logs[0].args.name
-            fundCount = tx.logs[0].args.fundCount
             managerAddr = tx.logs[0].args.fundOwner
             eventEmitted = true;
         }
@@ -63,14 +63,14 @@ contract('FundMarketplace', function(accounts) {
         //Confirm fundName is accurately broadcast in event
         assert.equal(fundName, name, "Fund Name does not match test name")
         //Confirm fundCount is accurately broadcast in event
-        assert.equal(fundCount, 1, "Fund Count does not match test")
+        assert.equal(fundNum, 1, "Fund Number does not match test")
         //Confirm manager address is accurately broadcast in event
         assert.equal(managerAddr, manager, "Manager is not listed as owner in event")
         assert.equal(eventEmitted, true, 'Initiating a fund should emit an event')
 
         //Retrieve Fund Details
-        result = await fundMarketplace.getFundDetails.call(name)
-        result2 = await fundMarketplace.getFundDetails2.call(name, manager)
+        result = await fundMarketplace.getFundDetails.call(fundNum)
+        result2 = await fundMarketplace.getFundDetails2.call(fundNum, manager)
 
         //Result Testing
         //Want to be able to remove hex2string- JavaScript converting string to hex at some point in process
@@ -100,8 +100,8 @@ contract('FundMarketplace', function(accounts) {
         const initialFund = web3.toWei(1, "ether")
 
         //Pre-transaction testing
-        result = await fundMarketplace.getFundDetails.call(name)
-        result2 = await fundMarketplace.getFundDetails2.call(name, investor)
+        result = await fundMarketplace.getFundDetails.call(fundNum)
+        result2 = await fundMarketplace.getFundDetails2.call(fundNum, investor)
         //Tests
         assert.equal(result[2], initialFund, "Initial total capital does not match initial balance")
         assert.equal(result2[0], false, "Account is incorrectly listed as investor")
@@ -109,24 +109,23 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(result2[2], 0, "Investor's fees are not zero")
 
         //Calculate Fee
-        var feeRate = await fundMarketplace.checkFeeRate.call(name)
+        var feeRate = await fundMarketplace.checkFeeRate.call(fundNum)
         var fee = (investment/feeRate) + 1
 
         //Make Investment
-        const tx = await fundMarketplace.Invest(name, investment, {from: investor, value: fee})
+        const tx = await fundMarketplace.Invest(fundNum, investment, {from: investor, value: fee})
         //Check for Event
         if (tx.logs[0].event === "Investment"){
-            //name, investor, investment
-            fundName = tx.logs[0].args.name
+            //fundNum, investor, investment
+            fundNum = tx.logs[0].args.fundNum
             investorAddr = tx.logs[0].args.investor
             newInvestment = tx.logs[0].args.investment
             eventEmitted = true;
         }
 
         //Event Testing
-        fundName = hex2string(fundName);
-        //Confirm fundName is accurately broadcast in event
-        assert.equal(fundName, name, "Fund Name does not match test name")
+        //Confirm fundNum is accurately broadcast in event
+        assert.equal(fundNum, 1, "Fund Number does not match test number")
         //Confirm fundCount is accurately broadcast in event
         assert.equal(investorAddr, investor, "Fund Count does not match test")
         //Confirm manager address is accurately broadcast in event
@@ -139,8 +138,8 @@ contract('FundMarketplace', function(accounts) {
         assert.isBelow(investorBalanceAfter, investorBalanceBefore-fee, "Investor's Balance should be less than the initial balance minus the fee, due to gas costs")
 
         //Post-transaction testing
-        result = await fundMarketplace.getFundDetails.call(name)
-        result2 = await fundMarketplace.getFundDetails2.call(name, investor)
+        result = await fundMarketplace.getFundDetails.call(fundNum)
+        result2 = await fundMarketplace.getFundDetails2.call(fundNum, investor)
         //Tests
         assert.equal(result[2].toNumber(), web3.toWei(3, "ether"), "Total Capital does not match sum of initial fund and new investment")
         assert.equal(result2[0], true, "Account is not listed as investor")
@@ -161,27 +160,26 @@ contract('FundMarketplace', function(accounts) {
         var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
 
         //local variables
-        const _name = "alpha"
         const action = "buy"
         const ticker = "PLNT"
         const qty = 3
         const price = web3.toWei(100, "szabo") //0.0001 ether
 
         //Pre-transaction Testing
-        result = await fundMarketplace.getFundDetails.call(_name)
+        result = await fundMarketplace.getFundDetails.call(fundNum)
         //Make sure Capital Deployed is 0
         assert.equal(result[3], 0, "capital deployed is not zero")
 
         //Define event that investor watches
         //Only watch for events filtered by fund
-        let event = fundMarketplace.OrderPlaced({name: _name})
+        let event = fundMarketplace.OrderPlaced({fundNum: fundNum})
 
         //Place Order
-        const tx = await fundMarketplace.placeOrder(_name, action, ticker, qty, price, {from: manager})
+        const tx = await fundMarketplace.placeOrder(fundNum, action, ticker, qty, price, {from: manager})
         //Check for Event
         if(tx.logs[0].event === "OrderPlaced"){
             //name, action, ticker, qty, price
-            fundName = tx.logs[0].args.name
+            fundNum = tx.logs[0].args.fundNum
             fundAction = tx.logs[0].args.action
             fundTicker = tx.logs[0].args.ticker
             fundQty = tx.logs[0].args.qty
@@ -192,11 +190,10 @@ contract('FundMarketplace', function(accounts) {
         //How does the investor receive the event information - check contracts documentation
 
         //Event Testing- verify investor can receive information
-        fundName = hex2string(fundName) //Convert to string format
         fundAction = hex2string(fundAction)
         fundTicker = hex2string(fundTicker)
         fundQty = fundQty.toNumber()
-        assert.equal(fundName, _name, "Fund name does not match test name")
+        assert.equal(fundNum, 1, "Fund number does not match test number")
         assert.equal(fundAction, action, "fund action does not match test action")
         assert.equal(fundTicker, ticker, "fund ticker does not match test ticker")
         assert.equal(fundQty, qty, "fund quantity does not match test quantity")
@@ -208,12 +205,12 @@ contract('FundMarketplace', function(accounts) {
             if(!error){
                 //What should the error be, if any
                 //console.log(result)
-                let eventName = await hex2string(result.args.name)
+                let eventNum = await result.args.fundNum.toNumber()
                 let eventQty = await result.args.qty.toNumber()
                 // console.log("Event Name: "+eventName)
                 // console.log("Event Quantity: "+eventQty)
                 //Code works, but takes time into next test to work, try to make sure this executes before this specific test finishes
-                let outcome =  await fundMarketplace.calcQty.call(eventName, eventQty, {from: investor})
+                let outcome =  await fundMarketplace.calcQty.call(eventNum, eventQty, {from: investor})
                 outcome = await outcome.toNumber()
                 assert.equal(outcome, 2, "Quantity in order is not proportional to investor's share of capital in the fund")
                 // outcome.then(function (result){
@@ -236,7 +233,7 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(investorBalanceAfter, investorBalanceBefore, "Investor's Balance should not change")
 
         //Post-transaction Testing
-        result = await fundMarketplace.getFundDetails.call(name)
+        result = await fundMarketplace.getFundDetails.call(fundNum)
         //Make sure Capital Deployed is equal to cost of trade (price * quantity)
         assert.equal(result[3], web3.toWei(300, "szabo"), "capital was not successfully deployed")
     })
@@ -253,15 +250,14 @@ contract('FundMarketplace', function(accounts) {
         var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
 
         //local variables
-        const _name = "alpha"
         const _timePeriod = 12
         const investment = web3.toWei(2, "ether")
-        const feeRate = await fundMarketplace.checkFeeRate.call(name)
+        const feeRate = await fundMarketplace.checkFeeRate.call(fundNum)
         const fee = (investment/feeRate) + 1
 
         //Pre-transaction testing
-        resultMan = await fundMarketplace.getFundDetails2.call(_name, manager)
-        resultInv = await fundMarketplace.getFundDetails2.call(_name, investor)
+        resultMan = await fundMarketplace.getFundDetails2.call(fundNum, manager)
+        resultInv = await fundMarketplace.getFundDetails2.call(fundNum, investor)
         assert.equal(resultMan[2], 0, "Manager's fees received were not zero")
         assert.equal(resultInv[2], fee, "Investor's fees are not valid")
 
@@ -269,20 +265,19 @@ contract('FundMarketplace', function(accounts) {
         const payment = Math.floor((resultInv[1]/feeRate)/_timePeriod)
 
         //Pay Fee
-        const tx = await fundMarketplace.payFee(_name, _timePeriod, {from: investor})
+        const tx = await fundMarketplace.payFee(fundNum, _timePeriod, {from: investor})
         //Check for Event
         if(tx.logs[0].event === "FeesPaid"){
-            //name, investor, fee
-            fundName = tx.logs[0].args.name
+            //fundNum, investor, fee
+            fundNum = tx.logs[0].args.fundNum
             payingInvestor = tx.logs[0].args.investor
             feePaid = tx.logs[0].args.fee         
             eventEmitted = true
         }
 
         //Event Testing
-        fundName = hex2string(fundName)
         feePaid = feePaid.toNumber()
-        assert.equal(fundName, _name, "Fund name does not match test name")
+        assert.equal(fundNum, 1, "Fund number does not match test number")
         assert.equal(payingInvestor, investor, "Investor does not match fee paying investor")
         assert.equal(feePaid, payment, "Fees paid does not match test payment")
         assert.equal(eventEmitted, true, "Paying Fees should emit an event")
@@ -294,51 +289,49 @@ contract('FundMarketplace', function(accounts) {
         assert.isBelow(investorBalanceAfter, investorBalanceBefore, "Investor's Balance should be less than the initial balance due to gas costs")
     
         //Post-transaction testing
-        resultMan = await fundMarketplace.getFundDetails2.call(_name, manager)
-        resultInv = await fundMarketplace.getFundDetails2.call(_name, investor)
+        resultMan = await fundMarketplace.getFundDetails2.call(fundNum, manager)
+        resultInv = await fundMarketplace.getFundDetails2.call(fundNum, investor)
         assert.equal(resultMan[2].toNumber(), Math.floor(fee/_timePeriod), "Manager did not receive fee")
         assert.equal(resultInv[2].toNumber(), Math.floor(fee-fee/_timePeriod), "Investor did not pay fee")   
     })
 
-    // it("should allow mangers to collect fees", async() => {
-    //     //get instance of deployed contract
-    //     //Deployed fundMarketplace
-    //     const fundMarketplace = await FundMarketplace.deployed()
+    it("should allow mangers to collect fees", async() => {
+        //get instance of deployed contract
+        //Deployed fundMarketplace
+        const fundMarketplace = await FundMarketplace.deployed()
 
-    //     //Set event emitted to be false
-    //     var eventEmitted = false
+        //Set event emitted to be false
+        var eventEmitted = false
 
-    //     //Account testing
-    //     var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
+        //Account testing
+        var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
 
-    //     //local variables
-    //     const _name = "alpha"
-    //     const _result = await fundMarketplace.getFundDetails2.call(_name, investor)
-    //     const _investment = _result[1].toNumber()
-    //     const feeRate = await fundMarketplace.checkFeeRate.call(_name)
-    //     const _timePeriod = 12
-    //     const payment = Math.floor(((_investment/feeRate)+1)/_timePeriod)
+        //local variables
+        const _result = await fundMarketplace.getFundDetails2.call(fundNum, investor)
+        const _investment = _result[1].toNumber()
+        const feeRate = await fundMarketplace.checkFeeRate.call(fundNum)
+        const _timePeriod = 12
+        const payment = Math.floor(((_investment/feeRate)+1)/_timePeriod)
 
-    //     //Collect Fees
-    //     const tx = await fundMarketplace.collectFees(_name, {from: manager})
-    //     if(tx.logs[0].event == "FeesCollected"){
-    //         //name, fee
-    //         fundName = tx.logs[0].args.name
-    //         feesCollected = tx.logs[0].args.fee
-    //         eventEmitted = true
-    //     }
+        //Collect Fees
+        const tx = await fundMarketplace.collectFees(fundNum, {from: manager})
+        if(tx.logs[0].event == "FeesCollected"){
+            //fundNum, fee
+            fundNum = tx.logs[0].args.fundNum
+            feesCollected = tx.logs[0].args.fee
+            eventEmitted = true
+        }
 
-    //     //Event Testing
-    //     fundName = hex2string(fundName)
-    //     feesCollected = feesCollected.toNumber()
-    //     assert.equal(fundName, _name, "Fund Name does not match test name")
-    //     assert.equal(feesCollected, payment, "Fees Collected does not match Fees Owed")
-    //     assert.equal(eventEmitted, true, "Collecting Fees should emit an event")
+        //Event Testing
+        feesCollected = feesCollected.toNumber()
+        assert.equal(fundNum, 1, "Fund number does not match test number")
+        assert.equal(feesCollected, payment, "Fees Collected does not match Fees Owed")
+        assert.equal(eventEmitted, true, "Collecting Fees should emit an event")
 
-    //     //Account Balance + Post-transaction Testing
-    //     var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
-    //     assert.isBelow(managerBalanceAfter, managerBalanceBefore + feesCollected, "Manager account post-balance is incorrect")
-    // })
+        //Account Balance + Post-transaction Testing
+        var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
+        assert.isBelow(managerBalanceAfter, managerBalanceBefore + feesCollected, "Manager account post-balance is incorrect")
+    })
 
     it("should allow an investor to withdraw funds", async() => {
         //Deployed FundMarketplace
@@ -351,18 +344,17 @@ contract('FundMarketplace', function(accounts) {
         var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
         
         //local variables
-        const _name = "alpha"
-        var _result = await fundMarketplace.getFundDetails2(_name, investor)
+        var _result = await fundMarketplace.getFundDetails2(fundNum, investor)
         var _balance = _result[1].toNumber()
         var _fees = _result[2].toNumber()
         var _amount = web3.toWei(1, "ether")
 
         //withdraw partial amount of funds
-        const tx1 = await fundMarketplace.withdrawFunds(_name, _amount, {from: investor})
+        const tx1 = await fundMarketplace.withdrawFunds(fundNum, _amount, {from: investor})
 
         if(tx1.logs[0].event === "FundsWithdrawn"){
-            //name, investor, investment, fees
-            fundName = tx1.logs[0].args.name
+            //fundNum, investor, investment, fees
+            fundNum = tx1.logs[0].args.fundNum
             withdrawnInvestor = tx1.logs[0].args.investor
             withdrawnCapital = tx1.logs[0].args.investment
             withdrawnFees = tx1.logs[0].args.fees
@@ -370,10 +362,9 @@ contract('FundMarketplace', function(accounts) {
         }
 
         //Event Testing
-        fundName = hex2string(fundName)
         withdrawnCapital = withdrawnCapital.toNumber()
         withdrawnFees = withdrawnFees.toNumber()
-        assert.equal(fundName, _name, "Fundname does not match test name")
+        assert.equal(fundNum, 1, "Fund number does not match test number")
         assert.equal(withdrawnInvestor, investor, "Withdrawn investor is not correctly listed")
         assert.equal(withdrawnCapital, _amount, "Balance was not correctly withdrawn")
         assert.equal(withdrawnFees, 0, "Fees were not correctly withdrawn")
@@ -386,18 +377,18 @@ contract('FundMarketplace', function(accounts) {
 
         //Post-Transaction Testing
         //General fund details
-        let resultFund = await fundMarketplace.getFundDetails(_name)
+        let resultFund = await fundMarketplace.getFundDetails(fundNum)
         //Fund Details for Investor
-        let resultInv = await fundMarketplace.getFundDetails2(_name, investor)
+        let resultInv = await fundMarketplace.getFundDetails2(fundNum, investor)
         //fund Detials for Manager
-        let resultMan = await fundMarketplace.getFundDetails2(_name, manager)
+        let resultMan = await fundMarketplace.getFundDetails2(fundNum, manager)
         assert.equal(resultFund[2].toNumber(), resultMan[1].toNumber() + resultInv[1].toNumber(), "Total Capital should be equal to sum of virtual balances")
         assert.equal(resultInv[0], true, "Investor should still be listed as an investor")
         assert.equal(resultInv[1].toNumber(), _balance - _amount, "Investor's virtual balance should be the initial balance - the amount withdrawn")
         assert.equal(resultInv[2].toNumber(), _fees, "Investor's fees should not change")
 
         //Withdraw Remainder of Funds
-        _result = await fundMarketplace.getFundDetails2(_name, investor)
+        _result = await fundMarketplace.getFundDetails2(fundNum, investor)
         //Update balance
         _balance = _result[1].toNumber()
         //Update fees- not necessary right now for current functionality
@@ -405,11 +396,11 @@ contract('FundMarketplace', function(accounts) {
         //Set eventEmitted to false
         eventEmitted = false
 
-        const tx2 = await fundMarketplace.withdrawFunds(_name, _amount, {from: investor})
+        const tx2 = await fundMarketplace.withdrawFunds(fundNum, _amount, {from: investor})
 
         if(tx2.logs[0].event === "FundsWithdrawn"){
             //name, investor, investment, fees
-            fundName = tx2.logs[0].args.name
+            fundNum = tx2.logs[0].args.fundNum
             withdrawnInvestor = tx2.logs[0].args.investor
             withdrawnCapital = tx2.logs[0].args.investment
             withdrawnFees = tx2.logs[0].args.fees
@@ -417,10 +408,9 @@ contract('FundMarketplace', function(accounts) {
         }
 
         //Event Testing
-        fundName = hex2string(fundName)
         withdrawnCapital = withdrawnCapital.toNumber()
         withdrawnFees = withdrawnFees.toNumber()
-        assert.equal(fundName, _name, "Fundname does not match test name")
+        assert.equal(fundNum, 1, "Fund number does not match test number")
         assert.equal(withdrawnInvestor, investor, "Withdrawn investor is not correctly listed")
         assert.equal(withdrawnCapital, _amount, "Balance was not correctly withdrawn")
         assert.equal(withdrawnFees, _fees, "Fees were not correctly withdrawn")
@@ -432,11 +422,11 @@ contract('FundMarketplace', function(accounts) {
 
         //Post-transaction Testing
         //General fund details
-        resultFund = await fundMarketplace.getFundDetails(_name)
+        resultFund = await fundMarketplace.getFundDetails(fundNum)
         //Fund Details for Investor
-        resultInv = await fundMarketplace.getFundDetails2(_name, investor)
+        resultInv = await fundMarketplace.getFundDetails2(fundNum, investor)
         //fund Detials for Manager
-        resultMan = await fundMarketplace.getFundDetails2(_name, manager)
+        resultMan = await fundMarketplace.getFundDetails2(fundNum, manager)
         assert.equal(resultFund[2].toNumber(), resultMan[1].toNumber() + resultInv[1].toNumber(), "Total Capital should be equal to manager's capital contribution")
         assert.equal(resultInv[0], false, "Investor is incorrectly listed as active in fund")
         assert.equal(resultInv[1].toNumber(), 0, "Investor's virutal balance is not zeroed out")

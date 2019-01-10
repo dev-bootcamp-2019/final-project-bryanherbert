@@ -4,7 +4,7 @@ import "../contracts/StructLib.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 library OrderLib{
-    function placeOrder(StructLib.Data storage self, bytes32 _name, bytes memory _action, uint _qty, uint _price)
+    function placeOrder(StructLib.Data storage self, uint _fundNum, bytes memory _action, uint _qty, uint _price)
     public
     {
         bytes memory buy = "buy";
@@ -13,13 +13,13 @@ library OrderLib{
         if(compareStrings(_action, buy)){
             require(
                 //Cost of trade is price * qty
-                self.list[_name].totalCapital > SafeMath.mul(_price,_qty),
+                self.list[_fundNum].totalCapital > SafeMath.mul(_price,_qty),
                 "Cost of trade is greater than balance of fund"
             );
-            self.list[_name].capitalDeployed += SafeMath.mul(_price, _qty);
+            self.list[_fundNum].capitalDeployed += SafeMath.mul(_price, _qty);
         }
         else if(compareStrings(_action, sell)){
-            self.list[_name].capitalDeployed -= SafeMath.mul(_price, _qty);
+            self.list[_fundNum].capitalDeployed -= SafeMath.mul(_price, _qty);
         }
         else{
             revert("Not a valid action");
@@ -30,9 +30,9 @@ library OrderLib{
         return keccak256(a) == keccak256(b);
     }
 
-    function calcQty(StructLib.Data storage self, bytes32 _name, uint qty) public view returns(uint) {
+    function calcQty(StructLib.Data storage self, uint _fundNum, uint qty) public view returns(uint) {
         //Investor's capital as a percentage of total funds
         //Need to incorporate Safe.Math for more robust solution
-        return(SafeMath.div(SafeMath.mul(qty, self.list[_name].virtualBalances[msg.sender]), self.list[_name].totalCapital));
+        return(SafeMath.div(SafeMath.mul(qty, self.list[_fundNum].virtualBalances[msg.sender]), self.list[_fundNum].totalCapital));
     }
 }
