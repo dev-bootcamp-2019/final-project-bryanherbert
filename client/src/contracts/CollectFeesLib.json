@@ -62,7 +62,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 45,
-        "sourceUnit": 1108,
+        "sourceUnit": 1124,
         "src": "26:36:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -136,7 +136,7 @@
                             "referencedDeclaration": 4,
                             "src": "268:4:0",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
@@ -147,10 +147,10 @@
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 1074,
+                          "referencedDeclaration": 1090,
                           "src": "268:9:0",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1106_storage_$",
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1122_storage_$",
                             "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                           }
                         },
@@ -175,7 +175,7 @@
                         "nodeType": "IndexAccess",
                         "src": "268:19:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1106_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1122_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
@@ -186,7 +186,7 @@
                       "lValueRequested": false,
                       "memberName": "fees",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1101,
+                      "referencedDeclaration": 1117,
                       "src": "268:24:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
@@ -246,7 +246,7 @@
                               "referencedDeclaration": 4,
                               "src": "313:4:0",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
@@ -257,10 +257,10 @@
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1074,
+                            "referencedDeclaration": 1090,
                             "src": "313:9:0",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1106_storage_$",
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1122_storage_$",
                               "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                             }
                           },
@@ -285,7 +285,7 @@
                           "nodeType": "IndexAccess",
                           "src": "313:19:0",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1106_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1122_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
@@ -296,7 +296,7 @@
                         "lValueRequested": false,
                         "memberName": "fees",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1101,
+                        "referencedDeclaration": 1117,
                         "src": "313:24:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
@@ -471,7 +471,7 @@
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
@@ -479,10 +479,10 @@
                     "id": 3,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1075,
+                    "referencedDeclaration": 1091,
                     "src": "115:14:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -618,7 +618,7 @@
         "id": 2,
         "nodeType": "ImportDirective",
         "scope": 45,
-        "sourceUnit": 1108,
+        "sourceUnit": 1124,
         "src": "26:36:0",
         "symbolAliases": [],
         "unitAlias": ""
@@ -692,7 +692,7 @@
                             "referencedDeclaration": 4,
                             "src": "268:4:0",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                              "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                               "typeString": "struct StructLib.Data storage pointer"
                             }
                           },
@@ -703,10 +703,10 @@
                           "lValueRequested": false,
                           "memberName": "list",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 1074,
+                          "referencedDeclaration": 1090,
                           "src": "268:9:0",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1106_storage_$",
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1122_storage_$",
                             "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                           }
                         },
@@ -731,7 +731,7 @@
                         "nodeType": "IndexAccess",
                         "src": "268:19:0",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Fund_$1106_storage",
+                          "typeIdentifier": "t_struct$_Fund_$1122_storage",
                           "typeString": "struct StructLib.Fund storage ref"
                         }
                       },
@@ -742,7 +742,7 @@
                       "lValueRequested": false,
                       "memberName": "fees",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 1101,
+                      "referencedDeclaration": 1117,
                       "src": "268:24:0",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
@@ -802,7 +802,7 @@
                               "referencedDeclaration": 4,
                               "src": "313:4:0",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                                "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                                 "typeString": "struct StructLib.Data storage pointer"
                               }
                             },
@@ -813,10 +813,10 @@
                             "lValueRequested": false,
                             "memberName": "list",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1074,
+                            "referencedDeclaration": 1090,
                             "src": "313:9:0",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1106_storage_$",
+                              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1122_storage_$",
                               "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                             }
                           },
@@ -841,7 +841,7 @@
                           "nodeType": "IndexAccess",
                           "src": "313:19:0",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_Fund_$1106_storage",
+                            "typeIdentifier": "t_struct$_Fund_$1122_storage",
                             "typeString": "struct StructLib.Fund storage ref"
                           }
                         },
@@ -852,7 +852,7 @@
                         "lValueRequested": false,
                         "memberName": "fees",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 1101,
+                        "referencedDeclaration": 1117,
                         "src": "313:24:0",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
@@ -1027,7 +1027,7 @@
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
@@ -1035,10 +1035,10 @@
                     "id": 3,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1075,
+                    "referencedDeclaration": 1091,
                     "src": "115:14:0",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$1075_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$1091_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -1187,8 +1187,14 @@
       "links": {},
       "address": "0xc282726aa20f9ee9a1ca478a7f9c9503b395f84f",
       "transactionHash": "0xef7207e382c0fa1bdfc61bf5ccef4cbcd34e45afb7ab40db7c65e535f4c154ca"
+    },
+    "1547087208076": {
+      "events": {},
+      "links": {},
+      "address": "0x601602814121d790259f33938887c57585e13720",
+      "transactionHash": "0xaaed1ad10abcf93de85e1257f20a1a8acd3f89154698ab52261cc8738e3efea1"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-10T00:21:26.062Z"
+  "updatedAt": "2019-01-10T02:59:14.540Z"
 }

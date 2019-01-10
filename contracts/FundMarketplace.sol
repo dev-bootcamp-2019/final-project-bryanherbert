@@ -82,7 +82,7 @@ contract FundMarketplace {
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable {
-        InitLib.initializeFund(funds, fundCount+1, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
+        InitLib.initializeFund(funds, fundCount, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
         fundCount++;
         emit FundCreated(fundCount, _name, _fundOwner);

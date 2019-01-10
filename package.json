@@ -21,7 +21,10 @@
   },
   "homepage": "https://github.com/dev-bootcamp-2019/final-project-bryanherbert#readme",
   "dependencies": {
-    "openzeppelin-solidity": "^2.0.0"
+    "bootstrap": "^4.2.1",
+    "jquery": "^3.3.1",
+    "openzeppelin-solidity": "^2.0.0",
+    "popper.js": "^1.14.6"
   },
   "devDependencies": {}
 }
