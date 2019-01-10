@@ -5,6 +5,53 @@ import truffleContract from "truffle-contract";
 
 import "./App.css";
 
+function Fund(props) {
+  // constructor(props){
+  //   super(props);
+  //   this.state = {
+  //     name: null,
+  //     manager: null,
+  //     capital: null,
+  //     feeRate: null,
+  //     paymentCycle: null,
+  //   };
+
+  return(
+    <div className = "fund">
+      <h1>{props.name} Fund</h1>
+      <p>Manager: {props.manager}</p>
+      <p>Total Capital: {props.capital} ether</p>
+      <p>Annual Fee Rate: {props.feeRate}%</p>
+      <p>Payment Cycle: {props.paymentCycle} days</p>
+    </div>
+  );
+}
+
+class Board extends React.Component {
+  //i is fund number
+  renderFund(info) {
+    return (
+      <Fund
+          name = {info.name}
+          manager = {info.manager}
+          capital = {info.capital}
+          feeRate = {info.feeRate}
+          paymentCycle = {info.paymentCycle}
+      />
+    );
+  }
+
+  render(){
+    return (
+      <div>
+        {this.renderFund(this.props)}
+      </div>
+    )
+  }
+
+}
+
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -117,6 +164,7 @@ class App extends Component {
 
 
 
+
   // runExample = async () => {
   //   //Add web3 here
   //   const { web3, accounts, contract } = this.state;
@@ -153,6 +201,23 @@ class App extends Component {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
+
+    const fundList = async () => {
+      var i = this.state.fundCount;
+      const { web3, contract } = this.state;
+      const response = await contract.getFundDetails(i);
+      console.log(i);
+      return(
+        <Fund
+          name = {web3.utils.hexToAscii(response[0])}
+          manager = {response[1]}
+          investment = {web3.utils.fromWei(response[2].toString(), "ether")}
+          feeRate = {response[4].toNumber()} 
+          paymentCycle = {response[5].toNumber()}
+        />
+      );
+    }
+
     return (
       <div className="App">
         <div>
@@ -162,10 +227,8 @@ class App extends Component {
           </p>
         </div>
         <h2>Fund Marketplace</h2>
-        <p>
-          If your contracts compiled and migrated successfully, below will display the name of the alpha fund.
-        </p>
         <form onSubmit={this.handleSubmit}>
+          <h3>Launch a Fund with the form below:</h3>
           <label>
             Fund Name: 
             <input
@@ -210,9 +273,25 @@ class App extends Component {
         <p>
           Total Fund Count: <strong>{this.state.fundCount}</strong>
         </p>
+        <div>
+          <ol>{fundList}</ol>                      
+        </div>
       </div>
     );
   }
 }
 
 export default App;
+
+
+
+
+// {Array(this.state.fundCount).fill(
+//   <Board
+//     name = {this.state.name}
+//     manager = {this.state.manager}
+//     capital = {this.state.investment}
+//     feeRate = {this.state.feeRate}
+//     paymentCycle = {this.state.paymentCycle}
+//   />)
+//   }
