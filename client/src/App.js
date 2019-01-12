@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
+import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
 
 import "./App.css";
 
@@ -221,58 +222,61 @@ class App extends Component {
     return (
       <div className="App">
         <div>
-          <h1>Welcome to Mimic</h1>
-          <p>
+          <Jumbotron>
+            <h1 className="display-3">Welcome to Mimic</h1>
+            <p className="lead">
             Your one stop shop for wealth management guidance
-          </p>
+            </p>
+          </Jumbotron>
         </div>
         <h2>Fund Marketplace</h2>
-        <form onSubmit={this.handleSubmit}>
-          <h3>Launch a Fund with the form below:</h3>
-          <label>
-            Fund Name: 
-            <input
-              name="inputName"
-              type="text"
-              //Don't think I need the value below
-              //value = {this.state.input}
-              onChange = {this.handleChange} />
-          </label>
-          <br></br>
-          <label>
-            Initial Investment (in ether): 
-            <input
-              name="inputInvestment"
-              type="text"
-              onChange = {this.handleChange} />
-          </label>
-          <br></br>
-          <label>
-            Annual Management Fee Rate (%):
-            <input
-              name="inputFeeRate"
-              type="text"
-              onChange = {this.handleChange} />
-          </label>
-          <br></br>
-          <label>
-            Payment Cycle (in days): 
-            <input
-              name="inputPaymentCycle"
-              type="text"
-              onChange = {this.handleChange} />
-          </label>
-          <br></br>
-          <input type="submit" value="Submit"/>
-        </form>
-        <div>The name of the fund is: <strong>{this.state.name}</strong></div>
-        <div>The manager of the fund is: <strong>{this.state.manager}</strong></div>
-        <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
-        <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
-        <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
-        <p>
-          Total Fund Count: <strong>{this.state.fundCount}</strong>
-        </p>
+        <Row>
+          <Col>
+            <Form onSubmit={this.handleSubmit}>
+            <h3>Launch a Fund with the form below:</h3>
+            <FormGroup>
+              <Label for="fundNameInput">Fund Name</Label>
+              <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
+            </FormGroup>
+            
+            <label>
+              Initial Investment (in ether): 
+              <input
+                name="inputInvestment"
+                type="text"
+                onChange = {this.handleChange} />
+            </label>
+            <br></br>
+            <label>
+              Annual Management Fee Rate (%):
+              <input
+                name="inputFeeRate"
+                type="text"
+                onChange = {this.handleChange} />
+            </label>
+            <br></br>
+            <label>
+              Payment Cycle (in days): 
+              <input
+                name="inputPaymentCycle"
+                type="text"
+                onChange = {this.handleChange} />
+            </label>
+            <br></br>
+            <input type="submit" value="Submit"/>
+          </Form>
+        </Col>
+          <Col>
+          <div>The name of the fund is: <strong>{this.state.name}</strong></div>
+          <div>The manager of the fund is: <strong>{this.state.manager}</strong></div>
+          <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
+          <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
+          <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
+          <p>
+            Total Fund Count: <strong>{this.state.fundCount}</strong>
+          </p>
+        </Col>
+        </Row>
         <div>
           <ol>{fundList}</ol>                      
         </div>
