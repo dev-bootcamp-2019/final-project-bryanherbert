@@ -52,11 +52,21 @@ class Board extends React.Component {
 
 }
 
-
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = { 
+    this.state = {
+      
+      fundList: [
+        {
+          fundName: null,
+          fundManager: null,
+          fundInvestment: null,
+          fundFeeRate: null,
+          fundPaymentCycle: null,
+        }
+      ],
+      
       name: null,
       inputName: null, 
       
@@ -161,6 +171,54 @@ class App extends Component {
     this.setState({ 
       fundCount: fundCount.toNumber()
     });
+
+    //Clear fundList
+    //for (var member in this.state.fundList) delete this.state.fundList[member];
+
+    //Define fundList variable to concatenate (not sure this is right, based on tic tac toe)
+    //const fundList = this.state.fundList.slice(0, this.state.fundCount);
+    //console.log("Pre Fund List: "+fundList);
+
+    //Populate fundList Array
+    if(fundCount > 0){
+      for(let i=1; i<=fundCount; i++){
+        const response = await contract.getFundDetails(i);
+        if(i==1){
+          this.setState({
+            fundList: [
+              {
+                fundName: web3.utils.hexToAscii(response[0]), 
+                fundManager: response[1], 
+                fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"), 
+                fundFeeRate: response[4].toNumber(), 
+                fundPaymentCycle: response[5].toNumber()
+              }
+            ]
+          });
+        } else{
+            console.log("i = "+i);
+            //maybe make this a slice
+            const tempFundList = this.state.fundList;
+            this.setState({
+              fundList: tempFundList.concat([
+                {
+                  fundName: web3.utils.hexToAscii(response[0]), 
+                  fundManager: response[1], 
+                  fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"), 
+                  fundFeeRate: response[4].toNumber(), 
+                  fundPaymentCycle: response[5].toNumber()
+                }
+              ])
+            });
+          }
+      };
+    };
+    console.log("post Fund List: "+this.state.fundList);
+    console.log("test name: "+this.state.fundList[0].fundName);
+    console.log("test name: "+this.state.fundList[1].fundName);
+    console.log("test name: "+this.state.fundList[2].fundName);
+    console.log("test name: "+this.state.fundList[3].fundName);
+    console.log("test name: "+this.state.fundList[4].fundName);
   };
 
 
@@ -238,7 +296,6 @@ class App extends Component {
               <Label for="fundNameInput">Fund Name</Label>
               <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
             </FormGroup>
-            
             <label>
               Initial Investment (in ether): 
               <input

@@ -1217,8 +1217,14 @@
       "links": {},
       "address": "0x9270dd2b8f69587c56dbd1d8b81539535e16ce79",
       "transactionHash": "0x93b70e713dee58f1492aec51bc437d6b77191019ceb1261e046d8ed6d2b3a13a"
+    },
+    "1547661414843": {
+      "events": {},
+      "links": {},
+      "address": "0x530e911efbd54bd177b38cbcdd25eb3c29929f87",
+      "transactionHash": "0x93b70e713dee58f1492aec51bc437d6b77191019ceb1261e046d8ed6d2b3a13a"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-12T20:12:43.418Z"
+  "updatedAt": "2019-01-16T17:57:42.266Z"
 }

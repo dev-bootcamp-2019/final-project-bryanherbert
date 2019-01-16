@@ -10897,8 +10897,22 @@
       },
       "address": "0x205962b4c3c0d87f2379064697d57c44c93f0373",
       "transactionHash": "0x5462230d3f4b909f211c5cc534ae7178ec21d144644ef73a3f672e1b07c33a57"
+    },
+    "1547661414843": {
+      "events": {},
+      "links": {
+        "InitLib": "0x33280fa32fba50f1376bfe2f8c4dfc0b0ae012b2",
+        "Misc": "0xedabcd7b9cc7d4c56cb35b10087418eb10f2c1d3",
+        "InvestLib": "0x4bac5679eb7a02e64873a61ecfd1606a26c3ef0f",
+        "PayFeeLib": "0x7e53cf78f16b46a95b639b134cfff87544322fb2",
+        "CollectFeesLib": "0x530e911efbd54bd177b38cbcdd25eb3c29929f87",
+        "WithdrawFundsLib": "0xc7544ac26570a390a3059d2320ec97a483befba7",
+        "OrderLib": "0xdb28bdabd09a95e6e11742cec37653938499f8de"
+      },
+      "address": "0x221bca94356e1bef4dabb2a76acd2d733d3157cf",
+      "transactionHash": "0xa086a226d162ca5b6b97dd3fc1addbabda553e67fd596cf5fe58cffbe5d46d4d"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-12T20:12:43.567Z"
+  "updatedAt": "2019-01-16T17:57:42.368Z"
 }
