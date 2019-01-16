@@ -213,12 +213,6 @@ class App extends Component {
           }
       };
     };
-    console.log("post Fund List: "+this.state.fundList);
-    console.log("test name: "+this.state.fundList[0].fundName);
-    console.log("test name: "+this.state.fundList[1].fundName);
-    console.log("test name: "+this.state.fundList[2].fundName);
-    console.log("test name: "+this.state.fundList[3].fundName);
-    console.log("test name: "+this.state.fundList[4].fundName);
   };
 
 
@@ -261,21 +255,18 @@ class App extends Component {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
 
-    const fundList = async () => {
-      var i = this.state.fundCount;
-      const { web3, contract } = this.state;
-      const response = await contract.getFundDetails(i);
-      console.log(i);
+    const fundList = this.state.fundList;
+    const funds = fundList.map((fund, fundNum) => {
       return(
-        <Fund
-          name = {web3.utils.hexToAscii(response[0])}
-          manager = {response[1]}
-          investment = {web3.utils.fromWei(response[2].toString(), "ether")}
-          feeRate = {response[4].toNumber()} 
-          paymentCycle = {response[5].toNumber()}
+        <Fund key = {fundNum}
+          name = {fund.fundName}
+          manager = {fund.fundManager}
+          capital = {fund.fundInvestment}
+          feeRate = {fund.fundFeeRate} 
+          paymentCycle = {fund.fundPaymentCycle}
         />
       );
-    }
+    })
 
     return (
       <div className="App">
@@ -291,51 +282,45 @@ class App extends Component {
         <Row>
           <Col>
             <Form onSubmit={this.handleSubmit}>
-            <h3>Launch a Fund with the form below:</h3>
-            <FormGroup>
-              <Label for="fundNameInput">Fund Name</Label>
-              <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
-            </FormGroup>
-            <label>
-              Initial Investment (in ether): 
-              <input
-                name="inputInvestment"
-                type="text"
-                onChange = {this.handleChange} />
-            </label>
-            <br></br>
-            <label>
-              Annual Management Fee Rate (%):
-              <input
-                name="inputFeeRate"
-                type="text"
-                onChange = {this.handleChange} />
-            </label>
-            <br></br>
-            <label>
-              Payment Cycle (in days): 
-              <input
-                name="inputPaymentCycle"
-                type="text"
-                onChange = {this.handleChange} />
-            </label>
-            <br></br>
-            <input type="submit" value="Submit"/>
-          </Form>
-        </Col>
+              <h3>Launch a Fund with the form below:</h3>
+              <FormGroup>
+                <Label for="fundNameInput">Fund Name</Label>
+                <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="fundInvestmentInput">Initial Investment (in ether)</Label>
+                <Input type = "text" name ="inputInvestment" id="investmentForm" onChange = {this.handleChange}/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="fundFeeRateInput">Annual Management Fee (%)</Label>
+                <Input type = "text" name ="inputFeeRate" id="feeRateForm" onChange = {this.handleChange}/>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="fundPaymentCycleInput">Payment Cycle (in days)</Label>
+                <Input type = "text" name ="inputPaymentCycle" id="paymentCycleForm" onChange = {this.handleChange}/>
+              </FormGroup>
+
+              <FormGroup>
+                <Button type="submit" color="primary">Submit</Button>
+              </FormGroup>
+            </Form>
+          </Col>
           <Col>
-          <div>The name of the fund is: <strong>{this.state.name}</strong></div>
-          <div>The manager of the fund is: <strong>{this.state.manager}</strong></div>
-          <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
-          <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
-          <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
-          <p>
-            Total Fund Count: <strong>{this.state.fundCount}</strong>
-          </p>
-        </Col>
+            <div>The name of the fund is: <strong>{this.state.name}</strong></div>
+            <div>The manager of the fund is: <strong>{this.state.manager}</strong></div>
+            <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
+            <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
+            <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
+            <p>
+              Total Fund Count: <strong>{this.state.fundCount}</strong>
+            </p>
+          </Col>
         </Row>
         <div>
-          <ol>{fundList}</ol>                      
+          <ol>{funds}</ol>                  
         </div>
       </div>
     );
