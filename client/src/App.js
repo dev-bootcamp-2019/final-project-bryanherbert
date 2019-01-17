@@ -18,8 +18,8 @@ function Fund(props) {
   //   };
 
   return(
-    <div className = "fund">
-      <h1>{props.name} Fund</h1>
+    <div className="fund">
+      <h3>{props.name} Fund</h3>
       <p>Manager: {props.manager}</p>
       <p>Total Capital: {props.capital} ether</p>
       <p>Annual Fee Rate: {props.feeRate}%</p>
@@ -67,19 +67,14 @@ class App extends Component {
         }
       ],
       
-      name: null,
       inputName: null, 
       
-      manager: null,
       inputManager: null,
       
-      investment: null,
       inputInvestment: null,  
       
-      feeRate: null,
       inputFeeRate: null, 
       
-      paymentCycle: null,
       inputPaymentCycle: null, 
       
       fundCount: null, 
@@ -146,17 +141,10 @@ class App extends Component {
       paymentCycle, 
       { from: manager });
     const count = await contract.fundCount();
-    const response = await contract.getFundDetails(count);
+    //const response = await contract.getFundDetails(count);
     
     //Update state with result
-    this.setState({ 
-      name: web3.utils.hexToAscii(response[0]), 
-      manager: response[1], 
-      investment: web3.utils.fromWei(response[2].toString(), "ether"), 
-      feeRate: response[4].toNumber(), 
-      paymentCycle: response[5].toNumber(),
-      fundCount: count.toNumber()
-    });
+    this.setState(this.setup);
   }
 
 
@@ -171,13 +159,6 @@ class App extends Component {
     this.setState({ 
       fundCount: fundCount.toNumber()
     });
-
-    //Clear fundList
-    //for (var member in this.state.fundList) delete this.state.fundList[member];
-
-    //Define fundList variable to concatenate (not sure this is right, based on tic tac toe)
-    //const fundList = this.state.fundList.slice(0, this.state.fundCount);
-    //console.log("Pre Fund List: "+fundList);
 
     //Populate fundList Array
     if(fundCount > 0){
@@ -278,47 +259,46 @@ class App extends Component {
             </p>
           </Jumbotron>
         </div>
-        <h2>Fund Marketplace</h2>
-        <Row>
-          <Col>
-            <Form onSubmit={this.handleSubmit}>
-              <h3>Launch a Fund with the form below:</h3>
-              <FormGroup>
-                <Label for="fundNameInput">Fund Name</Label>
-                <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
-              </FormGroup>
+        <div>
+          <Row>
+              <Col sm="12" md={{ size: 6, offset: 3}}>
+                <Form className="fundform" onSubmit={this.handleSubmit}>
+                  <h3>Launch a Fund with the form below:</h3>
+                  <FormGroup>
+                    <Label for="fundNameInput">Fund Name</Label>
+                    <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
+                  </FormGroup>
 
-              <FormGroup>
-                <Label for="fundInvestmentInput">Initial Investment (in ether)</Label>
-                <Input type = "text" name ="inputInvestment" id="investmentForm" onChange = {this.handleChange}/>
-              </FormGroup>
+                  <FormGroup>
+                    <Label for="fundInvestmentInput">Initial Investment (in ether)</Label>
+                    <Input type = "text" name ="inputInvestment" id="investmentForm" onChange = {this.handleChange}/>
+                  </FormGroup>
 
-              <FormGroup>
-                <Label for="fundFeeRateInput">Annual Management Fee (%)</Label>
-                <Input type = "text" name ="inputFeeRate" id="feeRateForm" onChange = {this.handleChange}/>
-              </FormGroup>
+                  <FormGroup>
+                    <Label for="fundFeeRateInput">Annual Management Fee (%)</Label>
+                    <Input type = "text" name ="inputFeeRate" id="feeRateForm" onChange = {this.handleChange}/>
+                  </FormGroup>
 
-              <FormGroup>
-                <Label for="fundPaymentCycleInput">Payment Cycle (in days)</Label>
-                <Input type = "text" name ="inputPaymentCycle" id="paymentCycleForm" onChange = {this.handleChange}/>
-              </FormGroup>
+                  <FormGroup>
+                    <Label for="fundPaymentCycleInput">Payment Cycle (in days)</Label>
+                    <Input type = "text" name ="inputPaymentCycle" id="paymentCycleForm" onChange = {this.handleChange}/>
+                  </FormGroup>
 
-              <FormGroup>
-                <Button type="submit" color="primary">Submit</Button>
-              </FormGroup>
-            </Form>
-          </Col>
-          <Col>
-            <div>The name of the fund is: <strong>{this.state.name}</strong></div>
-            <div>The manager of the fund is: <strong>{this.state.manager}</strong></div>
-            <div>The size of the fund is: <strong>{this.state.investment} ether</strong></div>
-            <div>The fee rate of the fund is: <strong>{this.state.feeRate}%</strong></div>
-            <div>The payment cycle of the fund is: <strong>{this.state.paymentCycle} days</strong></div>
-            <p>
-              Total Fund Count: <strong>{this.state.fundCount}</strong>
-            </p>
-          </Col>
-        </Row>
+                  <FormGroup>
+                    <Button type="submit" color="primary">Submit</Button>
+                  </FormGroup>
+                </Form>
+              </Col>
+            </Row>
+        </div>
+        <div>
+          <h2>Fund Marketplace</h2>
+        </div>
+        <div>
+          <p>
+            Total Fund Count: <strong>{this.state.fundCount}</strong>
+          </p>
+        </div>
         <div>
           <ol>{funds}</ol>                  
         </div>

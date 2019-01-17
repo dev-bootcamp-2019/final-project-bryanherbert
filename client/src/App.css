@@ -22,8 +22,32 @@
   color: #61dafb;
 }
 
+.jumbotron{
+  background-image: url("https://images.icanvas.com/2d/TEO20.jpg");
+  background-size: cover;
+}
+
 .jumbotron h1{ 
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.fundform {
+  border-style: solid;
+  border-color: black;
+  border-width: 1px;
+  border-radius: 25px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.fund {
+  display: inline-block;
+  border-style: solid;
+  border-color: blue;
+  border-width: 2px;
+  border-radius: 25px;
+  padding: 10px;
+  margin: 10px;
 }
 
 @keyframes App-logo-spin {
