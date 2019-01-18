@@ -50,6 +50,11 @@
   margin: 10px;
 }
 
+.funds-table h4{
+  text-align: left;
+  padding-left: 30px;
+}
+
 .invest-button {
   padding-left: 20%;
 }

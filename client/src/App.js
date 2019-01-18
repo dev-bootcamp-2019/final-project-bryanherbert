@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
-import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText} from 'reactstrap';
+import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table} from 'reactstrap';
 
 import "./App.css";
 
@@ -61,6 +61,96 @@ class Fund extends React.Component {
     );
   }
   
+}
+
+class FundTableEntry extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    return(
+      <tr>
+        <th scope="row">{this.props.fundNumber}</th>
+        <td>{this.props.name}</td>
+        <td>{this.props.totalCapital} ether</td>
+        <td>{this.props.capitalDeployed} ether</td>
+        <td>{this.props.feeRate}%</td>
+        <td>{this.props.paymentCycle} days</td>
+      </tr>
+    );
+  }
+}
+
+class FundsTable extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      deployedCapital: Array(this.props.fundList.length+1).fill(0)
+    };
+    this.getResults = this.getResults.bind(this);
+    this.fillCapitalDeployed = this.fillCapitalDeployed.bind(this);
+  }
+
+  getResults = async (contract, num) => {
+    const result = await contract.getFundDetails(num);
+    return result;
+  }
+
+  fillCapitalDeployed = async (contract, web3) => {
+    let deployedCapital= Array(this.props.fundList.length+1).fill(0)
+    for(var i=1; i<=this.props.fundList.length;i++){
+      const result = await this.getResults(contract, i);
+      const capitalDeployed = web3.utils.fromWei(result[3].toString(), "ether")
+      deployedCapital[i] = capitalDeployed;
+    }
+    this.setState({
+      deployedCapital: deployedCapital
+    });
+  }
+  render(){
+    let i = 0;
+    this.fillCapitalDeployed(this.props.contract, this.props.web3);
+    const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
+      const owner = fund.fundManager;      
+      if(owner === this.props.account){
+        i++;
+        return(
+          <FundTableEntry
+            fundNumber = {i}
+            name = {fund.fundName}
+            totalCapital = {fund.fundInvestment}
+            capitalDeployed = {this.state.deployedCapital[fundNum+1]}
+            feeRate = {fund.fundFeeRate}
+            paymentCycle = {fund.fundPaymentCycle}
+          />
+        );
+      }else{
+      }
+    })
+
+    return(
+      <div>
+        <Table striped>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Total Capital</th>
+              <th>Capital Deployed</th>
+              <th>Fee Rate</th>
+              <th>Payment Cycle</th>
+              <th>Fees</th>
+              <th>Orders</th>
+            </tr>
+          </thead>
+          <tbody>
+            {DisplayFundList}
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
 }
 
 class App extends Component {
@@ -273,6 +363,15 @@ class App extends Component {
             </p>
           </Jumbotron>
         </div>
+        <div className="funds-table">
+          <h4>My Funds Table</h4>
+          <FundsTable
+            account = {this.state.accounts[0]}
+            contract = {this.state.contract}
+            fundList = {this.state.fundList}
+            web3 = {this.state.web3}
+          />
+        </div>
         <div>
           <Row>
               <Col sm="12" md={{ size: 6, offset: 3}}>
@@ -322,16 +421,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-
-
-// {Array(this.state.fundCount).fill(
-//   <Board
-//     name = {this.state.name}
-//     manager = {this.state.manager}
-//     capital = {this.state.investment}
-//     feeRate = {this.state.feeRate}
-//     paymentCycle = {this.state.paymentCycle}
-//   />)
-//   }
