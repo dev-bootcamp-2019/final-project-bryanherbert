@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
-import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table} from 'reactstrap';
+import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
 
 import "./App.css";
 
@@ -63,10 +63,53 @@ class Fund extends React.Component {
   
 }
 
+class FeeModal extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false
+    };
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  render() {
+    return(
+      <div>
+        <Button color="success" onClick={this.toggle}>Fees Menu</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Fees Menu</ModalHeader>
+          <ModalBody>
+            <p>Available Fees to Collect: {this.props.fees} ether</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="success" onClick={this.toggle}>Collect Fees</Button>
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
+}
+
 class FundTableEntry extends React.Component{
   constructor(props){
     super(props);
+    //this.handleFees = this.handleFees.bind(this);
+    //this.handleOrders = this.handleOrders.bind(this);
   }
+
+  // handleFees = async () => {
+  //   event.preventDefault();
+  //   return(
+
+  //   );
+  // }
 
   render(){
     return(
@@ -77,6 +120,14 @@ class FundTableEntry extends React.Component{
         <td>{this.props.capitalDeployed} ether</td>
         <td>{this.props.feeRate}%</td>
         <td>{this.props.paymentCycle} days</td>
+        <td>
+          <FeeModal
+            fees = {this.props.fees}
+          />
+        </td>
+        <td>
+          <Button color="danger" onClick={this.handleOrders}>Order Menu</Button>
+        </td>
       </tr>
     );
   }
@@ -85,9 +136,9 @@ class FundTableEntry extends React.Component{
 class FundsTable extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      deployedCapital: Array(this.props.fundList.length+1).fill(0)
-    };
+    // this.state = {
+    //   deployedCapital: Array(this.props.fundList.length+1).fill(0)
+    // };
   }
 
   render(){
@@ -98,12 +149,14 @@ class FundsTable extends React.Component {
         i++;
         return(
           <FundTableEntry
+            key = {i}
             fundNumber = {i}
             name = {fund.fundName}
             totalCapital = {fund.fundInvestment}
             capitalDeployed = {fund.fundCapitalDeployed}
             feeRate = {fund.fundFeeRate}
             paymentCycle = {fund.fundPaymentCycle}
+            fees = {fund.fundAvailableFees}
           />
         );
       }else{
@@ -147,6 +200,7 @@ class App extends Component {
           fundCapitalDeployed: null,
           fundFeeRate: null,
           fundPaymentCycle: null,
+          fundAvailableFees: null,
         }
       ],
       
@@ -246,6 +300,9 @@ class App extends Component {
     if(fundCount > 0){
       for(let i=1; i<=fundCount; i++){
         const response = await contract.getFundDetails(i);
+        const response2 = await contract.getFundDetails2(i, accounts[0]);
+        console.log("Response 2: "+response2);
+        console.log("Response 2 Virtual Balance: "+response2[1]);
         if(i===1){
           this.setState({
             fundList: [
@@ -255,7 +312,8 @@ class App extends Component {
                 fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"), 
                 fundCapitalDeployed: web3.utils.fromWei(response[3].toString(), "ether"),
                 fundFeeRate: response[4].toNumber(), 
-                fundPaymentCycle: response[5].toNumber()
+                fundPaymentCycle: response[5].toNumber(),
+                fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
               }
             ]
           });
@@ -270,7 +328,8 @@ class App extends Component {
                   fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"),
                   fundCapitalDeployed: web3.utils.fromWei(response[3].toString(), "ether"), 
                   fundFeeRate: response[4].toNumber(), 
-                  fundPaymentCycle: response[5].toNumber()
+                  fundPaymentCycle: response[5].toNumber(),
+                  fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
                 }
               ])
             });
@@ -318,7 +377,7 @@ class App extends Component {
 
     const fundList = this.state.fundList;
     const funds = fundList.map((fund, fundNum) => {
-      if(this.state.fundCount != 0) {
+      if(this.state.fundCount !== 0) {
         return(
           <Fund key = {fundNum}
             //Could probably just use key but not sure how
