@@ -88,29 +88,10 @@ class FundsTable extends React.Component {
     this.state = {
       deployedCapital: Array(this.props.fundList.length+1).fill(0)
     };
-    this.getResults = this.getResults.bind(this);
-    this.fillCapitalDeployed = this.fillCapitalDeployed.bind(this);
   }
 
-  getResults = async (contract, num) => {
-    const result = await contract.getFundDetails(num);
-    return result;
-  }
-
-  fillCapitalDeployed = async (contract, web3) => {
-    let deployedCapital= Array(this.props.fundList.length+1).fill(0)
-    for(var i=1; i<=this.props.fundList.length;i++){
-      const result = await this.getResults(contract, i);
-      const capitalDeployed = web3.utils.fromWei(result[3].toString(), "ether")
-      deployedCapital[i] = capitalDeployed;
-    }
-    this.setState({
-      deployedCapital: deployedCapital
-    });
-  }
   render(){
     let i = 0;
-    this.fillCapitalDeployed(this.props.contract, this.props.web3);
     const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
       const owner = fund.fundManager;      
       if(owner === this.props.account){
@@ -120,7 +101,7 @@ class FundsTable extends React.Component {
             fundNumber = {i}
             name = {fund.fundName}
             totalCapital = {fund.fundInvestment}
-            capitalDeployed = {this.state.deployedCapital[fundNum+1]}
+            capitalDeployed = {fund.fundCapitalDeployed}
             feeRate = {fund.fundFeeRate}
             paymentCycle = {fund.fundPaymentCycle}
           />
@@ -163,6 +144,7 @@ class App extends Component {
           fundName: null,
           fundManager: null,
           fundInvestment: null,
+          fundCapitalDeployed: null,
           fundFeeRate: null,
           fundPaymentCycle: null,
         }
@@ -240,7 +222,7 @@ class App extends Component {
       feeRate, 
       paymentCycle, 
       { from: manager });
-    const count = await contract.fundCount();
+    //const count = await contract.fundCount();
     //const response = await contract.getFundDetails(count);
     
     //Update state with result
@@ -271,6 +253,7 @@ class App extends Component {
                 fundName: web3.utils.hexToAscii(response[0]), 
                 fundManager: response[1], 
                 fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"), 
+                fundCapitalDeployed: web3.utils.fromWei(response[3].toString(), "ether"),
                 fundFeeRate: response[4].toNumber(), 
                 fundPaymentCycle: response[5].toNumber()
               }
@@ -284,7 +267,8 @@ class App extends Component {
                 {
                   fundName: web3.utils.hexToAscii(response[0]), 
                   fundManager: response[1], 
-                  fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"), 
+                  fundInvestment: web3.utils.fromWei(response[2].toString(), "ether"),
+                  fundCapitalDeployed: web3.utils.fromWei(response[3].toString(), "ether"), 
                   fundFeeRate: response[4].toNumber(), 
                   fundPaymentCycle: response[5].toNumber()
                 }
@@ -334,23 +318,25 @@ class App extends Component {
 
     const fundList = this.state.fundList;
     const funds = fundList.map((fund, fundNum) => {
-      return(
-        <Fund key = {fundNum}
-          //Could probably just use key but not sure how
-          fundNum = {fundNum+1}
-          name = {fund.fundName}
-          manager = {fund.fundManager}
-          capital = {fund.fundInvestment}
-          feeRate = {fund.fundFeeRate} 
-          paymentCycle = {fund.fundPaymentCycle}
-          web3 = {this.state.web3}
-          accounts =  {this.state.accounts}
-          contract = {this.state.contract}
-          setup = {this.setup}
-          //handleChange = {(event) => this.handleChange(event)}
-          //handleInvestClick = {(event) => this.handleInvestClick(event)}
-        />
-      );
+      if(this.state.fundCount != 0) {
+        return(
+          <Fund key = {fundNum}
+            //Could probably just use key but not sure how
+            fundNum = {fundNum+1}
+            name = {fund.fundName}
+            manager = {fund.fundManager}
+            capital = {fund.fundInvestment}
+            feeRate = {fund.fundFeeRate} 
+            paymentCycle = {fund.fundPaymentCycle}
+            web3 = {this.state.web3}
+            accounts =  {this.state.accounts}
+            contract = {this.state.contract}
+            setup = {this.setup}
+            //handleChange = {(event) => this.handleChange(event)}
+            //handleInvestClick = {(event) => this.handleInvestClick(event)}
+          />
+        );
+      }
     })
 
     return (
@@ -359,7 +345,7 @@ class App extends Component {
           <Jumbotron>
             <h1 className="display-3">Welcome to Mimic</h1>
             <p className="lead">
-            Your one stop shop for wealth management guidance
+            Beat the Markets on the Backs of the World's Best Managers
             </p>
           </Jumbotron>
         </div>
