@@ -6,50 +6,61 @@ import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText} f
 
 import "./App.css";
 
-function Fund(props) {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     name: null,
-  //     manager: null,
-  //     capital: null,
-  //     feeRate: null,
-  //     paymentCycle: null,
-  //   };
+class Fund extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      investmentAmount: null,
+    };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleInvestClick = this.handleInvestClick.bind(this);
+  }
 
-  return(
-    <div className="fund">
-      <h3>{props.name} Fund</h3>
-      <p>Manager: {props.manager}</p>
-      <p>Total Capital: {props.capital} ether</p>
-      <p>Annual Fee Rate: {props.feeRate}%</p>
-      <p>Payment Cycle: {props.paymentCycle} days</p>
-    </div>
-  );
-}
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
 
-class Board extends React.Component {
-  //i is fund number
-  renderFund(info) {
-    return (
-      <Fund
-          name = {info.name}
-          manager = {info.manager}
-          capital = {info.capital}
-          feeRate = {info.feeRate}
-          paymentCycle = {info.paymentCycle}
-      />
-    );
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleInvestClick= async(event) => {
+    event.preventDefault();
+    const { investmentAmount} = this.state;
+    const investment = this.props.web3.utils.toWei(investmentAmount.toString(), "ether");
+    var feeRate = await this.props.contract.checkFeeRate.call(this.props.fundNum);
+    var fee = (investment/feeRate) + 1;
+    await this.props.contract.Invest(
+      this.props.fundNum, 
+      investment,
+      { from: this.props.accounts[0], value:fee });
+    
+    //Update state with result
+    this.setState(this.props.setup);
   }
 
   render(){
-    return (
-      <div>
-        {this.renderFund(this.props)}
+    return(
+      <div className="fund">
+        <h3>{this.props.name} Fund</h3>
+        <p>Manager: {this.props.manager}</p>
+        <p>Total Capital: {this.props.capital} ether</p>
+        <p>Annual Fee Rate: {this.props.feeRate}%</p>
+        <p>Payment Cycle: {this.props.paymentCycle} days</p>
+        <Form inline className="invest-button">
+          <FormGroup>
+            <Label for="investButton" hidden></Label>
+            <Input type="text" name="investmentAmount" id="investment" placeholder="Ether" onChange={this.handleChange}/>
+          </FormGroup>
+          {' '}
+          <Button color="success" onClick={this.handleInvestClick}>Invest</Button>
+        </Form>
       </div>
-    )
+    );
   }
-
+  
 }
 
 class App extends Component {
@@ -127,7 +138,6 @@ class App extends Component {
     event.preventDefault();
     const { web3, accounts, contract, inputName, inputInvestment, inputFeeRate, inputPaymentCycle } = this.state;
     const name = web3.utils.asciiToHex(inputName);
-    console.log(name)
     const manager = accounts[0];
     let amount = inputInvestment;
     let investment = web3.utils.toWei(amount.toString(), "ether");
@@ -158,13 +168,13 @@ class App extends Component {
     //Update state with result
     this.setState({ 
       fundCount: fundCount.toNumber()
-    });
+    })
 
     //Populate fundList Array
     if(fundCount > 0){
       for(let i=1; i<=fundCount; i++){
         const response = await contract.getFundDetails(i);
-        if(i==1){
+        if(i===1){
           this.setState({
             fundList: [
               {
@@ -177,7 +187,6 @@ class App extends Component {
             ]
           });
         } else{
-            console.log("i = "+i);
             //maybe make this a slice
             const tempFundList = this.state.fundList;
             this.setState({
@@ -195,9 +204,6 @@ class App extends Component {
       };
     };
   };
-
-
-
 
   // runExample = async () => {
   //   //Add web3 here
@@ -240,11 +246,19 @@ class App extends Component {
     const funds = fundList.map((fund, fundNum) => {
       return(
         <Fund key = {fundNum}
+          //Could probably just use key but not sure how
+          fundNum = {fundNum+1}
           name = {fund.fundName}
           manager = {fund.fundManager}
           capital = {fund.fundInvestment}
           feeRate = {fund.fundFeeRate} 
           paymentCycle = {fund.fundPaymentCycle}
+          web3 = {this.state.web3}
+          accounts =  {this.state.accounts}
+          contract = {this.state.contract}
+          setup = {this.setup}
+          //handleChange = {(event) => this.handleChange(event)}
+          //handleInvestClick = {(event) => this.handleInvestClick(event)}
         />
       );
     })
