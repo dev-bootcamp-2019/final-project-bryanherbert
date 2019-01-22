@@ -108,6 +108,118 @@ class FeeModal extends React.Component{
   }
 }
 
+class OrderModal extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      fundNumber: this.props.fundNumber,
+      account: this.props.account,
+      contract: this.props.contract,
+      web3: this.props.web3,
+      modal: false,
+      action: null,
+      ticker: null,
+      quantity: null,
+      price: null
+    };
+    this.toggle = this.toggle.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleSubmit = async(event) => {
+    event.preventDefault();
+    const { fundNumber, account, contract, web3, action, ticker, quantity, price } = this.state;
+    let finalAction = null;
+    if(action === "Buy"){
+      finalAction = "buy";
+    }
+    else if(action === "Sell"){
+      finalAction = "sell";
+    }
+    finalAction = web3.utils.asciiToHex(finalAction);
+    const finalTicker = web3.utils.asciiToHex(ticker);
+    const finalPrice = web3.utils.toWei(price.toString(), "szabo");
+
+    //Price currently must be in ether
+    //figure out conversion
+    await contract.placeOrder(
+      fundNumber,
+      finalAction,
+      finalTicker,
+      quantity,
+      finalPrice,
+      { from: account });
+    
+    //Update state with result
+    //Not sure this is correct format but it works
+    this.setState(this.props.setup);
+  }
+
+  render() {
+    return(
+      <div>
+        <Button color="danger" onClick={this.toggle}>Order Menu</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Order Form</ModalHeader>
+          <ModalBody>
+            <Form className="orderForm">
+              <FormGroup row>
+                <Label for="select" sm={2}>Select</Label>
+                <Col sm={10}>
+                  <Input type="select" name="action" id="actionSelect" onChange={this.handleChange}>
+                    <option></option>
+                    <option>Buy</option>
+                    <option>Sell</option>
+                  </Input>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="ticker" sm={2}>Ticker</Label>
+                <Col sm={10}>
+                  <Input type="text" name="ticker" id="ticker" placeholder="Enter Stock Ticker" onChange={this.handleChange}/>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="quantity" sm={2}>Quantity</Label>
+                <Col sm={10}>
+                  <Input type="text" name="quantity" id="quantity" placeholder="Enter Number of Shares" onChange={this.handleChange}/>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Label for="price" sm={2}>Price</Label>
+                <Col sm={10}>
+                  <Input type="text" name="price" id="price" placeholder="Enter Execution Price (in szabo)" onChange={this.handleChange}/>
+                </Col>
+              </FormGroup>
+            </Form>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={this.handleSubmit}>Place Order</Button>
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
+}
+
 class FundTableEntry extends React.Component{
   constructor(props){
     super(props);
@@ -140,7 +252,12 @@ class FundTableEntry extends React.Component{
           />
         </td>
         <td>
-          <Button color="danger" onClick={this.handleOrders}>Order Menu</Button>
+          <OrderModal
+            account = {this.props.account}
+            contract = {this.props.contract}
+            fundNumber = {this.props.fundNumber}
+            web3 = {this.props.web3}
+          />
         </td>
       </tr>
     );
@@ -170,6 +287,7 @@ class FundsTable extends React.Component {
             fees = {fund.fundAvailableFees}
             account = {this.props.account}
             contract = {this.props.contract}
+            web3 = {this.props.web3}
           />
         );
       }else{
