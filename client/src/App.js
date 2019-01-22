@@ -28,7 +28,7 @@ class Fund extends React.Component {
 
   handleInvestClick= async(event) => {
     event.preventDefault();
-    const { investmentAmount} = this.state;
+    const { investmentAmount } = this.state;
     const investment = this.props.web3.utils.toWei(investmentAmount.toString(), "ether");
     var feeRate = await this.props.contract.checkFeeRate.call(this.props.fundNum);
     var fee = (investment/feeRate) + 1;
@@ -37,7 +37,7 @@ class Fund extends React.Component {
       investment,
       { from: this.props.accounts[0], value:fee });
     
-    //Update state with result
+    //Update state with result - not sure this is correct format
     this.setState(this.props.setup);
   }
 
@@ -70,12 +70,23 @@ class FeeModal extends React.Component{
       modal: false
     };
     this.toggle = this.toggle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   toggle() {
     this.setState({
       modal: !this.state.modal
     });
+  }
+
+  handleClick = async(event) => {
+    event.preventDefault();
+    await this.props.contract.collectFees(
+      this.props.fundNumber,
+      { from: this.props.account }
+    );
+    //Not sure this is correct format but it works
+    this.setState(this.props.setup);
   }
 
   render() {
@@ -88,7 +99,7 @@ class FeeModal extends React.Component{
             <p>Available Fees to Collect: {this.props.fees} ether</p>
           </ModalBody>
           <ModalFooter>
-            <Button color="success" onClick={this.toggle}>Collect Fees</Button>
+            <Button color="success" onClick={this.handleClick}>Collect Fees</Button>
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -123,6 +134,9 @@ class FundTableEntry extends React.Component{
         <td>
           <FeeModal
             fees = {this.props.fees}
+            account = {this.props.account}
+            contract = {this.props.contract}
+            fundNumber = {this.props.fundNumber}
           />
         </td>
         <td>
@@ -136,9 +150,6 @@ class FundTableEntry extends React.Component{
 class FundsTable extends React.Component {
   constructor(props){
     super(props);
-    // this.state = {
-    //   deployedCapital: Array(this.props.fundList.length+1).fill(0)
-    // };
   }
 
   render(){
@@ -157,6 +168,8 @@ class FundsTable extends React.Component {
             feeRate = {fund.fundFeeRate}
             paymentCycle = {fund.fundPaymentCycle}
             fees = {fund.fundAvailableFees}
+            account = {this.props.account}
+            contract = {this.props.contract}
           />
         );
       }else{
@@ -301,8 +314,6 @@ class App extends Component {
       for(let i=1; i<=fundCount; i++){
         const response = await contract.getFundDetails(i);
         const response2 = await contract.getFundDetails2(i, accounts[0]);
-        console.log("Response 2: "+response2);
-        console.log("Response 2 Virtual Balance: "+response2[1]);
         if(i===1){
           this.setState({
             fundList: [
