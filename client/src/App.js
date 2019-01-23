@@ -225,21 +225,12 @@ class OrderModal extends React.Component{
 class FundTableEntry extends React.Component{
   constructor(props){
     super(props);
-    //this.handleFees = this.handleFees.bind(this);
-    //this.handleOrders = this.handleOrders.bind(this);
   }
-
-  // handleFees = async () => {
-  //   event.preventDefault();
-  //   return(
-
-  //   );
-  // }
 
   render(){
     return(
       <tr>
-        <th scope="row">{this.props.fundNumber}</th>
+        <th scope="row">{this.props.i}</th>
         <td>{this.props.name}</td>
         <td>{this.props.virtualBalance} ether</td>
         <td>{this.props.totalCapital} ether</td>
@@ -277,13 +268,15 @@ class FundsTable extends React.Component {
   render(){
     let i = 0;
     const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
-      const owner = fund.fundManager;      
+      const owner = fund.fundManager;
+      const fundNumber = fundNum+1;    
       if(owner === this.props.account){
         i++;
         return(
           <FundTableEntry
             key = {i}
-            fundNumber = {i}
+            i = {i}
+            fundNumber = {fundNumber}
             name = {fund.fundName}
             virtualBalance = {fund.fundVirtualBalance}
             totalCapital = {fund.fundInvestment}
@@ -326,6 +319,13 @@ class FundsTable extends React.Component {
   }
 }
 
+
+
+
+
+
+
+
 class FeeModal2 extends React.Component{
   constructor(props){
     super(props);
@@ -343,12 +343,17 @@ class FeeModal2 extends React.Component{
     this.setState({
       modal: !this.state.modal,
     });
+    if(!this.state.modal){
+      this.checkFee();
+    }
   }
 
   handleClick = async(event) => {
     event.preventDefault();
-    await this.props.contract.collectFees(
+    //hardcoded in 12
+    await this.props.contract.payFee(
       this.props.fundNumber,
+      12,
       { from: this.props.account }
     );
     //Not sure this is correct format but it works
@@ -356,7 +361,8 @@ class FeeModal2 extends React.Component{
   }
 
   checkFee = async() => {
-    const result = await this.props.contract.checkFee(this.props.fundNumber, 12);
+    const result = await this.props.contract.checkFee(this.props.fundNumber, 12, { from: this.props.account });
+    console.log("Fund Number: "+this.props.fundNumber);
     const feesOwed = this.props.web3.utils.fromWei(result[0].toString(), "ether");
     const cycleComplete = result[1];
     this.setState({
@@ -368,9 +374,16 @@ class FeeModal2 extends React.Component{
   }
 
   render() {
-    this.checkFee();
-    console.log("New State feesOwed: "+this.state.feesOwed);
-    console.log("New State cycleComplete: "+this.state.cycleComplete);
+    let FeeButton;
+    if(this.state.cycleComplete){
+      FeeButton = (
+        <Button color="success" onClick={this.handleClick}>Pay Fees</Button>
+      );
+    } else{
+      FeeButton = (
+        <Button color="success" onClick={this.handleClick} disabled>Pay Fees</Button>
+      );
+    }
     return(
       <div>
         <Button color="success" onClick={this.toggle}>Fees Menu</Button>
@@ -381,7 +394,7 @@ class FeeModal2 extends React.Component{
             <p>Fees Owed: {this.state.feesOwed} ether</p>
           </ModalBody>
           <ModalFooter>
-            <Button color="success" onClick={this.handleClick}>Pay Fees</Button>
+            {FeeButton}
             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
           </ModalFooter>
         </Modal>
@@ -400,7 +413,7 @@ class InvestmentTableEntry extends React.Component{
     const balanceDeployed = (this.props.virtualBalance) * fraction;
     return(
       <tr>
-        <th scope="row">{this.props.fundNumber}</th>
+        <th scope="row">{this.props.i}</th>
         <td>{this.props.name}</td>
         <td>{this.props.virtualBalance} ether</td>
         <td>{balanceDeployed} ether ({fraction}%)</td>
@@ -439,13 +452,15 @@ class InvestmentsTable extends React.Component {
     const DisplayInvestmentList = this.props.fundList.map((fund, fundNum) => {
       //const result = this.props.contract.getFundDetails2(fundNum, account);   
       const status = fund.fundInvestorStatus;
-      const owner = fund.fundManager  
+      const owner = fund.fundManager 
+      const fundNumber = fundNum+1;
       if(status && this.props.account !== owner){
         i++;
         return(
           <InvestmentTableEntry
             key = {i}
-            fundNumber = {i}
+            i = {i}
+            fundNumber = {fundNumber}
             name = {fund.fundName}
             totalCapital = {fund.fundInvestment}
             capitalDeployed = {fund.fundCapitalDeployed}
@@ -683,7 +698,6 @@ class App extends Component {
       if(this.state.fundCount !== 0) {
         return(
           <Fund key = {fundNum}
-            //Could probably just use key but not sure how
             fundNum = {fundNum+1}
             name = {fund.fundName}
             manager = {fund.fundManager}
