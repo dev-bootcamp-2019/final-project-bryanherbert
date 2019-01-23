@@ -228,13 +228,15 @@ class FundTableEntry extends React.Component{
   }
 
   render(){
+    const fraction = (this.props.capitalDeployed/this.props.totalCapital)*100;
+    const rounded = Math.floor(fraction*100)/100;
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
         <td>{this.props.name}</td>
         <td>{this.props.virtualBalance} ether</td>
         <td>{this.props.totalCapital} ether</td>
-        <td>{this.props.capitalDeployed} ether</td>
+        <td>{this.props.capitalDeployed} ether ({rounded}%)</td>
         <td>{this.props.feeRate}%</td>
         <td>{this.props.paymentCycle} days</td>
         <td>
@@ -362,15 +364,12 @@ class FeeModal2 extends React.Component{
 
   checkFee = async() => {
     const result = await this.props.contract.checkFee(this.props.fundNumber, 12, { from: this.props.account });
-    console.log("Fund Number: "+this.props.fundNumber);
     const feesOwed = this.props.web3.utils.fromWei(result[0].toString(), "ether");
     const cycleComplete = result[1];
     this.setState({
       feesOwed: feesOwed,
       cycleComplete: cycleComplete
     });
-    console.log("State feesOwed: "+this.state.feesOwed);
-    console.log("State cycleComplete: "+this.state.cycleComplete);
   }
 
   render() {
@@ -409,14 +408,15 @@ class InvestmentTableEntry extends React.Component{
   }
 
   render(){
-    const fraction = this.props.capitalDeployed/this.props.totalCapital;
-    const balanceDeployed = (this.props.virtualBalance) * fraction;
+    const fraction = this.props.capitalDeployed/this.props.totalCapital*100;
+    const rounded = Math.floor(fraction*100)/100;
+    const balanceDeployed = this.props.virtualBalance * (fraction/100);
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
         <td>{this.props.name}</td>
         <td>{this.props.virtualBalance} ether</td>
-        <td>{balanceDeployed} ether ({fraction}%)</td>
+        <td>{balanceDeployed} ether ({rounded}%)</td>
         <td>
           <FeeModal2
             //Fees available to pay
@@ -517,6 +517,17 @@ class App extends Component {
           fundAvailableFees: null,
           fundInvestorStatus: null,
           fundVirtualBalance: null
+        }
+      ],
+
+      orderList: [
+        {
+          fundName: null,
+          action: null,
+          ticker: null,
+          quantity: null,
+          price: null,
+          completed: null,
         }
       ],
       
@@ -714,6 +725,21 @@ class App extends Component {
         );
       }
     })
+
+    //Watch for Order Events
+    let web3 = this.state.web3;
+    let event = this.state.contract.OrderPlaced({
+      filter: {fundNum: 1},
+      fromBlock: 0
+    })
+    .on('data', function(event){
+      console.log("Fund Number: "+event.args.fundNum);
+      console.log("Action: "+web3.utils.hexToAscii(event.args.action));
+      console.log("Ticker: "+web3.utils.hexToAscii(event.args.ticker));
+      console.log("Quantity: "+event.args.qty.toNumber());
+      console.log("Price: "+web3.utils.fromWei(event.args.price.toString(), "ether"));
+    })
+    .on('error', console.error);
 
     return (
       <div className="App">
