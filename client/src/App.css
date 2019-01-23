@@ -76,6 +76,10 @@ td, tr{
   text-align: center;
 }
 
+.nav-tabs{
+  padding-top: 20px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

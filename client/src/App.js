@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
-import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody} from 'reactstrap';
-
+import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
+import classnames from 'classnames';
 import "./App.css";
 
 class Fund extends React.Component {
@@ -109,6 +109,39 @@ class FeeModal extends React.Component{
   }
 }
 
+class OrderTableEntry2 extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      newQuantity: null,
+    };
+    this.calcQty = this.calcQty.bind(this);
+  }
+
+  calcQty = async(quantity) => {
+    let result = await this.props.contract.calcQty(this.props.fundNumber, quantity, { from: this.props.account });
+    let newQty = result.toNumber();
+    this.setState({
+      newQuantity: newQty
+    });
+  }
+
+  render(){
+    this.calcQty(this.props.quantity);
+    return(
+      <tr>
+        <th scope="row">{this.props.i}</th>
+        <td>{this.props.action}</td>
+        <td>{this.props.ticker}</td>
+        <td>{this.state.newQuantity}</td>
+        <td>{this.props.quantity}</td>
+        <td>{this.props.price} ether</td>
+        <td>{this.props.blockNumber}</td>
+      </tr>
+    );
+  }
+}
+
 class OrderModal extends React.Component{
   constructor(props){
     super(props);
@@ -121,9 +154,11 @@ class OrderModal extends React.Component{
       action: null,
       ticker: null,
       quantity: null,
-      price: null
+      price: null,
+      activeTab: '1'
     };
     this.toggle = this.toggle.bind(this);
+    this.toggleTab = this.toggleTab.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -132,6 +167,14 @@ class OrderModal extends React.Component{
     this.setState({
       modal: !this.state.modal
     });
+  }
+
+  toggleTab(tab){
+    if(this.state.activeTab !== tab){
+      this.setState({
+        activeTab: tab
+      });
+    }
   }
 
   handleChange(event) {
@@ -176,47 +219,115 @@ class OrderModal extends React.Component{
   }
 
   render() {
+    let i = 0;
+    console.log("Stage 3 Length: "+this.props.orderList.length);
+    const DisplayOrderList = this.props.orderList.map((order, orderNum) => { 
+      console.log("Order: "+order.ticker);
+      console.log("Order Fund Number: "+order.fundNum);
+      console.log("State FundNumber: "+this.state.fundNumber);
+      if(order.fundNum==this.state.fundNumber){
+        i++;
+        return(
+          <OrderTableEntry2
+            key = {i}
+            i = {i}
+            fundNumber = {order.fundNum}
+            action = {order.action}
+            ticker = {order.ticker}
+            quantity = {order.quantity}
+            price = {order.price}
+            blockNumber = {order.blockNumber}
+            account = {this.props.account}
+            contract = {this.props.contract}
+          />
+        );
+      }else{
+      }
+    })
     return(
       <div>
         <Button color="danger" onClick={this.toggle}>Order Menu</Button>
         <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
-          <ModalHeader toggle={this.toggle}>Order Form</ModalHeader>
-          <ModalBody>
-            <Form className="orderForm">
-              <FormGroup row>
-                <Label for="select" sm={2}>Select</Label>
-                <Col sm={10}>
-                  <Input type="select" name="action" id="actionSelect" onChange={this.handleChange}>
-                    <option></option>
-                    <option>Buy</option>
-                    <option>Sell</option>
-                  </Input>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="ticker" sm={2}>Ticker</Label>
-                <Col sm={10}>
-                  <Input type="text" name="ticker" id="ticker" placeholder="Enter Stock Ticker" onChange={this.handleChange}/>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="quantity" sm={2}>Quantity</Label>
-                <Col sm={10}>
-                  <Input type="text" name="quantity" id="quantity" placeholder="Enter Number of Shares" onChange={this.handleChange}/>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Label for="price" sm={2}>Price</Label>
-                <Col sm={10}>
-                  <Input type="text" name="price" id="price" placeholder="Enter Execution Price (in szabo)" onChange={this.handleChange}/>
-                </Col>
-              </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="danger" onClick={this.handleSubmit}>Place Order</Button>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '1'})}
+                onClick={() => { this.toggleTab('1'); }}
+              >
+                New Order Form
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={classnames({ active: this.state.activeTab === '2'})}
+                onClick={() => { this.toggleTab('2'); }}
+              >
+                Past Orders
+              </NavLink>
+            </NavItem>
+          </Nav>
+          <TabContent activeTab={this.state.activeTab}>
+            <TabPane tabId="1">
+              <ModalHeader toggle={this.toggle}>Order Form</ModalHeader>
+              <ModalBody>
+                <Form className="orderForm">
+                  <FormGroup row>
+                    <Label for="select" sm={2}>Select</Label>
+                    <Col sm={10}>
+                      <Input type="select" name="action" id="actionSelect" onChange={this.handleChange}>
+                        <option></option>
+                        <option>Buy</option>
+                        <option>Sell</option>
+                      </Input>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label for="ticker" sm={2}>Ticker</Label>
+                    <Col sm={10}>
+                      <Input type="text" name="ticker" id="ticker" placeholder="Enter Stock Ticker" onChange={this.handleChange}/>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label for="quantity" sm={2}>Quantity</Label>
+                    <Col sm={10}>
+                      <Input type="text" name="quantity" id="quantity" placeholder="Enter Number of Shares" onChange={this.handleChange}/>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup row>
+                    <Label for="price" sm={2}>Price</Label>
+                    <Col sm={10}>
+                      <Input type="text" name="price" id="price" placeholder="Enter Execution Price (in szabo)" onChange={this.handleChange}/>
+                    </Col>
+                  </FormGroup>
+                </Form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" onClick={this.handleSubmit}>Place Order</Button>
+                <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+              </ModalFooter>
+            </TabPane>
+            <TabPane tabId="2">
+              <ModalHeader toggle={this.toggle}>Received Orders</ModalHeader>
+              <div>
+                <Table striped>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Action</th>
+                      <th>Ticker</th>
+                      <th>My Quantity (shares)</th>
+                      <th>Total Quantity (shares)</th>
+                      <th>Price (/share)</th>
+                      <th>Block Number</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {DisplayOrderList}
+                  </tbody>
+                </Table>
+              </div>  
+            </TabPane>
+          </TabContent>
         </Modal>
       </div>
     );
@@ -231,6 +342,7 @@ class FundTableEntry extends React.Component{
   render(){
     const fraction = (this.props.capitalDeployed/this.props.totalCapital)*100;
     const rounded = Math.floor(fraction*100)/100;
+    console.log("Stage 2 Length: "+this.props.orderList.length);
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
@@ -256,6 +368,7 @@ class FundTableEntry extends React.Component{
             fundNumber = {this.props.fundNumber}
             web3 = {this.props.web3}
             setup = {this.props.setup}
+            orderList = {this.props.orderList}
           />
         </td>
       </tr>
@@ -272,7 +385,8 @@ class FundsTable extends React.Component {
     let i = 0;
     const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
       const owner = fund.fundManager;
-      const fundNumber = fundNum+1;    
+      const fundNumber = fundNum+1;
+      console.log("Stage 1 Length: "+this.props.orderList.length);  
       if(owner === this.props.account){
         i++;
         return(
@@ -291,6 +405,7 @@ class FundsTable extends React.Component {
             contract = {this.props.contract}
             web3 = {this.props.web3}
             setup = {this.props.setup}
+            orderList = {this.props.orderList}
           />
         );
       }else{
@@ -322,20 +437,31 @@ class FundsTable extends React.Component {
   }
 }
 
-
-
 class OrderTableEntry extends React.Component{
   constructor(props){
     super(props);
+    this.state = {
+      newQuantity: null,
+    };
+    this.calcQty = this.calcQty.bind(this);
+  }
+
+  calcQty = async(quantity) => {
+    let result = await this.props.contract.calcQty(this.props.fundNumber, quantity, { from: this.props.account });
+    let newQty = result.toNumber();
+    this.setState({
+      newQuantity: newQty
+    });
   }
 
   render(){
+    this.calcQty(this.props.quantity);
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
         <td>{this.props.action}</td>
         <td>{this.props.ticker}</td>
-        <td>{this.props.quantity}</td>
+        <td>{this.state.newQuantity}</td>
         <td>{this.props.price} ether</td>
         <td>{this.props.blockNumber}</td>
       </tr>
@@ -361,12 +487,7 @@ class OrderModal2 extends React.Component{
   render() {
     let i = 0;
     const DisplayOrderList = this.props.orderList.map((order, orderNum) => { 
-      console.log("New")
-      console.log("props fundnum: "+this.props.fundNumber);
-      console.log("Order fundnumber: "+order.fundNum);
-      console.log("Order ticker: "+order.ticker);
       if(order.fundNum==this.props.fundNumber){
-        console.log("got here");
         i++;
         return(
           <OrderTableEntry
@@ -378,9 +499,11 @@ class OrderModal2 extends React.Component{
             quantity = {order.quantity}
             price = {order.price}
             blockNumber = {order.blockNumber}
+            account = {this.props.account}
+            contract = {this.props.contract}
           />
         );
-      }else{console.log("Something went wrong");
+      }else{
       }
     })
 
@@ -799,14 +922,7 @@ class App extends Component {
       fromBlock: 0
     })
     .on('data', function(event){
-      console.log(event);
       updateState(event);
-      //Probably can get rid of stuff below
-      fundNum = event.args.fundNum;
-      action = web3.utils.hexToAscii(event.args.action);
-      ticker = web3.utils.hexToAscii(event.args.ticker);
-      quantity = event.args.qty.toNumber();
-      price = web3.utils.fromWei(event.args.price.toString(), "ether");
     })
     .on('error', console.error);
   };
@@ -870,9 +986,6 @@ class App extends Component {
       }
     })
 
-    //console check
-    console.log("Length of Order List "+this.state.orderList.length);
-
     return (
       <div className="App">
         <div>
@@ -891,6 +1004,7 @@ class App extends Component {
             fundList = {this.state.fundList}
             web3 = {this.state.web3}
             setup = {this.setup}
+            orderList = {this.state.orderList}
           />
         </div>
         <div className="funds-table">
