@@ -389,8 +389,6 @@ class OrderModal2 extends React.Component{
         <Button color="danger" onClick={this.toggle}>Order Menu</Button>
         <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
           <ModalHeader toggle={this.toggle}>Received Orders</ModalHeader>
-          <ModalBody>
-          </ModalBody>
           <div>
             <Table striped>
               <thead>
@@ -407,7 +405,7 @@ class OrderModal2 extends React.Component{
                 {DisplayOrderList}
               </tbody>
             </Table>
-          </div>
+          </div>  
         </Modal>
       </div>
     );
