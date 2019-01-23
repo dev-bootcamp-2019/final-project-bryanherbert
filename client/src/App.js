@@ -5,7 +5,6 @@ import truffleContract from "truffle-contract";
 import { Alert, Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
 import classnames from 'classnames';
 import "./App.css";
-import { isNull } from "util";
 
 class Fund extends React.Component {
   constructor(props){
@@ -221,11 +220,7 @@ class OrderModal extends React.Component{
 
   render() {
     let i = 0;
-    console.log("Stage 3 Length: "+this.props.orderList.length);
     const DisplayOrderList = this.props.orderList.map((order, orderNum) => { 
-      console.log("Order: "+order.ticker);
-      console.log("Order Fund Number: "+order.fundNum);
-      console.log("State FundNumber: "+this.state.fundNumber);
       if(order.fundNum==this.state.fundNumber){
         i++;
         return(
@@ -343,7 +338,6 @@ class FundTableEntry extends React.Component{
   render(){
     const fraction = (this.props.capitalDeployed/this.props.totalCapital)*100;
     const rounded = Math.floor(fraction*100)/100;
-    console.log("Stage 2 Length: "+this.props.orderList.length);
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
@@ -386,8 +380,7 @@ class FundsTable extends React.Component {
     let i = 0;
     const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
       const owner = fund.fundManager;
-      const fundNumber = fundNum+1;
-      console.log("Stage 1 Length: "+this.props.orderList.length);  
+      const fundNumber = fundNum+1; 
       if(owner === this.props.account){
         i++;
         return(
