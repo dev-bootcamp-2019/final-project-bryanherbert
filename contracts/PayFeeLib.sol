@@ -39,6 +39,17 @@ library PayFeeLib {
         _;
     }
 
+    function checkFee(StructLib.Data storage self, uint _fundNum, uint _timePeriod)
+    public view
+    verifyInvestmentStatus(self, _fundNum)
+    returns (uint, bool)
+    {
+        uint payment = SafeMath.div(SafeMath.div(self.list[_fundNum].virtualBalances[msg.sender],Misc.checkFeeRate(self, _fundNum)),_timePeriod);
+        bool paymentDue = (now >= SafeMath.add(self.list[_fundNum].paymentCycleStart[msg.sender], SafeMath.mul(self.list[_fundNum].paymentCycle, 1 days)));
+        return (payment, paymentDue);
+    }
+
+
     function payFee(StructLib.Data storage self, uint _fundNum, uint _timePeriod) 
     public
     verifyInvestmentStatus(self, _fundNum)

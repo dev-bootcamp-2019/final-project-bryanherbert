@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Questrial');
+
 .App {
   text-align: center;
 }
@@ -23,12 +25,23 @@
 }
 
 .jumbotron{
-  background-image: url("https://images.icanvas.com/2d/TEO20.jpg");
+  background: linear-gradient(
+                    rgba(20,20,20,0.5),
+                    rgba(20,20,20,0.5)),
+                    url("https://www.liberatedstocktrader.com/wp-content/uploads/2017/11/pexels-photo-534216.jpeg");                    
   background-size: cover;
 }
 
 .jumbotron h1{ 
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Questrial', sans-serif;
+  color: white;
+  font-weight: bold;
+}
+
+.jumbotron p{
+  font-family: 'Questrial', sans-serif;
+  color: white;
+  font-size: 24px;
 }
 
 .fundform {

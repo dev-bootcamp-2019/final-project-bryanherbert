@@ -128,6 +128,14 @@ contract FundMarketplace {
         emit FeesPaid (_fundNum, msg.sender, payment);
     }
 
+    //Check whether a fee is due and how much
+    function checkFee(uint _fundNum, uint _timePeriod) external view returns (uint, bool) {
+        uint payment;
+        bool paymentDue;
+        (payment, paymentDue) = PayFeeLib.checkFee(funds, _fundNum, _timePeriod);
+        return (payment, paymentDue);
+    }
+
     //Owner of Strategy Collects Fees
     function collectFees(uint _fundNum) external
     //isOwner(_name)

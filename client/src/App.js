@@ -170,6 +170,8 @@ class OrderModal extends React.Component{
     //Update state with result
     //Not sure this is correct format but it works
     this.setState(this.props.setup);
+    //Close window
+    this.toggle();
   }
 
   render() {
@@ -239,6 +241,7 @@ class FundTableEntry extends React.Component{
       <tr>
         <th scope="row">{this.props.fundNumber}</th>
         <td>{this.props.name}</td>
+        <td>{this.props.virtualBalance} ether</td>
         <td>{this.props.totalCapital} ether</td>
         <td>{this.props.capitalDeployed} ether</td>
         <td>{this.props.feeRate}%</td>
@@ -249,6 +252,7 @@ class FundTableEntry extends React.Component{
             account = {this.props.account}
             contract = {this.props.contract}
             fundNumber = {this.props.fundNumber}
+            setup = {this.props.setup}
           />
         </td>
         <td>
@@ -257,6 +261,7 @@ class FundTableEntry extends React.Component{
             contract = {this.props.contract}
             fundNumber = {this.props.fundNumber}
             web3 = {this.props.web3}
+            setup = {this.props.setup}
           />
         </td>
       </tr>
@@ -280,6 +285,7 @@ class FundsTable extends React.Component {
             key = {i}
             fundNumber = {i}
             name = {fund.fundName}
+            virtualBalance = {fund.fundVirtualBalance}
             totalCapital = {fund.fundInvestment}
             capitalDeployed = {fund.fundCapitalDeployed}
             feeRate = {fund.fundFeeRate}
@@ -288,6 +294,7 @@ class FundsTable extends React.Component {
             account = {this.props.account}
             contract = {this.props.contract}
             web3 = {this.props.web3}
+            setup = {this.props.setup}
           />
         );
       }else{
@@ -301,6 +308,7 @@ class FundsTable extends React.Component {
             <tr>
               <th>#</th>
               <th>Name</th>
+              <th>My Balance</th>
               <th>Total Capital</th>
               <th>Capital Deployed</th>
               <th>Fee Rate</th>
@@ -311,6 +319,166 @@ class FundsTable extends React.Component {
           </thead>
           <tbody>
             {DisplayFundList}
+          </tbody>
+        </Table>
+      </div>
+    );
+  }
+}
+
+class FeeModal2 extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false,
+      feesOwed: null,
+      cycleComplete: false
+    };
+    this.toggle = this.toggle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.checkFee = this.checkFee.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal,
+    });
+  }
+
+  handleClick = async(event) => {
+    event.preventDefault();
+    await this.props.contract.collectFees(
+      this.props.fundNumber,
+      { from: this.props.account }
+    );
+    //Not sure this is correct format but it works
+    this.setState(this.props.setup);
+  }
+
+  checkFee = async() => {
+    const result = await this.props.contract.checkFee(this.props.fundNumber, 12);
+    const feesOwed = this.props.web3.utils.fromWei(result[0].toString(), "ether");
+    const cycleComplete = result[1];
+    this.setState({
+      feesOwed: feesOwed,
+      cycleComplete: cycleComplete
+    });
+    console.log("State feesOwed: "+this.state.feesOwed);
+    console.log("State cycleComplete: "+this.state.cycleComplete);
+  }
+
+  render() {
+    this.checkFee();
+    console.log("New State feesOwed: "+this.state.feesOwed);
+    console.log("New State cycleComplete: "+this.state.cycleComplete);
+    return(
+      <div>
+        <Button color="success" onClick={this.toggle}>Fees Menu</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Fees Menu</ModalHeader>
+          <ModalBody>
+            <p>Fees in Escrow: {this.props.fees} ether</p>
+            <p>Fees Owed: {this.state.feesOwed} ether</p>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="success" onClick={this.handleClick}>Pay Fees</Button>
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
+}
+
+class InvestmentTableEntry extends React.Component{
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    const fraction = this.props.capitalDeployed/this.props.totalCapital;
+    const balanceDeployed = (this.props.virtualBalance) * fraction;
+    return(
+      <tr>
+        <th scope="row">{this.props.fundNumber}</th>
+        <td>{this.props.name}</td>
+        <td>{this.props.virtualBalance} ether</td>
+        <td>{balanceDeployed} ether ({fraction}%)</td>
+        <td>
+          <FeeModal2
+            //Fees available to pay
+            fees = {this.props.fees}
+            account = {this.props.account}
+            contract = {this.props.contract}
+            fundNumber = {this.props.fundNumber}
+            web3 = {this.props.web3}
+            setup = {this.props.setup}
+          />
+        </td>
+        <td>
+          <OrderModal
+            account = {this.props.account}
+            contract = {this.props.contract}
+            fundNumber = {this.props.fundNumber}
+            web3 = {this.props.web3}
+            setup = {this.props.setup}
+          />
+        </td>
+      </tr>
+    );
+  }
+}
+
+class InvestmentsTable extends React.Component {
+  constructor(props){
+    super(props);
+  }
+
+  render(){
+    let i = 0;
+    const DisplayInvestmentList = this.props.fundList.map((fund, fundNum) => {
+      //const result = this.props.contract.getFundDetails2(fundNum, account);   
+      const status = fund.fundInvestorStatus;
+      const owner = fund.fundManager  
+      if(status && this.props.account !== owner){
+        i++;
+        return(
+          <InvestmentTableEntry
+            key = {i}
+            fundNumber = {i}
+            name = {fund.fundName}
+            totalCapital = {fund.fundInvestment}
+            capitalDeployed = {fund.fundCapitalDeployed}
+            virtualBalance = {fund.fundVirtualBalance}
+            feeRate = {fund.fundFeeRate}
+            paymentCycle = {fund.fundPaymentCycle}
+            fees = {fund.fundAvailableFees}
+            account = {this.props.account}
+            contract = {this.props.contract}
+            web3 = {this.props.web3}
+            setup = {this.props.setup}
+          />
+        );
+      }else{
+      }
+    })
+
+    return(
+      <div>
+        <Table striped>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>My Balance</th>
+              <th>Balance Deployed</th>
+              <th>Fees</th>
+              <th>Orders</th>
+              <th>Withdraw</th>
+            </tr>
+          </thead>
+          <tbody>
+            {DisplayInvestmentList}
           </tbody>
         </Table>
       </div>
@@ -332,6 +500,8 @@ class App extends Component {
           fundFeeRate: null,
           fundPaymentCycle: null,
           fundAvailableFees: null,
+          fundInvestorStatus: null,
+          fundVirtualBalance: null
         }
       ],
       
@@ -442,7 +612,9 @@ class App extends Component {
                 fundCapitalDeployed: web3.utils.fromWei(response[3].toString(), "ether"),
                 fundFeeRate: response[4].toNumber(), 
                 fundPaymentCycle: response[5].toNumber(),
-                fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
+                fundInvestorStatus: response2[0],
+                fundVirtualBalance: web3.utils.fromWei(response2[1].toString(), "ether"),
+                fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether")
               }
             ]
           });
@@ -458,7 +630,9 @@ class App extends Component {
                   fundCapitalDeployed: web3.utils.fromWei(response[3].toString(), "ether"), 
                   fundFeeRate: response[4].toNumber(), 
                   fundPaymentCycle: response[5].toNumber(),
-                  fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
+                  fundInvestorStatus: response2[0],
+                  fundVirtualBalance: web3.utils.fromWei(response2[1].toString(), "ether"),
+                  fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether")
                 }
               ])
             });
@@ -533,17 +707,28 @@ class App extends Component {
           <Jumbotron>
             <h1 className="display-3">Welcome to Mimic</h1>
             <p className="lead">
-            Beat the Markets on the Backs of the World's Best Managers
+            Beat the Markets with the World's Best Managers
             </p>
           </Jumbotron>
         </div>
         <div className="funds-table">
-          <h4>My Funds Table</h4>
+          <h4>My Funds</h4>
           <FundsTable
             account = {this.state.accounts[0]}
             contract = {this.state.contract}
             fundList = {this.state.fundList}
             web3 = {this.state.web3}
+            setup = {this.setup}
+          />
+        </div>
+        <div className="funds-table">
+          <h4>My Investments</h4>
+          <InvestmentsTable
+            account = {this.state.accounts[0]}
+            contract = {this.state.contract}
+            fundList = {this.state.fundList}
+            web3 = {this.state.web3}
+            setup = {this.setup}
           />
         </div>
         <div>

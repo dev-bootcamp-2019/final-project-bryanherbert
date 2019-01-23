@@ -32,8 +32,10 @@ library InvestLib {
     {
         self.list[_fundNum].totalCapital += _investment;
         self.list[_fundNum].investors[_investor] = true;
-        self.list[_fundNum].virtualBalances[_investor] = _investment;
-        self.list[_fundNum].fees[_investor] = _value;
+        //might need to adjust for re-invest
+        self.list[_fundNum].virtualBalances[_investor] += _investment;
+        //might need to adjust for re-invest
+        self.list[_fundNum].fees[_investor] += _value;
         self.list[_fundNum].paymentCycleStart[_investor] = now;
     }
 }
