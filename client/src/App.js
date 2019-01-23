@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
-import { Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
+import { Alert, Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
 import classnames from 'classnames';
 import "./App.css";
+import { isNull } from "util";
 
 class Fund extends React.Component {
   constructor(props){
@@ -93,7 +94,7 @@ class FeeModal extends React.Component{
   render() {
     return(
       <div>
-        <Button color="success" onClick={this.toggle}>Fees Menu</Button>
+        <Button color="primary" onClick={this.toggle}>Fees Menu</Button>
         <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
           <ModalHeader toggle={this.toggle}>Fees Menu</ModalHeader>
           <ModalBody>
@@ -246,7 +247,7 @@ class OrderModal extends React.Component{
     })
     return(
       <div>
-        <Button color="danger" onClick={this.toggle}>Order Menu</Button>
+        <Button color="success" onClick={this.toggle}>Order Menu</Button>
         <Modal className="modal-lg" isOpen={this.state.modal} toggle={this.state.toggle}>
           <Nav tabs>
             <NavItem>
@@ -437,6 +438,75 @@ class FundsTable extends React.Component {
   }
 }
 
+class WithdrawModal extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false,
+      withdrawAmount: null
+    };
+    this.toggle = this.toggle.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
+  }
+
+  handleClick = async(event) => {
+    event.preventDefault();
+    const amount = this.state.withdrawAmount;
+    const withdrawal = this.props.web3.utils.toWei(amount.toString(), "ether");
+
+    await this.props.contract.withdrawFunds(
+      this.props.fundNumber,
+      withdrawal,
+      { from: this.props.account }
+    );
+    //Not sure this is correct format but it works
+    this.setState(this.props.setup);
+  }
+
+  render() {
+    return(
+      <div>
+        <Button color="danger" onClick={this.toggle}>Withdraw</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Are you sure you want to withdraw your funds?</ModalHeader>
+          <ModalBody>
+            <p>Current Virtual Balance: {this.props.virtualBalance} ether</p>
+            <p>Current Unpaid Fees: {this.props.fees} ether</p>
+            {/* <Alert color="danger">
+              A full withdrawal will result in loss of all unpaid fees!
+            </Alert> */}
+            <Form inline className="withdraw-button">
+              <FormGroup>
+                <Label for="withdrawButton" hidden></Label>
+                <Input type="text" name="withdrawAmount" id="withdrawal" placeholder="Ether" onChange={this.handleChange}/>
+              </FormGroup>
+              {' '}
+              <Button color="danger" onClick={this.handleClick}>Withdraw</Button>
+            </Form>
+          </ModalBody>
+        </Modal>
+      </div>
+    );
+  }
+}
+
 class OrderTableEntry extends React.Component{
   constructor(props){
     super(props);
@@ -509,7 +579,7 @@ class OrderModal2 extends React.Component{
 
     return(
       <div>
-        <Button color="danger" onClick={this.toggle}>Order Menu</Button>
+        <Button color="success" onClick={this.toggle}>Order Menu</Button>
         <Modal className="modal-lg" isOpen={this.state.modal} toggle={this.state.toggle}>
           <ModalHeader toggle={this.toggle}>Received Orders</ModalHeader>
           <div>
@@ -592,7 +662,7 @@ class FeeModal2 extends React.Component{
     }
     return(
       <div>
-        <Button color="success" onClick={this.toggle}>Fees Menu</Button>
+        <Button color="primary" onClick={this.toggle}>Fees Menu</Button>
         <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
           <ModalHeader toggle={this.toggle}>Fees Menu</ModalHeader>
           <ModalBody>
@@ -643,6 +713,17 @@ class InvestmentTableEntry extends React.Component{
             web3 = {this.props.web3}
             setup = {this.props.setup}
             orderList = {this.props.orderList}
+          />
+        </td>
+        <td>
+          <WithdrawModal
+            fees = {this.props.fees}
+            virtualBalance = {this.props.virtualBalance}
+            account = {this.props.account}
+            contract = {this.props.contract}
+            fundNumber = {this.props.fundNumber}
+            web3 = {this.props.web3}
+            setup = {this.props.setup}
           />
         </td>
       </tr>
