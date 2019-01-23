@@ -726,83 +726,83 @@ class App extends Component {
       }
     })
 
-    // //Watch for Order Events
-    // let web3 = this.state.web3;
-    // let orderList = this.state.orderList;
-    // let updateState1 = (event) => {
-    //   this.setState({
-    //     orderList: [
-    //       {
-    //         fundName: event.args.fundNum,
-    //         action: web3.utils.hexToAscii(event.args.action),
-    //         ticker: web3.utils.hexToAscii(event.args.ticker),
-    //         quantity: event.args.qty.toNumber(),
-    //         price: web3.utils.fromWei(event.args.price.toString(), "ether"),
-    //         completed: false,
-    //       }
-    //     ]
-    //   });
-    // }
-    // let updateState2 = (event) => {
-    //   const tempOrderList = orderList;
-    //   this.setState({
-    //     orderList: tempOrderList.concat([
-    //       {
-    //         fundName: event.args.fundNum,
-    //         action: web3.utils.hexToAscii(event.args.action),
-    //         ticker: web3.utils.hexToAscii(event.args.ticker),
-    //         quantity: event.args.qty.toNumber(),
-    //         price: web3.utils.fromWei(event.args.price.toString(), "ether"),
-    //         completed: false,
-    //       }
-    //     ])
-    //   });
-    // }
-    // let event = this.state.contract.OrderPlaced({
-    //   filter: {fundNum: 1},
-    //   fromBlock: 0
-    // })
-    // .on('data', function(event){
-    //   // console.log("Fund Number: "+event.args.fundNum);
-    //   // console.log("Action: "+web3.utils.hexToAscii(event.args.action));
-    //   // console.log("Ticker: "+web3.utils.hexToAscii(event.args.ticker));
-    //   // console.log("Quantity: "+event.args.qty.toNumber());
-    //   // console.log("Price: "+web3.utils.fromWei(event.args.price.toString(), "ether"));
-    //   console.log("Length of Order List: "+orderList.length);
-    //   updateState2(event);
-    //   // if(orderList.length===1){
-    //   //   updateState1(event);
-    //   //   // this.setState({
-    //   //   //   orderList: [
-    //   //   //     {
-    //   //   //       fundName: event.args.fundNum,
-    //   //   //       action: web3.utils.hexToAscii(event.args.action),
-    //   //   //       ticker: web3.utils.hexToAscii(event.args.ticker),
-    //   //   //       quantity: event.args.qty.toNumber(),
-    //   //   //       price: web3.utils.fromWei(event.args.price.toString(), "ether"),
-    //   //   //       completed: false,
-    //   //   //     }
-    //   //   //   ]
-    //   //   // });
-    //   // } else{
-    //   //   updateState2(event);
-    //   //   //maybe make this a slice
-    //   //   // const tempOrderList = orderList;
-    //   //   // this.setState({
-    //   //   //   orderList: tempOrderList.concat([
-    //   //   //     {
-    //   //   //       fundName: event.args.fundNum,
-    //   //   //       action: web3.utils.hexToAscii(event.args.action),
-    //   //   //       ticker: web3.utils.hexToAscii(event.args.ticker),
-    //   //   //       quantity: event.args.qty.toNumber(),
-    //   //   //       price: web3.utils.fromWei(event.args.price.toString(), "ether"),
-    //   //   //       completed: false,
-    //   //   //     }
-    //   //   //   ])
-    //   //   // });
-    //   //}
-    // })
-    // .on('error', console.error);
+    //Watch for Order Events
+    let web3 = this.state.web3;
+    let orderList = this.state.orderList;
+    let updateState1 = (event) => {
+      this.setState({
+        orderList: [
+          {
+            fundName: event.args.fundNum,
+            action: web3.utils.hexToAscii(event.args.action),
+            ticker: web3.utils.hexToAscii(event.args.ticker),
+            quantity: event.args.qty.toNumber(),
+            price: web3.utils.fromWei(event.args.price.toString(), "ether"),
+            completed: false,
+          }
+        ]
+      });
+    }
+    let updateState2 = (event) => {
+      const tempOrderList = orderList;
+      this.setState({
+        orderList: tempOrderList.concat([
+          {
+            fundName: event.args.fundNum,
+            action: web3.utils.hexToAscii(event.args.action),
+            ticker: web3.utils.hexToAscii(event.args.ticker),
+            quantity: event.args.qty.toNumber(),
+            price: web3.utils.fromWei(event.args.price.toString(), "ether"),
+            completed: false,
+          }
+        ])
+      });
+    }
+    let event = this.state.contract.OrderPlaced({
+      filter: {fundNum: 1},
+      fromBlock: 0
+    })
+    .on('data', function(event){
+      // console.log("Fund Number: "+event.args.fundNum);
+      // console.log("Action: "+web3.utils.hexToAscii(event.args.action));
+      // console.log("Ticker: "+web3.utils.hexToAscii(event.args.ticker));
+      // console.log("Quantity: "+event.args.qty.toNumber());
+      // console.log("Price: "+web3.utils.fromWei(event.args.price.toString(), "ether"));
+      console.log("Length of Order List: "+orderList.length);
+      updateState2(event);
+      // if(orderList.length===1){
+      //   updateState1(event);
+      //   // this.setState({
+      //   //   orderList: [
+      //   //     {
+      //   //       fundName: event.args.fundNum,
+      //   //       action: web3.utils.hexToAscii(event.args.action),
+      //   //       ticker: web3.utils.hexToAscii(event.args.ticker),
+      //   //       quantity: event.args.qty.toNumber(),
+      //   //       price: web3.utils.fromWei(event.args.price.toString(), "ether"),
+      //   //       completed: false,
+      //   //     }
+      //   //   ]
+      //   // });
+      // } else{
+      //   updateState2(event);
+      //   //maybe make this a slice
+      //   // const tempOrderList = orderList;
+      //   // this.setState({
+      //   //   orderList: tempOrderList.concat([
+      //   //     {
+      //   //       fundName: event.args.fundNum,
+      //   //       action: web3.utils.hexToAscii(event.args.action),
+      //   //       ticker: web3.utils.hexToAscii(event.args.ticker),
+      //   //       quantity: event.args.qty.toNumber(),
+      //   //       price: web3.utils.fromWei(event.args.price.toString(), "ether"),
+      //   //       completed: false,
+      //   //     }
+      //   //   ])
+      //   // });
+      //}
+    })
+    .on('error', console.error);
 
     return (
       <div className="App">
