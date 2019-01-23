@@ -31,7 +31,8 @@ class Fund extends React.Component {
     const { investmentAmount } = this.state;
     const investment = this.props.web3.utils.toWei(investmentAmount.toString(), "ether");
     var feeRate = await this.props.contract.checkFeeRate.call(this.props.fundNum);
-    var fee = (investment/feeRate) + 1;
+    //Add 1% for rounding
+    var fee = 1.01*(investment/feeRate);
     await this.props.contract.Invest(
       this.props.fundNum, 
       investment,
@@ -323,10 +324,95 @@ class FundsTable extends React.Component {
 
 
 
+class OrderTableEntry extends React.Component{
+  constructor(props){
+    super(props);
+  }
 
+  render(){
+    return(
+      <tr>
+        <th scope="row">{this.props.i}</th>
+        <td>{this.props.action}</td>
+        <td>{this.props.ticker}</td>
+        <td>{this.props.quantity}</td>
+        <td>{this.props.price} ether</td>
+        <td>{this.props.blockNumber}</td>
+      </tr>
+    );
+  }
+}
 
+class OrderModal2 extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false
+    };
+    this.toggle = this.toggle.bind(this);
+  }
 
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
 
+  render() {
+    let i = 0;
+    const DisplayOrderList = this.props.orderList.map((order, orderNum) => { 
+      console.log("New")
+      console.log("props fundnum: "+this.props.fundNumber);
+      console.log("Order fundnumber: "+order.fundNum);
+      console.log("Order ticker: "+order.ticker);
+      if(order.fundNum==this.props.fundNumber){
+        console.log("got here");
+        i++;
+        return(
+          <OrderTableEntry
+            key = {i}
+            i = {i}
+            fundNumber = {order.fundNum}
+            action = {order.action}
+            ticker = {order.ticker}
+            quantity = {order.quantity}
+            price = {order.price}
+            blockNumber = {order.blockNumber}
+          />
+        );
+      }else{console.log("Something went wrong");
+      }
+    })
+
+    return(
+      <div>
+        <Button color="danger" onClick={this.toggle}>Order Menu</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Received Orders</ModalHeader>
+          <ModalBody>
+          </ModalBody>
+          <div>
+            <Table striped>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Action</th>
+                  <th>Ticker</th>
+                  <th>Quantity (shares)</th>
+                  <th>Price (/share)</th>
+                  <th>Block Number</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DisplayOrderList}
+              </tbody>
+            </Table>
+          </div>
+        </Modal>
+      </div>
+    );
+  }
+}
 
 class FeeModal2 extends React.Component{
   constructor(props){
@@ -429,12 +515,13 @@ class InvestmentTableEntry extends React.Component{
           />
         </td>
         <td>
-          <OrderModal
+          <OrderModal2
             account = {this.props.account}
             contract = {this.props.contract}
             fundNumber = {this.props.fundNumber}
             web3 = {this.props.web3}
             setup = {this.props.setup}
+            orderList = {this.props.orderList}
           />
         </td>
       </tr>
@@ -472,6 +559,7 @@ class InvestmentsTable extends React.Component {
             contract = {this.props.contract}
             web3 = {this.props.web3}
             setup = {this.props.setup}
+            orderList  = {this.props.orderList}
           />
         );
       }else{
@@ -527,7 +615,7 @@ class App extends Component {
           ticker: null,
           quantity: null,
           price: null,
-          completed: null,
+          blockNumber: null,
         }
       ],
       
@@ -687,7 +775,7 @@ class App extends Component {
               ticker: web3.utils.hexToAscii(event.args.ticker),
               quantity: event.args.qty.toNumber(),
               price: web3.utils.fromWei(event.args.price.toString(), "ether"),
-              completed: false
+              blockNumber: event.blockNumber
             }
           ]
         });
@@ -700,7 +788,7 @@ class App extends Component {
               ticker: web3.utils.hexToAscii(event.args.ticker),
               quantity: event.args.qty.toNumber(),
               price: web3.utils.fromWei(event.args.price.toString(), "ether"),
-              completed: false
+              blockNumber: event.blockNumber
             }
           ])
         });
@@ -708,11 +796,14 @@ class App extends Component {
     }
 
     let event = this.state.contract.OrderPlaced({
-      filter: {fundNum: 1},
+      //Want all the orders
+      //filter: {fundNum: 1},
       fromBlock: 0
     })
     .on('data', function(event){
-      updateState(event)
+      console.log(event);
+      updateState(event);
+      //Probably can get rid of stuff below
       fundNum = event.args.fundNum;
       action = web3.utils.hexToAscii(event.args.action);
       ticker = web3.utils.hexToAscii(event.args.ticker);
@@ -810,6 +901,7 @@ class App extends Component {
             account = {this.state.accounts[0]}
             contract = {this.state.contract}
             fundList = {this.state.fundList}
+            orderList = {this.state.orderList}
             web3 = {this.state.web3}
             setup = {this.setup}
           />

@@ -110,7 +110,7 @@ contract('FundMarketplace', function(accounts) {
 
         //Calculate Fee
         var feeRate = await fundMarketplace.checkFeeRate.call(fundNum)
-        var fee = (investment/feeRate) + 1
+        var fee = 1.01*(investment/feeRate)
 
         //Make Investment
         const tx = await fundMarketplace.Invest(fundNum, investment, {from: investor, value: fee})
