@@ -247,7 +247,7 @@ class OrderModal extends React.Component{
     return(
       <div>
         <Button color="danger" onClick={this.toggle}>Order Menu</Button>
-        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+        <Modal className="modal-lg" isOpen={this.state.modal} toggle={this.state.toggle}>
           <Nav tabs>
             <NavItem>
               <NavLink
@@ -510,7 +510,7 @@ class OrderModal2 extends React.Component{
     return(
       <div>
         <Button color="danger" onClick={this.toggle}>Order Menu</Button>
-        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+        <Modal className="modal-lg" isOpen={this.state.modal} toggle={this.state.toggle}>
           <ModalHeader toggle={this.toggle}>Received Orders</ModalHeader>
           <div>
             <Table striped>
