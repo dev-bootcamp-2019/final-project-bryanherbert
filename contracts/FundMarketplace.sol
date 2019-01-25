@@ -15,6 +15,7 @@ contract FundMarketplace {
     address internal admin;
     StructLib.Data funds;
     uint public fundCount;
+    uint public lifeCount;
 
     //Events
     event FundCreated(
@@ -90,6 +91,7 @@ contract FundMarketplace {
         InitLib.initializeFund(funds, fundCount, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
         fundCount++;
+        lifetimeCount++;
         emit FundCreated(fundCount, _name, _fundOwner);
     }
 
@@ -167,6 +169,8 @@ contract FundMarketplace {
         uint refund = funds.list[_fundNum].fees[msg.sender];
         msg.sender.transfer(refund);
         delete funds.list[_fundNum];
+        //Adjust numbering of other funds
+        fundCount--;
         emit FundClosed(_fundNum, msg.sender);
     }
 

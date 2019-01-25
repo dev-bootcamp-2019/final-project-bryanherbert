@@ -88,6 +88,8 @@ class FeeModal extends React.Component{
     );
     //Not sure this is correct format but it works
     this.setState(this.props.setup);
+    //Close Window
+    this.toggle();
   }
 
   render() {
@@ -330,6 +332,56 @@ class OrderModal extends React.Component{
   }
 }
 
+class CloseModal extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false,
+    };
+    this.toggle = this.toggle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleClick = async(event) => {
+    event.preventDefault();
+
+    await this.props.contract.closeFund(
+      this.props.fundNumber,
+      { from: this.props.account }
+    );
+    //Not sure this is correct format but it works
+    this.setState(this.props.setup);
+    //Close Window
+    this.toggle();
+  }
+
+  render() {
+    return(
+      <div>
+        <Button color="danger" onClick={this.toggle}>Close Fund</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Are you sure you want to close this fund?</ModalHeader>
+          <ModalBody>
+            <Alert color="danger">
+              A fund closure is permanent and will result in a loss of all data and fees!
+            </Alert>
+          </ModalBody>
+          <ModalFooter>
+            <Button color="danger" onClick={this.handleClick}>Yes</Button>
+            <Button color="secondary" onClick={this.toggle}>No</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
+}
+
 class FundTableEntry extends React.Component{
   constructor(props){
     super(props);
@@ -365,6 +417,14 @@ class FundTableEntry extends React.Component{
             web3 = {this.props.web3}
             setup = {this.props.setup}
             orderList = {this.props.orderList}
+          />
+        </td>
+        <td>
+          <CloseModal
+            account = {this.props.account}
+            contract = {this.props.contract}
+            fundNumber = {this.props.fundNumber}
+            setup = {this.props.setup}
           />
         </td>
       </tr>
@@ -421,6 +481,7 @@ class FundsTable extends React.Component {
               <th>Payment Cycle</th>
               <th>Fees</th>
               <th>Orders</th>
+              <th>Closures</th>
             </tr>
           </thead>
           <tbody>
@@ -888,8 +949,6 @@ class App extends Component {
       feeRate, 
       paymentCycle, 
       { from: manager });
-    //const count = await contract.fundCount();
-    //const response = await contract.getFundDetails(count);
     
     //Update state with result
     this.setState(this.setup);
@@ -901,19 +960,24 @@ class App extends Component {
     const { web3, accounts, contract } = this.state;
 
     //Test for getting the fundCount
-    const fundCount = await contract.fundCount();
+    let fundCount = await contract.fundCount();
+    //Adjustment for when funds are removed
+    let lifetimeCount = await contract.lifetimeCount();
+    console.log("FundCount: "+fundCount);
+    fundCount = fundCount.toNumber();
 
     //Update state with result
     this.setState({ 
-      fundCount: fundCount.toNumber()
+      fundCount: fundCount
     })
 
     //Populate fundList Array
     if(fundCount > 0){
-      for(let i=1; i<=fundCount; i++){
+      for(let i=1; i<=lifetimeCount; i++){
+        console.log("i = "+i);
         const response = await contract.getFundDetails(i);
         const response2 = await contract.getFundDetails2(i, accounts[0]);
-        if(i===1){
+        if(i===1 && response[0].toNumber() !== 0){
           this.setState({
             fundList: [
               {
@@ -929,7 +993,7 @@ class App extends Component {
               }
             ]
           });
-        } else{
+        } else if (response[0].toNumber() !== 0){
             //maybe make this a slice
             const tempFundList = this.state.fundList;
             this.setState({
