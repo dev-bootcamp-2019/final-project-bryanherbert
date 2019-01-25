@@ -68,6 +68,7 @@ The manager clicks on the "Order Menu" button, which pulls up a modal with two t
 - Ticker
 - Quantity of Shares
 - Price per Share
+
 After entering in the information, the manager clicks the "Place Order" button. This investment is recorded in the "Past Orders" tab. As a result, each investor who is subscribed to the fund receives an adjusted order that changes the quantity of shares based on each investor's level of capital invested in the fund. The manager can see her own designated quantity under the "My Quantity" column of the past orders tab.
 
 When the manager decides to close the fund, she clicks the "Close Fund" Button, which deletes the fund's data from the smart contract and returns unearned fees to the investors.
