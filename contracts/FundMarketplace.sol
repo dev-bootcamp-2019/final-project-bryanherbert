@@ -15,7 +15,7 @@ contract FundMarketplace {
     address internal admin;
     StructLib.Data funds;
     uint public fundCount;
-    uint public lifeCount;
+    uint public lifetimeCount;
 
     //Events
     event FundCreated(
@@ -168,7 +168,8 @@ contract FundMarketplace {
         //Transfer uncollected fees to manager
         uint refund = funds.list[_fundNum].fees[msg.sender];
         msg.sender.transfer(refund);
-        delete funds.list[_fundNum];
+        //Set fund to closed
+        funds.list[_fundNum].closed = true;
         //Adjust numbering of other funds
         fundCount--;
         emit FundClosed(_fundNum, msg.sender);
@@ -190,5 +191,10 @@ contract FundMarketplace {
         return(funds.list[_fundNum].investors[_addr], 
         funds.list[_fundNum].virtualBalances[_addr],
         funds.list[_fundNum].fees[_addr]);
+    }
+
+    function checkFundStatus(uint _fundNum) external view returns (bool, bool){
+        return(funds.list[_fundNum].fundraising,
+        funds.list[_fundNum].closed);
     }
 }

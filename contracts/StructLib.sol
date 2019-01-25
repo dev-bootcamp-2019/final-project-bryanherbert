@@ -28,6 +28,10 @@ library StructLib{
         mapping (address => uint) fees;
         //Adoption Times for each investor
         mapping(address => uint) paymentCycleStart;
+        //Boolean representing whether fund is in fundraising period
+        bool fundraising;
+        //Boolean representing whether fund is closed
+        bool closed;
         //will need to add IPFS hash eventually to verify code
     }
 }

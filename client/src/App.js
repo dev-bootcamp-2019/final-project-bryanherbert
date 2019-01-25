@@ -442,7 +442,7 @@ class FundsTable extends React.Component {
     const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
       const owner = fund.fundManager;
       const fundNumber = fundNum+1; 
-      if(owner === this.props.account){
+      if(owner === this.props.account && !fund.fundClosed){
         i++;
         return(
           <FundTableEntry
@@ -862,7 +862,9 @@ class App extends Component {
           fundPaymentCycle: null,
           fundAvailableFees: null,
           fundInvestorStatus: null,
-          fundVirtualBalance: null
+          fundVirtualBalance: null,
+          fundFundraising: null,
+          fundClosed: null,
         }
       ],
 
@@ -960,11 +962,10 @@ class App extends Component {
     const { web3, accounts, contract } = this.state;
 
     //Test for getting the fundCount
-    let fundCount = await contract.fundCount();
-    //Adjustment for when funds are removed
-    let lifetimeCount = await contract.lifetimeCount();
-    console.log("FundCount: "+fundCount);
+    let fundCount = await contract.fundCount()
     fundCount = fundCount.toNumber();
+    let lifetimeCount = await contract.lifetimeCount();
+    lifetimeCount = lifetimeCount.toNumber();
 
     //Update state with result
     this.setState({ 
@@ -974,10 +975,10 @@ class App extends Component {
     //Populate fundList Array
     if(fundCount > 0){
       for(let i=1; i<=lifetimeCount; i++){
-        console.log("i = "+i);
         const response = await contract.getFundDetails(i);
         const response2 = await contract.getFundDetails2(i, accounts[0]);
-        if(i===1 && response[0].toNumber() !== 0){
+        const response3 = await contract.checkFundStatus(i);
+        if(i===1){
           this.setState({
             fundList: [
               {
@@ -989,11 +990,13 @@ class App extends Component {
                 fundPaymentCycle: response[5].toNumber(),
                 fundInvestorStatus: response2[0],
                 fundVirtualBalance: web3.utils.fromWei(response2[1].toString(), "ether"),
-                fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether")
+                fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
+                fundFundraising: response3[0],
+                fundClosed: response3[1]
               }
             ]
           });
-        } else if (response[0].toNumber() !== 0){
+        } else{
             //maybe make this a slice
             const tempFundList = this.state.fundList;
             this.setState({
@@ -1007,7 +1010,9 @@ class App extends Component {
                   fundPaymentCycle: response[5].toNumber(),
                   fundInvestorStatus: response2[0],
                   fundVirtualBalance: web3.utils.fromWei(response2[1].toString(), "ether"),
-                  fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether")
+                  fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
+                  fundFundraising: response3[0],
+                  fundClosed: response3[1]
                 }
               ])
             });
@@ -1016,11 +1021,6 @@ class App extends Component {
     };
 
     //Watch for Order Events
-    let fundNum = null;
-    let action = null;
-    let ticker = null;
-    let quantity = null;
-    let price = null;
     let i = 0;
 
     let updateState = (event) => {
@@ -1106,7 +1106,7 @@ class App extends Component {
 
     const fundList = this.state.fundList;
     const funds = fundList.map((fund, fundNum) => {
-      if(this.state.fundCount !== 0) {
+      if(this.state.fundCount !== 0 && !fund.fundClosed) {
         return(
           <Fund key = {fundNum}
             fundNum = {fundNum+1}

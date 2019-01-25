@@ -47,5 +47,9 @@ library InitLib {
         self.list[count].virtualBalances[_fundOwner] = _investment;
         //set fundOwner's fees to zero
         self.list[count].fees[_fundOwner] = 0;
+        //set fundraising to 1
+        self.list[count].fundraising = true;
+        //set closed to 0
+        self.list[count].closed = false;
     }
 }

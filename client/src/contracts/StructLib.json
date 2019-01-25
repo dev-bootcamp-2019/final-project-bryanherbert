@@ -1,24 +1,24 @@
 {
   "contractName": "StructLib",
   "abi": [],
-  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a723058209c5810d77f09eecd533f9df6adac949381e60df7324fdb3f54f976836f9226fe0029",
-  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a723058209c5810d77f09eecd533f9df6adac949381e60df7324fdb3f54f976836f9226fe0029",
-  "sourceMap": "26:1269:7:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
-  "deployedSourceMap": "26:1269:7:-;;;;;;;;",
-  "source": "pragma solidity ^0.4.24;\n\nlibrary StructLib{\n    struct Data { mapping(uint => Fund) list; }\n\n    struct Fund {\n        //Fund Number\n        uint fundNum;\n        //Name of fund\n        bytes32 name;\n        //Partner who Initialized the strategy\n        //Could be a multisig wallet\n        address fundOwner;\n        //amount of funds the strategy is virtually managing\n        uint totalCapital;\n        //Keep track of available capital\n        uint capitalDeployed;\n        //Add fee that quant can set- in whole number, i.e. 2% is represented as 2\n        uint feeRate;\n        //Number of days in Payment Cycle\n        uint paymentCycle;\n        //maps investors to investment status- current investors return true, non-investors return false\n        mapping (address => bool) investors;\n        //maps investors to their virtual balances in the strategy\n        mapping (address => uint) virtualBalances;\n        //maps investors to the actual fee they have stored in the Strategy Hub contract\n        //fees are paid into stratOwner fee account and paid from investor fee account\n        mapping (address => uint) fees;\n        //Adoption Times for each investor\n        mapping(address => uint) paymentCycleStart;\n        //will need to add IPFS hash eventually to verify code\n    }\n}",
+  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f30073000000000000000000000000000000000000000030146080604052600080fd00a165627a7a7230582008b3b0794eda2941dd2b11cdc47425fb55ed396bb717ecab13d23ca2e60a61e40029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fd00a165627a7a7230582008b3b0794eda2941dd2b11cdc47425fb55ed396bb717ecab13d23ca2e60a61e40029",
+  "sourceMap": "26:1439:7:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "26:1439:7:-;;;;;;;;",
+  "source": "pragma solidity ^0.4.24;\n\nlibrary StructLib{\n    struct Data { mapping(uint => Fund) list; }\n\n    struct Fund {\n        //Fund Number\n        uint fundNum;\n        //Name of fund\n        bytes32 name;\n        //Partner who Initialized the strategy\n        //Could be a multisig wallet\n        address fundOwner;\n        //amount of funds the strategy is virtually managing\n        uint totalCapital;\n        //Keep track of available capital\n        uint capitalDeployed;\n        //Add fee that quant can set- in whole number, i.e. 2% is represented as 2\n        uint feeRate;\n        //Number of days in Payment Cycle\n        uint paymentCycle;\n        //maps investors to investment status- current investors return true, non-investors return false\n        mapping (address => bool) investors;\n        //maps investors to their virtual balances in the strategy\n        mapping (address => uint) virtualBalances;\n        //maps investors to the actual fee they have stored in the Strategy Hub contract\n        //fees are paid into stratOwner fee account and paid from investor fee account\n        mapping (address => uint) fees;\n        //Adoption Times for each investor\n        mapping(address => uint) paymentCycleStart;\n        //Boolean representing whether fund is in fundraising period\n        bool fundraising;\n        //Boolean representing whether fund is closed\n        bool closed;\n        //will need to add IPFS hash eventually to verify code\n    }\n}",
   "sourcePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
   "ast": {
     "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
     "exportedSymbols": {
       "StructLib": [
-        1310
+        1356
       ]
     },
-    "id": 1311,
+    "id": 1357,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1273,
+        "id": 1315,
         "literals": [
           "solidity",
           "^",
@@ -34,34 +34,34 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1310,
+        "id": 1356,
         "linearizedBaseContracts": [
-          1310
+          1356
         ],
         "name": "StructLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "StructLib.Data",
-            "id": 1278,
+            "id": 1320,
             "members": [
               {
                 "constant": false,
-                "id": 1277,
+                "id": 1319,
                 "name": "list",
                 "nodeType": "VariableDeclaration",
-                "scope": 1278,
+                "scope": 1320,
                 "src": "63:26:7",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1309_storage_$",
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1355_storage_$",
                   "typeString": "mapping(uint256 => struct StructLib.Fund)"
                 },
                 "typeName": {
-                  "id": 1276,
+                  "id": 1318,
                   "keyType": {
-                    "id": 1274,
+                    "id": 1316,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "71:4:7",
@@ -73,18 +73,18 @@
                   "nodeType": "Mapping",
                   "src": "63:21:7",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1309_storage_$",
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1355_storage_$",
                     "typeString": "mapping(uint256 => struct StructLib.Fund)"
                   },
                   "valueType": {
                     "contractScope": null,
-                    "id": 1275,
+                    "id": 1317,
                     "name": "Fund",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1309,
+                    "referencedDeclaration": 1355,
                     "src": "79:4:7",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Fund_$1309_storage_ptr",
+                      "typeIdentifier": "t_struct$_Fund_$1355_storage_ptr",
                       "typeString": "struct StructLib.Fund"
                     }
                   }
@@ -95,20 +95,20 @@
             ],
             "name": "Data",
             "nodeType": "StructDefinition",
-            "scope": 1310,
+            "scope": 1356,
             "src": "49:43:7",
             "visibility": "public"
           },
           {
             "canonicalName": "StructLib.Fund",
-            "id": 1309,
+            "id": 1355,
             "members": [
               {
                 "constant": false,
-                "id": 1280,
+                "id": 1322,
                 "name": "fundNum",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "142:12:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -117,7 +117,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1279,
+                  "id": 1321,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "142:4:7",
@@ -131,10 +131,10 @@
               },
               {
                 "constant": false,
-                "id": 1282,
+                "id": 1324,
                 "name": "name",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "187:12:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -143,7 +143,7 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 1281,
+                  "id": 1323,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
                   "src": "187:7:7",
@@ -157,10 +157,10 @@
               },
               {
                 "constant": false,
-                "id": 1284,
+                "id": 1326,
                 "name": "fundOwner",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "293:17:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -169,7 +169,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 1283,
+                  "id": 1325,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "293:7:7",
@@ -183,10 +183,10 @@
               },
               {
                 "constant": false,
-                "id": 1286,
+                "id": 1328,
                 "name": "totalCapital",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "381:17:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -195,7 +195,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1285,
+                  "id": 1327,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "381:4:7",
@@ -209,10 +209,10 @@
               },
               {
                 "constant": false,
-                "id": 1288,
+                "id": 1330,
                 "name": "capitalDeployed",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "450:20:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -221,7 +221,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1287,
+                  "id": 1329,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "450:4:7",
@@ -235,10 +235,10 @@
               },
               {
                 "constant": false,
-                "id": 1290,
+                "id": 1332,
                 "name": "feeRate",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "563:12:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -247,7 +247,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1289,
+                  "id": 1331,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "563:4:7",
@@ -261,10 +261,10 @@
               },
               {
                 "constant": false,
-                "id": 1292,
+                "id": 1334,
                 "name": "paymentCycle",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "627:17:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -273,7 +273,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1291,
+                  "id": 1333,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "627:4:7",
@@ -287,10 +287,10 @@
               },
               {
                 "constant": false,
-                "id": 1296,
+                "id": 1338,
                 "name": "investors",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "759:35:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -299,9 +299,9 @@
                   "typeString": "mapping(address => bool)"
                 },
                 "typeName": {
-                  "id": 1295,
+                  "id": 1337,
                   "keyType": {
-                    "id": 1293,
+                    "id": 1335,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "768:7:7",
@@ -317,7 +317,7 @@
                     "typeString": "mapping(address => bool)"
                   },
                   "valueType": {
-                    "id": 1294,
+                    "id": 1336,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "779:4:7",
@@ -332,10 +332,10 @@
               },
               {
                 "constant": false,
-                "id": 1300,
+                "id": 1342,
                 "name": "virtualBalances",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "871:41:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -344,9 +344,9 @@
                   "typeString": "mapping(address => uint256)"
                 },
                 "typeName": {
-                  "id": 1299,
+                  "id": 1341,
                   "keyType": {
-                    "id": 1297,
+                    "id": 1339,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "880:7:7",
@@ -362,7 +362,7 @@
                     "typeString": "mapping(address => uint256)"
                   },
                   "valueType": {
-                    "id": 1298,
+                    "id": 1340,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "891:4:7",
@@ -377,10 +377,10 @@
               },
               {
                 "constant": false,
-                "id": 1304,
+                "id": 1346,
                 "name": "fees",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "1098:30:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -389,9 +389,9 @@
                   "typeString": "mapping(address => uint256)"
                 },
                 "typeName": {
-                  "id": 1303,
+                  "id": 1345,
                   "keyType": {
-                    "id": 1301,
+                    "id": 1343,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1107:7:7",
@@ -407,7 +407,7 @@
                     "typeString": "mapping(address => uint256)"
                   },
                   "valueType": {
-                    "id": 1302,
+                    "id": 1344,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1118:4:7",
@@ -422,10 +422,10 @@
               },
               {
                 "constant": false,
-                "id": 1308,
+                "id": 1350,
                 "name": "paymentCycleStart",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "1181:42:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -434,9 +434,9 @@
                   "typeString": "mapping(address => uint256)"
                 },
                 "typeName": {
-                  "id": 1307,
+                  "id": 1349,
                   "keyType": {
-                    "id": 1305,
+                    "id": 1347,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1189:7:7",
@@ -452,7 +452,7 @@
                     "typeString": "mapping(address => uint256)"
                   },
                   "valueType": {
-                    "id": 1306,
+                    "id": 1348,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1200:4:7",
@@ -464,33 +464,85 @@
                 },
                 "value": null,
                 "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1352,
+                "name": "fundraising",
+                "nodeType": "VariableDeclaration",
+                "scope": 1355,
+                "src": "1302:16:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1351,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1302:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1354,
+                "name": "closed",
+                "nodeType": "VariableDeclaration",
+                "scope": 1355,
+                "src": "1382:11:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1353,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1382:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
               }
             ],
             "name": "Fund",
             "nodeType": "StructDefinition",
-            "scope": 1310,
-            "src": "98:1195:7",
+            "scope": 1356,
+            "src": "98:1365:7",
             "visibility": "public"
           }
         ],
-        "scope": 1311,
-        "src": "26:1269:7"
+        "scope": 1357,
+        "src": "26:1439:7"
       }
     ],
-    "src": "0:1295:7"
+    "src": "0:1465:7"
   },
   "legacyAST": {
     "absolutePath": "/home/bryherbz/Documents/final-project-bryanherbert/contracts/StructLib.sol",
     "exportedSymbols": {
       "StructLib": [
-        1310
+        1356
       ]
     },
-    "id": 1311,
+    "id": 1357,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1273,
+        "id": 1315,
         "literals": [
           "solidity",
           "^",
@@ -506,34 +558,34 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1310,
+        "id": 1356,
         "linearizedBaseContracts": [
-          1310
+          1356
         ],
         "name": "StructLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "StructLib.Data",
-            "id": 1278,
+            "id": 1320,
             "members": [
               {
                 "constant": false,
-                "id": 1277,
+                "id": 1319,
                 "name": "list",
                 "nodeType": "VariableDeclaration",
-                "scope": 1278,
+                "scope": 1320,
                 "src": "63:26:7",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1309_storage_$",
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1355_storage_$",
                   "typeString": "mapping(uint256 => struct StructLib.Fund)"
                 },
                 "typeName": {
-                  "id": 1276,
+                  "id": 1318,
                   "keyType": {
-                    "id": 1274,
+                    "id": 1316,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "71:4:7",
@@ -545,18 +597,18 @@
                   "nodeType": "Mapping",
                   "src": "63:21:7",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1309_storage_$",
+                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1355_storage_$",
                     "typeString": "mapping(uint256 => struct StructLib.Fund)"
                   },
                   "valueType": {
                     "contractScope": null,
-                    "id": 1275,
+                    "id": 1317,
                     "name": "Fund",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1309,
+                    "referencedDeclaration": 1355,
                     "src": "79:4:7",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Fund_$1309_storage_ptr",
+                      "typeIdentifier": "t_struct$_Fund_$1355_storage_ptr",
                       "typeString": "struct StructLib.Fund"
                     }
                   }
@@ -567,20 +619,20 @@
             ],
             "name": "Data",
             "nodeType": "StructDefinition",
-            "scope": 1310,
+            "scope": 1356,
             "src": "49:43:7",
             "visibility": "public"
           },
           {
             "canonicalName": "StructLib.Fund",
-            "id": 1309,
+            "id": 1355,
             "members": [
               {
                 "constant": false,
-                "id": 1280,
+                "id": 1322,
                 "name": "fundNum",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "142:12:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -589,7 +641,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1279,
+                  "id": 1321,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "142:4:7",
@@ -603,10 +655,10 @@
               },
               {
                 "constant": false,
-                "id": 1282,
+                "id": 1324,
                 "name": "name",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "187:12:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -615,7 +667,7 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 1281,
+                  "id": 1323,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
                   "src": "187:7:7",
@@ -629,10 +681,10 @@
               },
               {
                 "constant": false,
-                "id": 1284,
+                "id": 1326,
                 "name": "fundOwner",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "293:17:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -641,7 +693,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 1283,
+                  "id": 1325,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "293:7:7",
@@ -655,10 +707,10 @@
               },
               {
                 "constant": false,
-                "id": 1286,
+                "id": 1328,
                 "name": "totalCapital",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "381:17:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -667,7 +719,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1285,
+                  "id": 1327,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "381:4:7",
@@ -681,10 +733,10 @@
               },
               {
                 "constant": false,
-                "id": 1288,
+                "id": 1330,
                 "name": "capitalDeployed",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "450:20:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -693,7 +745,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1287,
+                  "id": 1329,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "450:4:7",
@@ -707,10 +759,10 @@
               },
               {
                 "constant": false,
-                "id": 1290,
+                "id": 1332,
                 "name": "feeRate",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "563:12:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -719,7 +771,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1289,
+                  "id": 1331,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "563:4:7",
@@ -733,10 +785,10 @@
               },
               {
                 "constant": false,
-                "id": 1292,
+                "id": 1334,
                 "name": "paymentCycle",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "627:17:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -745,7 +797,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 1291,
+                  "id": 1333,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "627:4:7",
@@ -759,10 +811,10 @@
               },
               {
                 "constant": false,
-                "id": 1296,
+                "id": 1338,
                 "name": "investors",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "759:35:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -771,9 +823,9 @@
                   "typeString": "mapping(address => bool)"
                 },
                 "typeName": {
-                  "id": 1295,
+                  "id": 1337,
                   "keyType": {
-                    "id": 1293,
+                    "id": 1335,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "768:7:7",
@@ -789,7 +841,7 @@
                     "typeString": "mapping(address => bool)"
                   },
                   "valueType": {
-                    "id": 1294,
+                    "id": 1336,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "779:4:7",
@@ -804,10 +856,10 @@
               },
               {
                 "constant": false,
-                "id": 1300,
+                "id": 1342,
                 "name": "virtualBalances",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "871:41:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -816,9 +868,9 @@
                   "typeString": "mapping(address => uint256)"
                 },
                 "typeName": {
-                  "id": 1299,
+                  "id": 1341,
                   "keyType": {
-                    "id": 1297,
+                    "id": 1339,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "880:7:7",
@@ -834,7 +886,7 @@
                     "typeString": "mapping(address => uint256)"
                   },
                   "valueType": {
-                    "id": 1298,
+                    "id": 1340,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "891:4:7",
@@ -849,10 +901,10 @@
               },
               {
                 "constant": false,
-                "id": 1304,
+                "id": 1346,
                 "name": "fees",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "1098:30:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -861,9 +913,9 @@
                   "typeString": "mapping(address => uint256)"
                 },
                 "typeName": {
-                  "id": 1303,
+                  "id": 1345,
                   "keyType": {
-                    "id": 1301,
+                    "id": 1343,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1107:7:7",
@@ -879,7 +931,7 @@
                     "typeString": "mapping(address => uint256)"
                   },
                   "valueType": {
-                    "id": 1302,
+                    "id": 1344,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1118:4:7",
@@ -894,10 +946,10 @@
               },
               {
                 "constant": false,
-                "id": 1308,
+                "id": 1350,
                 "name": "paymentCycleStart",
                 "nodeType": "VariableDeclaration",
-                "scope": 1309,
+                "scope": 1355,
                 "src": "1181:42:7",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -906,9 +958,9 @@
                   "typeString": "mapping(address => uint256)"
                 },
                 "typeName": {
-                  "id": 1307,
+                  "id": 1349,
                   "keyType": {
-                    "id": 1305,
+                    "id": 1347,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1189:7:7",
@@ -924,7 +976,7 @@
                     "typeString": "mapping(address => uint256)"
                   },
                   "valueType": {
-                    "id": 1306,
+                    "id": 1348,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1200:4:7",
@@ -936,20 +988,72 @@
                 },
                 "value": null,
                 "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1352,
+                "name": "fundraising",
+                "nodeType": "VariableDeclaration",
+                "scope": 1355,
+                "src": "1302:16:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1351,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1302:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1354,
+                "name": "closed",
+                "nodeType": "VariableDeclaration",
+                "scope": 1355,
+                "src": "1382:11:7",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1353,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1382:4:7",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
               }
             ],
             "name": "Fund",
             "nodeType": "StructDefinition",
-            "scope": 1310,
-            "src": "98:1195:7",
+            "scope": 1356,
+            "src": "98:1365:7",
             "visibility": "public"
           }
         ],
-        "scope": 1311,
-        "src": "26:1269:7"
+        "scope": 1357,
+        "src": "26:1439:7"
       }
     ],
-    "src": "0:1295:7"
+    "src": "0:1465:7"
   },
   "compiler": {
     "name": "solc",
@@ -1139,10 +1243,16 @@
     "1548406603648": {
       "events": {},
       "links": {},
-      "address": "0xb8034eda00c49ca4ef6deed9b2c63dd5432350e6",
-      "transactionHash": "0x32e5883c85543c2525719839359367dfe9445874fb38fb972715b5c9fe6b9617"
+      "address": "0x87d61d0e05881b662e2e4eadb8045770f5299c10",
+      "transactionHash": "0xc886b9ccb932221f4ddd994a66e1294516b81e7ba0d9fdb388306327a5a8f863"
+    },
+    "1548441715040": {
+      "events": {},
+      "links": {},
+      "address": "0xf7b1e9055d1ff5cdf6a631f96db8ba45bc4f49b7",
+      "transactionHash": "0x224eff9dc429e6a4cac4bbd6578b67676e8adabc45c746e5ab1892e65636658b"
     }
   },
   "schemaVersion": "2.0.1",
-  "updatedAt": "2019-01-25T08:57:10.331Z"
+  "updatedAt": "2019-01-25T18:48:18.870Z"
 }
