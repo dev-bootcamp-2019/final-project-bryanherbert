@@ -250,7 +250,7 @@ class OrderModal extends React.Component{
                 className={classnames({ active: this.state.activeTab === '1'})}
                 onClick={() => { this.toggleTab('1'); }}
               >
-                New Order Form
+                New Order
               </NavLink>
             </NavItem>
             <NavItem>
@@ -338,13 +338,14 @@ class FundTableEntry extends React.Component{
   render(){
     const fraction = (this.props.capitalDeployed/this.props.totalCapital)*100;
     const rounded = Math.floor(fraction*100)/100;
+    const capDepRounded = Math.floor(this.props.capitalDeployed*100)/100;
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
         <td>{this.props.name}</td>
         <td>{this.props.virtualBalance} ether</td>
         <td>{this.props.totalCapital} ether</td>
-        <td>{this.props.capitalDeployed} ether ({rounded}%)</td>
+        <td>{capDepRounded} ether ({rounded}%)</td>
         <td>{this.props.feeRate}%</td>
         <td>{this.props.paymentCycle} days</td>
         <td>
@@ -681,12 +682,13 @@ class InvestmentTableEntry extends React.Component{
     const fraction = this.props.capitalDeployed/this.props.totalCapital*100;
     const rounded = Math.floor(fraction*100)/100;
     const balanceDeployed = this.props.virtualBalance * (fraction/100);
+    const balDepRounded = Math.floor(balanceDeployed*100)/100;
     return(
       <tr>
         <th scope="row">{this.props.i}</th>
         <td>{this.props.name}</td>
         <td>{this.props.virtualBalance} ether</td>
-        <td>{balanceDeployed} ether ({rounded}%)</td>
+        <td>{balDepRounded} ether ({rounded}%)</td>
         <td>
           <FeeModal2
             //Fees available to pay
@@ -772,7 +774,7 @@ class InvestmentsTable extends React.Component {
               <th>Balance Deployed</th>
               <th>Fees</th>
               <th>Orders</th>
-              <th>Withdraw</th>
+              <th>Withdrawals</th>
             </tr>
           </thead>
           <tbody>
