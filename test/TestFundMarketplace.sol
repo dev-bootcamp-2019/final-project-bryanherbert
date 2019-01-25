@@ -202,30 +202,44 @@ contract TestFundMarketplace {
     }
 
     function testCloseFund() public {
-        investor.closeFund(fm, fundNum);
+        bytes32 name = "alpha";
+        
+        //Tests
+        (a,,,,,) = fm.getFundDetails(fundNum);
+        Assert.equal(a, name, "Fund Details were incorrect");
+        
+        //Delete Fund
+        manager.closeFund(fm, fundNum);
+
+        //Tests
+        (a,,,,,) = fm.getFundDetails(fundNum);
+        Assert.equal(a, 0, "Fund was not deleted");
     }
 
 }
 
-//change to manager
 contract Manager {
 
-    function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) public {
+    function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) 
+    external 
+    {
         fm.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);
     }
 
-    function collectFees(FundMarketplace fm, uint _fundNum) public {
+    function collectFees(FundMarketplace fm, uint _fundNum) 
+    external 
+    {
         fm.collectFees(_fundNum);
     }
 
     function placeOrder(FundMarketplace fm, uint _fundNum, bytes _action, bytes32 _ticker, uint _qty, uint _price)
-    public
+    external
     {
         fm.placeOrder(_fundNum, _action, _ticker, _qty, _price);
     }
 
     function closeFund(FundMarketplace fm, uint _fundNum)
-    public
+    external
     {
         fm.closeFund(_fundNum);
     }
@@ -237,33 +251,33 @@ contract Manager {
 
 contract Investor {
 
-    function makeInvestment(FundMarketplace fm, uint _fundNum, uint _investment) public {
+    function makeInvestment(FundMarketplace fm, uint _fundNum, uint _investment) 
+    external 
+    {
         uint fee = SafeMath.add(SafeMath.div(_investment, fm.checkFeeRate(_fundNum)), 1);
         fm.Invest.value(fee)(_fundNum, _investment);
     }
 
-    function payFee(FundMarketplace fm, uint _fundNum, uint _timePeriod) public {
+    function payFee(FundMarketplace fm, uint _fundNum, uint _timePeriod) 
+    external 
+    {
         fm.payFee(_fundNum, _timePeriod);
     }
 
-    function withdrawFunds(FundMarketplace fm, uint _fundNum, uint _amount) public {
+    function withdrawFunds(FundMarketplace fm, uint _fundNum, uint _amount) 
+    external 
+    {
         fm.withdrawFunds(_fundNum, _amount);
     }
 
-    function calcQty(FundMarketplace fm, uint _fundNum, uint qty) public view returns (uint) {
-        return fm.calcQty(_fundNum, qty);
-    }
-
-    //Delete this
-    function closeFund(FundMarketplace fm, uint _fundNum)
-    public
+    function calcQty(FundMarketplace fm, uint _fundNum, uint qty) 
+    external view returns (uint) 
     {
-        fm.closeFund(_fundNum);
+        return fm.calcQty(_fundNum, qty);
     }
 
     //Fallback function, accepts ether
     function() public payable{
 
     }
-
 }

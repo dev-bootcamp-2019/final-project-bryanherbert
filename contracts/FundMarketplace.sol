@@ -63,6 +63,11 @@ contract FundMarketplace {
         uint price
     );
 
+    event FundClosed(
+        uint indexed fundNum,
+        address manager
+    );
+
     constructor() public {
         admin = msg.sender;
     }
@@ -157,8 +162,12 @@ contract FundMarketplace {
     function closeFund(uint _fundNum) public
     isOwner(_fundNum, msg.sender)
     {
-        //Do I need to delete all the members of the struct 
+        //Have to work out business logic better for this button
+        //Transfer uncollected fees to manager
+        uint refund = funds.list[_fundNum].fees[msg.sender];
+        msg.sender.transfer(refund);
         delete funds.list[_fundNum];
+        emit FundClosed(_fundNum, msg.sender);
     }
 
     //Get fund information (for testing/verification purposes)

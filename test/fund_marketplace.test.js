@@ -110,7 +110,7 @@ contract('FundMarketplace', function(accounts) {
 
         //Calculate Fee
         var feeRate = await fundMarketplace.checkFeeRate.call(fundNum)
-        var fee = 1.01*(investment/feeRate)
+        var fee = (investment/feeRate)+1;
 
         //Make Investment
         const tx = await fundMarketplace.Invest(fundNum, investment, {from: investor, value: fee})
@@ -253,7 +253,7 @@ contract('FundMarketplace', function(accounts) {
         const _timePeriod = 12
         const investment = web3.toWei(2, "ether")
         const feeRate = await fundMarketplace.checkFeeRate.call(fundNum)
-        const fee = (investment/feeRate) + 1
+        const fee = (investment/feeRate)+1;
 
         //Pre-transaction testing
         resultMan = await fundMarketplace.getFundDetails2.call(fundNum, manager)
@@ -431,5 +431,46 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(resultInv[0], false, "Investor is incorrectly listed as active in fund")
         assert.equal(resultInv[1].toNumber(), 0, "Investor's virutal balance is not zeroed out")
         assert.equal(resultInv[2].toNumber(), 0, "Investor's fees are not zeroed out")
+    })
+
+    it("should allow a manager to close a fund", async() => {
+        //Deployed FundMarketplace
+        const fundMarketplace = await FundMarketplace.deployed()
+
+        //Set event emitted to be false
+        var eventEmitted = false
+
+        //Accounts
+        var investorBalanceBefore = await web3.eth.getBalance(investor).toNumber()
+        
+        //local variables
+        var _result = await fundMarketplace.getFundDetails(fundNum)
+        var _name = hex2string(_result[0])
+
+        //Pre-Transaction Testing
+        assert.equal(_name, name, "Fund Details are wrong");
+
+        //Close Funds
+        const tx = await fundMarketplace.closeFund(fundNum, {from: manager})
+
+        if(tx.logs[0].event === "FundClosed"){
+            //fundNum, investor, investment, fees
+            eventFundNum = tx.logs[0].args.fundNum
+            eventManager = tx.logs[0].args.manager
+            eventEmitted = true;
+        }
+
+        //Event Testing
+        assert.equal(eventFundNum, 1, "Wrong Fund was Cancelled");
+        assert.equal(eventManager, manager, "Improper account cancellled fund")
+        assert.equal(eventEmitted, true, "Withdrawing fees should emit an event")
+
+        //local variables
+        var _result = await fundMarketplace.getFundDetails(fundNum)
+        var _name = hex2string(_result[0])
+
+        //Post-Transaction Testing
+        assert.equal(_name, 0, "Fund was not deleted");
+
     })
 });
