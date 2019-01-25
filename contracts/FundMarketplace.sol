@@ -69,16 +69,16 @@ contract FundMarketplace {
 
     //Modifiers
 
-    // //Can replace this with ethpm code
-    // modifier isOwner(bytes32 _name){
-    //     address _fundOwner;
-    //     (,_fundOwner,,) = getFundDetails(_name);
-    //     require(
-    //         _fundOwner == msg.sender,
-    //         "Message Sender does not own strategy"
-    //     );
-    //     _;
-    // }
+    //Can replace this with ethpm code
+    modifier isOwner(uint _fundNum, address _account){
+        address fundOwner;
+        (,fundOwner,,,,) = getFundDetails(_fundNum);
+        require(
+            fundOwner == msg.sender,
+            "Message Sender does not own fund"
+        );
+        _;
+    }
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable {
@@ -154,9 +154,16 @@ contract FundMarketplace {
         emit FundsWithdrawn(_fundNum, msg.sender, investment, fees);
     }
 
+    function closeFund(uint _fundNum) public
+    isOwner(_fundNum, msg.sender)
+    {
+        //Do I need to delete all the members of the struct 
+        delete funds.list[_fundNum];
+    }
+
     //Get fund information (for testing/verification purposes)
     
-    function getFundDetails(uint _fundNum) external view returns (bytes32, address, uint, uint, uint, uint){
+    function getFundDetails(uint _fundNum) public view returns (bytes32, address, uint, uint, uint, uint){
         return (funds.list[_fundNum].name, 
         funds.list[_fundNum].fundOwner, 
         funds.list[_fundNum].totalCapital,
@@ -166,7 +173,7 @@ contract FundMarketplace {
     }
 
     //need two functions because of stack height
-    function getFundDetails2(uint _fundNum, address _addr) external view returns (bool, uint, uint){
+    function getFundDetails2(uint _fundNum, address _addr) public view returns (bool, uint, uint){
         return(funds.list[_fundNum].investors[_addr], 
         funds.list[_fundNum].virtualBalances[_addr],
         funds.list[_fundNum].fees[_addr]);

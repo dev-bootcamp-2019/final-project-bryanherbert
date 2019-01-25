@@ -201,6 +201,10 @@ contract TestFundMarketplace {
         Assert.isAbove(postBalance, preBalance, "Investor's fees were not transferred back successfully");
     }
 
+    function testCloseFund() public {
+        investor.closeFund(fm, fundNum);
+    }
+
 }
 
 //change to manager
@@ -218,6 +222,12 @@ contract Manager {
     public
     {
         fm.placeOrder(_fundNum, _action, _ticker, _qty, _price);
+    }
+
+    function closeFund(FundMarketplace fm, uint _fundNum)
+    public
+    {
+        fm.closeFund(_fundNum);
     }
 
     //Fallback function, accepts ether
@@ -242,6 +252,13 @@ contract Investor {
 
     function calcQty(FundMarketplace fm, uint _fundNum, uint qty) public view returns (uint) {
         return fm.calcQty(_fundNum, qty);
+    }
+
+    //Delete this
+    function closeFund(FundMarketplace fm, uint _fundNum)
+    public
+    {
+        fm.closeFund(_fundNum);
     }
 
     //Fallback function, accepts ether
