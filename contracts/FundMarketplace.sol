@@ -88,7 +88,8 @@ contract FundMarketplace {
 
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
     external payable {
-        InitLib.initializeFund(funds, fundCount, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
+        //Changed fundCount to lifetimeCount in arguments
+        InitLib.initializeFund(funds, lifetimeCount, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
         fundCount++;
         lifetimeCount++;
