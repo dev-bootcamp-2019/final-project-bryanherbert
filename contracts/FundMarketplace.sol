@@ -69,6 +69,11 @@ contract FundMarketplace {
         address manager
     );
 
+    event FundraisingOver(
+        uint indexed fundNum,
+        address manager
+    );
+
     constructor() public {
         admin = msg.sender;
     }
@@ -174,6 +179,12 @@ contract FundMarketplace {
         //Adjust numbering of other funds
         fundCount--;
         emit FundClosed(_fundNum, msg.sender);
+    }
+
+    function endFundraising(uint _fundNum) public
+    isOwner(_fundNum, msg.sender){
+        funds.list[_fundNum].fundraising = false;
+        emit FundraisingOver(_fundNum, msg.sender);
     }
 
     //Get fund information (for testing/verification purposes)

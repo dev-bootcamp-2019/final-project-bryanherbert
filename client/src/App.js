@@ -43,13 +43,10 @@ class Fund extends React.Component {
   }
 
   render(){
-    return(
-      <div className="fund">
-        <h3>{this.props.name} Fund</h3>
-        <p>Manager: {this.props.manager}</p>
-        <p>Total Capital: {this.props.capital} ether</p>
-        <p>Annual Fee Rate: {this.props.feeRate}%</p>
-        <p>Payment Cycle: {this.props.paymentCycle} days</p>
+    const fundraising = this.props.fundraising;
+    let investment;
+    if(fundraising){
+      investment = (
         <Form inline className="invest-button">
           <FormGroup>
             <Label for="investButton" hidden></Label>
@@ -58,6 +55,30 @@ class Fund extends React.Component {
           {' '}
           <Button color="success" onClick={this.handleInvestClick}>Invest</Button>
         </Form>
+      );
+    }else{
+      investment = (
+      <Alert color="secondary">
+        Fundraising Period Ended
+      </Alert>
+      );
+    }
+    return(
+      <div className="fund">
+        <h3>{this.props.name} Fund</h3>
+        <p>Manager: {this.props.manager}</p>
+        <p>Total Capital: {this.props.capital} ether</p>
+        <p>Annual Fee Rate: {this.props.feeRate}%</p>
+        <p>Payment Cycle: {this.props.paymentCycle} days</p>
+        {/* <Form inline className="invest-button">
+          <FormGroup>
+            <Label for="investButton" hidden></Label>
+            <Input type="text" name="investmentAmount" id="investment" placeholder="Ether" onChange={this.handleChange}/>
+          </FormGroup>
+          {' '}
+          <Button color="success" onClick={this.handleInvestClick}>Invest</Button>
+        </Form> */}
+        {investment}
       </div>
     );
   }
@@ -382,6 +403,65 @@ class CloseModal extends React.Component{
   }
 }
 
+class FundModal extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      modal: false
+    };
+    this.toggle = this.toggle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
+  handleClick = async(event) => {
+    event.preventDefault();
+    await this.props.contract.endFundraising(
+      this.props.fundNumber,
+      { from: this.props.account }
+    );
+    //Not sure this is correct format but it works
+    this.setState(this.props.setup);
+    //Close Window
+    this.toggle();
+  }
+
+  render() {
+    let status;
+    let endFundraising;
+    if(this.props.fundraising){
+      status = "Active";
+      endFundraising = (
+        <Button color="danger" onClick={this.handleClick}>End Fundraising Period</Button>
+      );
+    } else{
+      status = "Ended";
+    }
+    return(
+      <div>
+        <Button color="info" onClick={this.toggle}>Fund Menu</Button>
+        <Modal isOpen={this.state.modal} toggle={this.state.toggle}>
+          <ModalHeader toggle={this.toggle}>Fund Management Menu</ModalHeader>
+          <ModalBody>
+            <p>Fee Rate: {this.props.feeRate}%</p>
+            <p>Payment Cycle: {this.props.paymentCycle} days</p>
+            <p>Fundraising Period: {status} </p>
+            {endFundraising}
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    );
+  }
+}
+
 class FundTableEntry extends React.Component{
   constructor(props){
     super(props);
@@ -398,8 +478,17 @@ class FundTableEntry extends React.Component{
         <td>{this.props.virtualBalance} ether</td>
         <td>{this.props.totalCapital} ether</td>
         <td>{capDepRounded} ether ({rounded}%)</td>
-        <td>{this.props.feeRate}%</td>
-        <td>{this.props.paymentCycle} days</td>
+        <td>
+          <FundModal
+            feeRate = {this.props.feeRate}
+            paymentCycle = {this.props.paymentCycle}
+            contract = {this.props.contract}
+            account = {this.props.account}
+            fundNumber = {this.props.fundNumber}
+            setup = {this.props.setup}
+            fundraising = {this.props.fundraising}
+          />
+        </td>
         <td>
           <FeeModal
             fees = {this.props.fees}
@@ -456,6 +545,7 @@ class FundsTable extends React.Component {
             feeRate = {fund.fundFeeRate}
             paymentCycle = {fund.fundPaymentCycle}
             fees = {fund.fundAvailableFees}
+            fundraising = {fund.fundFundraising}
             account = {this.props.account}
             contract = {this.props.contract}
             web3 = {this.props.web3}
@@ -477,8 +567,7 @@ class FundsTable extends React.Component {
               <th>My Balance</th>
               <th>Total Capital</th>
               <th>Capital Deployed</th>
-              <th>Fee Rate</th>
-              <th>Payment Cycle</th>
+              <th>Fund Management</th>
               <th>Fees</th>
               <th>Orders</th>
               <th>Closures</th>
@@ -797,7 +886,7 @@ class InvestmentsTable extends React.Component {
     const DisplayInvestmentList = this.props.fundList.map((fund, fundNum) => {
       //const result = this.props.contract.getFundDetails2(fundNum, account);   
       const status = fund.fundInvestorStatus;
-      const owner = fund.fundManager 
+      const owner = fund.fundManager;
       const fundNumber = fundNum+1;
       if(status && this.props.account !== owner){
         i++;
@@ -824,8 +913,24 @@ class InvestmentsTable extends React.Component {
       }
     })
 
+    const DisplayWarningsList = this.props.fundList.map((fund, fundNum) => {
+      const closed = fund.fundClosed;
+      const status = fund.fundInvestorStatus;
+      const owner = fund.fundManager;
+      if(closed && status && this.props.account !== owner){
+        return(
+          <Alert color="danger">
+            {fund.fundName} Fund has been closed. 
+            Please withdraw your total balance to retrieve your refunded management fee.
+          </Alert>
+        );
+      } else{
+      }
+    })
+
     return(
       <div>
+        {DisplayWarningsList}
         <Table striped>
           <thead>
             <tr>
@@ -1119,6 +1224,7 @@ class App extends Component {
             accounts =  {this.state.accounts}
             contract = {this.state.contract}
             setup = {this.setup}
+            fundraising = {fund.fundFundraising}
             //handleChange = {(event) => this.handleChange(event)}
             //handleInvestClick = {(event) => this.handleInvestClick(event)}
           />
