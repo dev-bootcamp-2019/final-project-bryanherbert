@@ -71,6 +71,7 @@ contract('FundMarketplace', function(accounts) {
         //Retrieve Fund Details
         result = await fundMarketplace.getFundDetails.call(fundNum)
         result2 = await fundMarketplace.getFundDetails2.call(fundNum, manager)
+        result3 = await fundMarketplace.checkFundStatus.call(fundNum)
 
         //Result Testing
         //Want to be able to remove hex2string- JavaScript converting string to hex at some point in process
@@ -83,6 +84,8 @@ contract('FundMarketplace', function(accounts) {
         assert.equal(result2[0], true, "Manager is not listed as investor");
         assert.equal(result2[1], initialFund, "Manager's funds are not listed");
         assert.equal(result2[2], 0, "Manager's fees deposited are not zero");
+        //New Tests for Investor list
+        assert.equal(result3[2][0], manager, "Manager is not listed as investor");
 
     })
 

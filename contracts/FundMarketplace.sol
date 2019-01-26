@@ -207,6 +207,7 @@ contract FundMarketplace {
 
     function checkFundStatus(uint _fundNum) external view returns (bool, bool){
         return(funds.list[_fundNum].fundraising,
-        funds.list[_fundNum].closed);
+        funds.list[_fundNum].closed
+        );
     }
 }

@@ -970,6 +970,7 @@ class App extends Component {
           fundVirtualBalance: null,
           fundFundraising: null,
           fundClosed: null,
+          fundInvestorList: null
         }
       ],
 
@@ -1083,6 +1084,7 @@ class App extends Component {
         const response = await contract.getFundDetails(i);
         const response2 = await contract.getFundDetails2(i, accounts[0]);
         const response3 = await contract.checkFundStatus(i);
+        console.log("Investor List: "+response3[2]);
         if(i===1){
           this.setState({
             fundList: [
@@ -1097,7 +1099,8 @@ class App extends Component {
                 fundVirtualBalance: web3.utils.fromWei(response2[1].toString(), "ether"),
                 fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
                 fundFundraising: response3[0],
-                fundClosed: response3[1]
+                fundClosed: response3[1],
+                fundInvestorList: response3[2]
               }
             ]
           });
@@ -1117,7 +1120,8 @@ class App extends Component {
                   fundVirtualBalance: web3.utils.fromWei(response2[1].toString(), "ether"),
                   fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
                   fundFundraising: response3[0],
-                  fundClosed: response3[1]
+                  fundClosed: response3[1],
+                  fundInvestorList: response3[2]
                 }
               ])
             });
