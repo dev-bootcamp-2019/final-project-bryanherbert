@@ -17453,6 +17453,20 @@
     "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {},
+      "links": {
+        "InitLib": "0x5b290740a717C6dfF102373675eCeF20CAe058F7",
+        "Misc": "0x94a16d0b05912FF9459d27F488616CF587694D22",
+        "InvestLib": "0x0dcc3814fE3C6d6482fe884256780Dc5B7D445E5",
+        "PayFeeLib": "0xd87c4773eA0290DABEB7BB2d490B7833237E5C0e",
+        "CollectFeesLib": "0x0021E18b39Be7473D8102b53ED45f9148280244B",
+        "WithdrawFundsLib": "0x4982B6c0712555D330aDF611752512603850d191",
+        "OrderLib": "0x47557efcfaa2747A6167cdb033b42018D7930071"
+      },
+      "address": "0xC89EfE11D7C14D728B89C5F18e2b1020C44b016E",
+      "transactionHash": "0xf18da5d18ea87b379da9fab82e504d100567bab708998eedad4f99b22d1d9394"
+    },
     "1545325041294": {
       "events": {},
       "links": {},
@@ -18063,10 +18077,24 @@
       },
       "address": "0x2c560dfd4DaDc5F73DF35AB31c2F16d84c28f2Fd",
       "transactionHash": "0xa45a2ba08b3e1d689fd9c35b847f500f19c2ea1fc1f9cafcc73d5337bd8f4e35"
+    },
+    "1548617286658": {
+      "events": {},
+      "links": {
+        "InitLib": "0xbC935f1338cA752600F565c8b1C1c52301d31e5E",
+        "Misc": "0x6085D2de5e432407DC43Cf0c3f668E4DE0BC1bF8",
+        "InvestLib": "0x11d5F6ebBF7Dd69a4642222F6e40844393c5F955",
+        "PayFeeLib": "0xB0b7bc4819C1153F625ec5439eA12cc05646FcFd",
+        "CollectFeesLib": "0x1A4F289C71D8d72357c7d556977C57221213eFCa",
+        "WithdrawFundsLib": "0xF78623e0C3699c390478915c193eb4A6F6b97BF0",
+        "OrderLib": "0x7Ae8EDe3CB72F373fd96935ac589ec61f182996b"
+      },
+      "address": "0x3bb11fFB5adeeEC97FFE22Ed2C04173C64c6f58b",
+      "transactionHash": "0x0f345f00f77436ad371ead1d96e4250d37dd7533951043612292aac6e06b507f"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T17:45:22.451Z",
+  "updatedAt": "2019-01-27T20:51:53.895Z",
   "devdoc": {
     "methods": {
       "getIpfsHash(uint256)": {

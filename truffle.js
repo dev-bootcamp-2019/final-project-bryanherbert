@@ -1,6 +1,9 @@
 const path = require("path");
-
-// let secrets = require('./secrets');
+let HDWalletProvider = require("truffle-hdwallet-provider")
+let secrets = require('./secret.js');
+const MNEMONIC = secrets.MNEMONIC;
+const infuraKey = secrets.infuraKey;
+// let secrets = require('./secret.js');
 // const WalletProvider = require("truffle-wallet-provider");
 // const Wallet = require('ethereumjs-wallet');
 
@@ -21,6 +24,13 @@ module.exports = {
       port: "8545",
       network_id:"*"
     },
+    ropsten: {
+      provider: function() {
+        return new HDWalletProvider(MNEMONIC,("https://ropsten.infura.io/"+infuraKey))
+      },
+      network_id: 3,
+      gas: 4000000
+    }
     // ropsten: { 
     //   provider: ropstenProvider,
     //   network_id: "3", gas: 4465030

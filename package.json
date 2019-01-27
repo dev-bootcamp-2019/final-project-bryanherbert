@@ -27,8 +27,11 @@
     "popper.js": "^1.14.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "reactstrap": "^7.0.2"
+    "reactstrap": "^7.0.2",
+    "truffle-hdwallet-provider": "^1.0.2"
   },
   "devDependencies": {
+    "bluebird": "^3.5.3",
+    "truffle-wallet-provider": "0.0.5"
   }
 }
