@@ -82,21 +82,21 @@ When the manager decides to close the fund, she clicks the "Close Fund" Button, 
 - Metamask-enabled browser
 
 ## Running the dApp Locally
-1. Clone the github repository:
+1. Clone the github repository:  
 `git clone https://github.com/dev-bootcamp-2019/final-project-bryanherbert.git`
-2. Install dependencies in the root directory and in the client directory:
+2. Install dependencies in the root directory and in the client directory:  
 `cd final-project-bryanherbert`
-`npm install`
-`cd client`
-`npm install`
-3. Start Ganache:
+`npm install`  
+`cd client`  
+`npm install`  
+3. Start Ganache:  
 `ganache-cli`
-4. Use truffle to compile contracts:
+4. Use truffle to compile contracts:  
 `truffle compile`
-5. Use truffle to deploy contracts:
+5. Use truffle to deploy contracts:  
 `truffle migrate`
-6. Run the frontend (in client directory):
-`npm run start`
+6. Run the frontend (in client directory):  
+`npm run start`  
 Access the frontend in your browser at http://localhost:3000/.
 
 ## Testing
