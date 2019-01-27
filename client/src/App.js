@@ -72,14 +72,9 @@ class Fund extends React.Component {
         <p>Total Capital: {this.props.capital} ether</p>
         <p>Annual Fee Rate: {this.props.feeRate}%</p>
         <p>Payment Cycle: {this.props.paymentCycle} days</p>
-        {/* <Form inline className="invest-button">
-          <FormGroup>
-            <Label for="investButton" hidden></Label>
-            <Input type="text" name="investmentAmount" id="investment" placeholder="Ether" onChange={this.handleChange}/>
-          </FormGroup>
-          {' '}
-          <Button color="success" onClick={this.handleInvestClick}>Invest</Button>
-        </Form> */}
+        <div className="ipfs-button">
+          <a href={this.props.ipfsURL} class="ipfs-button" target="_blank">View Prospectus</a>
+        </div>
         {investment}
       </div>
     );
@@ -452,6 +447,9 @@ class FundModal extends React.Component{
           <ModalBody>
             <p>Fee Rate: {this.props.feeRate}%</p>
             <p>Payment Cycle: {this.props.paymentCycle} days</p>
+            <div className="ipfs-button">
+              <a href={this.props.ipfsURL} class="ipfs-button" target="_blank">View Prospectus</a>
+            </div>
             <p>Fundraising Period: {status} </p>
             {endFundraising}
           </ModalBody>
@@ -489,6 +487,7 @@ class FundTableEntry extends React.Component{
             fundNumber = {this.props.fundNumber}
             setup = {this.props.setup}
             fundraising = {this.props.fundraising}
+            ipfsURL = {this.props.ipfsURL}
           />
         </td>
         <td>
@@ -548,6 +547,7 @@ class FundsTable extends React.Component {
             paymentCycle = {fund.fundPaymentCycle}
             fees = {fund.fundAvailableFees}
             fundraising = {fund.fundFundraising}
+            ipfsURL = {fund.fundIpfsURL}
             account = {this.props.account}
             contract = {this.props.contract}
             web3 = {this.props.web3}
@@ -842,6 +842,11 @@ class InvestmentTableEntry extends React.Component{
         <td>{this.props.virtualBalance} ether</td>
         <td>{balDepRounded} ether ({rounded}%)</td>
         <td>
+          <div className="ipfs-button">
+            <a href={this.props.ipfsURL} class="ipfs-button" target="_blank">View Prospectus</a>
+          </div>  
+        </td>
+        <td>
           <FeeModal2
             //Fees available to pay
             fees = {this.props.fees}
@@ -904,6 +909,7 @@ class InvestmentsTable extends React.Component {
             feeRate = {fund.fundFeeRate}
             paymentCycle = {fund.fundPaymentCycle}
             fees = {fund.fundAvailableFees}
+            ipfsURL = {fund.fundIpfsURL}
             account = {this.props.account}
             contract = {this.props.contract}
             web3 = {this.props.web3}
@@ -940,6 +946,7 @@ class InvestmentsTable extends React.Component {
               <th>Name</th>
               <th>My Balance</th>
               <th>Balance Deployed</th>
+              <th>Prospectus</th>
               <th>Fees</th>
               <th>Orders</th>
               <th>Withdrawals</th>
@@ -973,7 +980,7 @@ class App extends Component {
           fundFundraising: null,
           fundClosed: null,
           fundInvestorList: null,
-          fundIPFSHash: null
+          fundIpfsURL: null
         }
       ],
 
@@ -1093,14 +1100,10 @@ class App extends Component {
     let investment = web3.utils.toWei(amount.toString(), "ether");
     let feeRate = inputFeeRate;
     let paymentCycle = inputPaymentCycle;
-    console.log("Original Hash: "+ipfsHash);
     let result = await this.multiHashBreakdown(ipfsHash);
     let hash_function = result.hash_function;
     let size = result.size;
     let IPFSHash = result.IPFSHash;
-    console.log("Hash Function: "+hash_function);
-    console.log("Size: "+size);
-    console.log("IPFSHash: "+IPFSHash);
 
     await contract.initializeFund(name, 
       manager, 
@@ -1162,14 +1165,10 @@ class App extends Component {
         const response2 = await contract.getFundDetails2(i, accounts[0]);
         const response3 = await contract.checkFundStatus(i);
         const response4 = await contract.getIpfsHash(i);
-        console.log("Investor List: "+response3[2]);
 
-        console.log("digest: "+response4[0]);
-        console.log("hash_fucntion: "+response4[1]);
-        console.log("size: "+response4[2]);
         //Encode  Multihash structure
         let multihash = this.bytes2multihash(response4[0], response4[1], response4[2]);
-        console.log("MultiHash: "+multihash);
+        let investProspURL = "https://gateway.ipfs.io/ipfs/"+multihash;
 
         if(i===1){
           this.setState({
@@ -1186,7 +1185,8 @@ class App extends Component {
                 fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
                 fundFundraising: response3[0],
                 fundClosed: response3[1],
-                fundInvestorList: response3[2]
+                fundInvestorList: response3[2],
+                fundIpfsURL: investProspURL
               }
             ]
           });
@@ -1207,7 +1207,8 @@ class App extends Component {
                   fundAvailableFees: web3.utils.fromWei(response2[2].toString(), "ether"),
                   fundFundraising: response3[0],
                   fundClosed: response3[1],
-                  fundInvestorList: response3[2]
+                  fundInvestorList: response3[2],
+                  fundIpfsURL: investProspURL
                 }
               ])
             });
@@ -1283,6 +1284,7 @@ class App extends Component {
             contract = {this.state.contract}
             setup = {this.setup}
             fundraising = {fund.fundFundraising}
+            ipfsURL = {fund.fundIpfsURL}
             //handleChange = {(event) => this.handleChange(event)}
             //handleInvestClick = {(event) => this.handleInvestClick(event)}
           />
