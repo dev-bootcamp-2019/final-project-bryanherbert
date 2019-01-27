@@ -1009,10 +1009,8 @@ class App extends Component {
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.ascii_to_hex = this.ascii_to_hex.bind(this);
-    this.handleHash = this.handleHash.bind(this);
-    this.joinHash = this.joinHash.bind(this);
     this.multiHashBreakdown = this.multiHashBreakdown.bind(this);
+    this.bytes2multihash = this.bytes2multihash.bind(this);
   }
 
   componentDidMount = async () => {
@@ -1076,38 +1074,6 @@ class App extends Component {
     });
   }
 
-  ascii_to_hex(str){
-    let arr = [];
-    let length = str.length;
-    for(let i=0; i<length; i++){
-      let hex = Number(str.charCodeAt(i)).toString(16);
-      arr.push(hex);
-    }
-    return arr.join('');
-  }
-
-  handleHash (ipfsHash) {
-    let hex = this.ascii_to_hex(ipfsHash);
-    console.log("Hexadecimal Value: "+hex);
-    return hex;
-  }
-
-  joinHash (hashArr){
-    let str = "";
-    let length = hashArr.length;
-    for(let i=4; i<length; i++){
-      let index = hashArr[i];
-      str = str+index;
-    }
-    str = str+"";
-    return str;
-  }
-
-  str2bytes (str) {
-    let uint8Array = new TextEncoder("utf-8").encode(str);
-    return uint8Array;
-  }
-
   multiHashBreakdown(str){
     const decoded = bs58.decode(str);
 
@@ -1127,26 +1093,14 @@ class App extends Component {
     let investment = web3.utils.toWei(amount.toString(), "ether");
     let feeRate = inputFeeRate;
     let paymentCycle = inputPaymentCycle;
+    console.log("Original Hash: "+ipfsHash);
     let result = await this.multiHashBreakdown(ipfsHash);
     let hash_function = result.hash_function;
     let size = result.size;
     let IPFSHash = result.IPFSHash;
-    // let bytes_result = web3.utils.hexToBytes(hex_result)
-    // console.log("Result: "+result);
-    // let hash_function = '0x'+result[2]+result[3];
-    // let size = '0x'+result[4]+result[5];
-    // let IPFSHash = '0x'+this.joinHash(result);
-    // let result = this.handleHash(ipfsHash);
-    // console.log("original hash: "+ipfsHash);
-    // let result_split = result.split("");
-    // console.log("result_split: "+result_split);
-    // console.log("result_split first: "+result_split[0]);
-    // let hash_function = result_split[0] + result_split[1];
-    // let size = result_split[2] + result_split[3];
-    console.log("Hash_function: "+hash_function);
-    console.log("size: "+size);
-    // let IPFSHash = this.joinHash(result_split);
-    console.log("ipfs hash: "+IPFSHash);
+    console.log("Hash Function: "+hash_function);
+    console.log("Size: "+size);
+    console.log("IPFSHash: "+IPFSHash);
 
     await contract.initializeFund(name, 
       manager, 
@@ -1160,6 +1114,29 @@ class App extends Component {
     
     //Update state with result
     this.setState(this.setup);
+  }
+
+  /** @dev Encodes the three parts of the multihash structure into a base58 encoded multihash string
+   * @param {ipfsHash} ipfsHash 32-byte hexadecimal representation of ipfsHash digest
+   * @param {hash_function} type of hash_function used for encoding
+   * @param {size} of the length of the digest
+   * @returns {multihash} encoded multihash string 
+   */
+  bytes2multihash(ipfsHash, hash_function, size){
+    if(size === 0){
+      return null;
+    }
+
+    //Chop off 0x
+    const hBytes = Buffer.from(ipfsHash.slice(2), "hex");
+
+    //construct multihash
+    const mhBytes = new (hBytes.constructor)(2+hBytes.length);
+    mhBytes[0] = hash_function;
+    mhBytes[1] = size;
+    mhBytes.set(hBytes,2);
+
+    return bs58.encode(mhBytes);
   }
 
 
@@ -1184,7 +1161,16 @@ class App extends Component {
         const response = await contract.getFundDetails(i);
         const response2 = await contract.getFundDetails2(i, accounts[0]);
         const response3 = await contract.checkFundStatus(i);
+        const response4 = await contract.getIpfsHash(i);
         console.log("Investor List: "+response3[2]);
+
+        console.log("digest: "+response4[0]);
+        console.log("hash_fucntion: "+response4[1]);
+        console.log("size: "+response4[2]);
+        //Encode  Multihash structure
+        let multihash = this.bytes2multihash(response4[0], response4[1], response4[2]);
+        console.log("MultiHash: "+multihash);
+
         if(i===1){
           this.setState({
             fundList: [

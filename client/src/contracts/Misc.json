@@ -924,10 +924,16 @@
       "links": {},
       "address": "0xfffa2C89e0435173c54bC27a14E4141DBc49B855",
       "transactionHash": "0x1ce468c01ec5a37724fa3f27b7276d5bfb8044cda6b80596c14854accb18558a"
+    },
+    "1548610771009": {
+      "events": {},
+      "links": {},
+      "address": "0xe3EFBd934AFF4b3e3709F33Ad30C2792e23c993B",
+      "transactionHash": "0xac29b8c6d507a60c2bc8a13d600e46f81489e3654e6d9ac27113b1d4ef4e114b"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T10:10:44.730Z",
+  "updatedAt": "2019-01-27T17:45:22.330Z",
   "devdoc": {
     "methods": {}
   },

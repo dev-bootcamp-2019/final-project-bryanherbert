@@ -4253,10 +4253,16 @@
       "links": {},
       "address": "0xA378032C9d7bF80A973178194F226beEe7cE7C35",
       "transactionHash": "0x6901abfabac415010caa02f513755b5478d7587a1b897db3aff221f8fa5ec2b2"
+    },
+    "1548610771009": {
+      "events": {},
+      "links": {},
+      "address": "0x28aAd8353C47dA51412718257027e90DD73a3BCf",
+      "transactionHash": "0x12f673e0519780c2969701aad2a46f80531a3eaa5fc59ffb82c7bb9bc27e4c96"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T10:10:44.817Z",
+  "updatedAt": "2019-01-27T17:45:22.420Z",
   "devdoc": {
     "methods": {}
   },

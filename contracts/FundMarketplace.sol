@@ -263,4 +263,17 @@ contract FundMarketplace {
         funds.list[_fundNum].closed
         );
     }
+
+    /** @dev Returns the members of the Multihash struct
+      * @param _fundNum Fund Number
+      * @return ipfsHash 32-byte hexadecimal representation of ipfsHash digest
+      * @return hash_function type of hash_function used for encoding
+      * @return size of the length of the digest
+      */
+    function getIpfsHash (uint _fundNum) public view returns (bytes32 ipfsHash, uint8 hash_function, uint8 size){
+        return(funds.list[_fundNum].investHash.ipfsHash,
+        funds.list[_fundNum].investHash.hash_function,
+        funds.list[_fundNum].investHash.size
+        );
+    }
 }
