@@ -1,14 +1,14 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "../contracts/StructLib.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 library OrderLib{
-    function placeOrder(StructLib.Data storage self, uint _fundNum, bytes memory _action, uint _qty, uint _price)
+    function placeOrder(StructLib.Data storage self, uint _fundNum, bytes32 _action, uint _qty, uint _price)
     public
     {
-        bytes memory buy = "buy";
-        bytes memory sell = "sell";
+        bytes32 buy = "buy";
+        bytes32 sell = "sell";
         
         if(compareStrings(_action, buy)){
             require(
@@ -26,8 +26,8 @@ library OrderLib{
         }
     }
 
-    function compareStrings(bytes memory a, bytes memory b) public pure returns(bool){
-        return keccak256(a) == keccak256(b);
+    function compareStrings(bytes32 a, bytes32  b) public pure returns(bool){
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
     }
 
     function calcQty(StructLib.Data storage self, uint _fundNum, uint qty) public view returns(uint) {

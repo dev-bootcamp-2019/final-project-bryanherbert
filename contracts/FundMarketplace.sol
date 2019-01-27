@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "../contracts/StructLib.sol";
 import "../contracts/InitLib.sol";
@@ -58,7 +58,7 @@ contract FundMarketplace {
 
     event OrderPlaced(
         uint indexed fundNum,
-        bytes action,
+        bytes32 action,
         bytes32 ticker,
         uint qty,
         uint price
@@ -112,7 +112,7 @@ contract FundMarketplace {
 
     //Place order for a trade
     //Not sure what calldata is exactly for _action
-    function placeOrder(uint _fundNum, bytes _action, bytes32 _ticker, uint _qty, uint _price)
+    function placeOrder(uint _fundNum, bytes32 _action, bytes32 _ticker, uint _qty, uint _price)
     external 
     {
         OrderLib.placeOrder(funds, _fundNum, _action, _qty, _price);

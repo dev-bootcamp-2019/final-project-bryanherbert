@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "../contracts/StructLib.sol";
 
@@ -13,7 +13,7 @@ library WithdrawFundsLib {
         _;
     }
 
-    function withdrawFunds(StructLib.Data storage self, uint _fundNum, address _investor, uint _amount)
+    function withdrawFunds(StructLib.Data storage self, uint _fundNum, address payable _investor, uint _amount)
     public
     maxWithdraw(self, _fundNum, _investor, _amount)
     returns (uint, uint)
