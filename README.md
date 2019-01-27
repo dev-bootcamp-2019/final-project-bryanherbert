@@ -74,12 +74,30 @@ After entering in the information, the manager clicks the "Place Order" button. 
 When the manager decides to close the fund, she clicks the "Close Fund" Button, which deletes the fund's data from the smart contract and returns unearned fees to the investors.
 
 ## Prerequisites
-- npm 6.5+
-- truffle 4.1.4+
-- ganache-cli 6.1.8+
+- NodeJs 11+
+- npm 6+
+- truffle 5.0.0+
+- Solidity 0.5.0+
+- ganache-cli 6.2.0+
 - Metamask-enabled browser
 
-## Running the dApp
+## Running the dApp Locally
+1. Clone the github repository:
+`git clone https://github.com/dev-bootcamp-2019/final-project-bryanherbert.git`
+2. Install dependencies in the root directory and in the client directory:
+`cd final-project-bryanherbert`
+`npm install`
+`cd client`
+`npm install`
+3. Start Ganache:
+`ganache-cli`
+4. Use truffle to compile contracts:
+`truffle compile`
+5. Use truffle to deploy contracts:
+`truffle migrate`
+6. Run the frontend (in client directory):
+`npm run start`
+Access the frontend in your browser at http://localhost:3000/.
 
 ## Testing
 I've written tests in both Solidity and Javascript that check the following behavior:

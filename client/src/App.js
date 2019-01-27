@@ -1302,6 +1302,9 @@ class App extends Component {
             </p>
           </Jumbotron>
         </div>
+        <div>
+          <p>Current Account is <strong>{this.state.accounts[0]}</strong></p>
+        </div>
         <div className="funds-table">
           <h4>My Funds</h4>
           <FundsTable
