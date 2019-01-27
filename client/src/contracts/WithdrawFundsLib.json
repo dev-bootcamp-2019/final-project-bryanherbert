@@ -3972,10 +3972,16 @@
       "links": {},
       "address": "0x3FB522f89f9C3Ff2f2A6f7fb8cD1dB89840eC38B",
       "transactionHash": "0x7477d702af406bcfc354267be0cb572e599825f593a2cc4ee62f5bbc933833d8"
+    },
+    "1548563526358": {
+      "events": {},
+      "links": {},
+      "address": "0x77b0ACe5F3ffe2E3a7cafe7a16E78D5eCb48a19a",
+      "transactionHash": "0x6ff5d9c5298a09d48680a4c0cf44f2484a0cb3f466da9c3190af6c6dceb0adf5"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T04:01:42.742Z",
+  "updatedAt": "2019-01-27T04:33:14.319Z",
   "devdoc": {
     "methods": {}
   },

@@ -7603,10 +7603,18 @@
       },
       "address": "0xCc19121d669048523747bCFAc702cb4f3Db26ba8",
       "transactionHash": "0x62a29fad5b04397cf8913a406c12b5a1e932971fecb1e24a0888a716c17932ee"
+    },
+    "1548563526358": {
+      "events": {},
+      "links": {
+        "Misc": "0x145980AF1116bb2679d87F41956DcdB19Fe46833"
+      },
+      "address": "0xA0f11484621Bad7faFcb47C7C1A0233b3D955d60",
+      "transactionHash": "0x79d402a3f2761328bcd515a3051f0404083e7d53bc583d971d26dfc292945b5f"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T04:01:42.798Z",
+  "updatedAt": "2019-01-27T04:33:14.374Z",
   "devdoc": {
     "methods": {}
   },

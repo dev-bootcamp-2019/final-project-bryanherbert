@@ -1271,10 +1271,16 @@
       "links": {},
       "address": "0x9fB9Be07feb3bA3e6811CEDaAa902E00EFb361e7",
       "transactionHash": "0x0dd145ae2c5646c7c7bde3bc66da56d0a1c493b052b5ace7b5d42f0559a17736"
+    },
+    "1548563526358": {
+      "events": {},
+      "links": {},
+      "address": "0x309e642757357Fcc6fbc3b2e25cFE30C30d6440b",
+      "transactionHash": "0x9db9e5712a2de39adfe02313878fe9b27b2567dde0cde8c1997e200627942161"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T04:01:42.661Z",
+  "updatedAt": "2019-01-27T04:33:14.229Z",
   "devdoc": {
     "methods": {}
   },

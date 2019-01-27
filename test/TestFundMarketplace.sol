@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.5.0;
 
 import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
@@ -27,7 +27,7 @@ contract TestFundMarketplace {
     uint i;
 
     function beforeAll() public {
-        //Deploy StrategyHub contracts
+        //Deploy FundMarketplace contracts
         fm = FundMarketplace(DeployedAddresses.FundMarketplace());
         //Deploy Manager and Investor contracts
         manager = new Manager();
@@ -95,7 +95,7 @@ contract TestFundMarketplace {
     
     function testPlaceOrder() public {
         //bytes used for string comparison in OrderLib compareStrings()
-        bytes memory action = "buy";
+        bytes32 action = "buy";
         bytes32 ticker = "PLNT";
         uint qty = 3;
         //Price of individual security
@@ -202,18 +202,19 @@ contract TestFundMarketplace {
     }
 
     function testCloseFund() public {
-        bytes32 name = "alpha";
-        
         //Tests
-        (a,,,,,) = fm.getFundDetails(fundNum);
-        Assert.equal(a, name, "Fund Details were incorrect");
+        (,g) = fm.checkFundStatus(fundNum);
+        uint fundCount_old = fm.fundCount();
+        Assert.equal(g, false, "Fund Details were incorrect");
         
         //Delete Fund
         manager.closeFund(fm, fundNum);
 
         //Tests
-        (a,,,,,) = fm.getFundDetails(fundNum);
-        Assert.equal(a, 0, "Fund was not deleted");
+        (,g) = fm.checkFundStatus(fundNum);
+        uint fundCount_new = fm.fundCount();
+        Assert.equal(g, true, "Fund Details were incorrect");
+        Assert.equal(fundCount_new, fundCount_old-1, "Fund count was not correctly updated");
     }
 
 }
@@ -223,7 +224,7 @@ contract Manager {
     function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) 
     external 
     {
-        fm.initializeFund(_name, this, _initalFund, _feeRate, _paymentCycle);
+        fm.initializeFund(_name, address(this), _initalFund, _feeRate, _paymentCycle);
     }
 
     function collectFees(FundMarketplace fm, uint _fundNum) 
@@ -232,7 +233,7 @@ contract Manager {
         fm.collectFees(_fundNum);
     }
 
-    function placeOrder(FundMarketplace fm, uint _fundNum, bytes _action, bytes32 _ticker, uint _qty, uint _price)
+    function placeOrder(FundMarketplace fm, uint _fundNum, bytes32 _action, bytes32 _ticker, uint _qty, uint _price)
     external
     {
         fm.placeOrder(_fundNum, _action, _ticker, _qty, _price);
@@ -244,8 +245,13 @@ contract Manager {
         fm.closeFund(_fundNum);
     }
 
+    function setStopped(FundMarketplace fm)
+    external{
+        fm.setStopped();
+    }
+
     //Fallback function, accepts ether
-    function() public payable {
+    function() external payable {
     }
 }
 
@@ -277,7 +283,7 @@ contract Investor {
     }
 
     //Fallback function, accepts ether
-    function() public payable{
+    function() external payable{
 
     }
 }

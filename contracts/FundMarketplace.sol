@@ -16,6 +16,7 @@ contract FundMarketplace {
     StructLib.Data funds;
     uint public fundCount;
     uint public lifetimeCount;
+    bool public stopped = false;
 
     //Events
     event FundCreated(
@@ -91,8 +92,33 @@ contract FundMarketplace {
         _;
     }
 
+    modifier isAdmin () {
+        require(
+            msg.sender == admin,
+            "Message Sender is not administrator"
+        );
+        _;
+    }
+
+    modifier stopInEmergency () {
+        require(
+            !stopped,
+            "Emergency State: Vulnerability Detected"
+        );
+        _;
+    }
+
+    function setStopped ()
+    public 
+    isAdmin()
+    {
+        stopped = !stopped;
+    }
+
     function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
-    external payable {
+    external payable 
+    stopInEmergency()
+    {
         //Changed fundCount to lifetimeCount in arguments
         InitLib.initializeFund(funds, lifetimeCount, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
         //Increment fundCount
@@ -104,7 +130,8 @@ contract FundMarketplace {
     //Make investment into particular fund
     //Must have required funds
     function Invest(uint _fundNum, uint _investment) 
-    external payable  
+    external payable 
+    stopInEmergency() 
     {
         InvestLib.Invest(funds, _fundNum, _investment, msg.sender, msg.value);
         emit Investment(_fundNum, msg.sender, _investment);
@@ -114,6 +141,7 @@ contract FundMarketplace {
     //Not sure what calldata is exactly for _action
     function placeOrder(uint _fundNum, bytes32 _action, bytes32 _ticker, uint _qty, uint _price)
     external 
+    stopInEmergency()
     {
         OrderLib.placeOrder(funds, _fundNum, _action, _qty, _price);
         emit OrderPlaced(_fundNum, _action, _ticker, _qty, _price);
@@ -134,7 +162,9 @@ contract FundMarketplace {
     }
 
     //One-time pay fee function
-    function payFee(uint _fundNum, uint _timePeriod) external
+    function payFee(uint _fundNum, uint _timePeriod) 
+    external
+    stopInEmergency()
     {
         PayFeeLib.payFee(funds, _fundNum, _timePeriod);
         uint payment = SafeMath.div(SafeMath.div(funds.list[_fundNum].virtualBalances[msg.sender], checkFeeRate(_fundNum)), _timePeriod);
@@ -150,14 +180,17 @@ contract FundMarketplace {
     }
 
     //Owner of Strategy Collects Fees
-    function collectFees(uint _fundNum) external
+    function collectFees(uint _fundNum) 
+    external
+    stopInEmergency()
     //isOwner(_name)
     {
         uint fees = CollectFeesLib.collectFees(funds, _fundNum, msg.sender);
         emit FeesCollected(_fundNum, fees);
     }
 
-    function withdrawFunds(uint _fundNum, uint _amount) public
+    function withdrawFunds(uint _fundNum, uint _amount) 
+    public
     //verifyInvestmentStatus(_name) 
     {
         //Need to make sure this matches up with withdraw philosophy
@@ -169,6 +202,7 @@ contract FundMarketplace {
 
     function closeFund(uint _fundNum) public
     isOwner(_fundNum, msg.sender)
+    stopInEmergency()
     {
         //Have to work out business logic better for this button
         //Transfer uncollected fees to manager
@@ -181,8 +215,11 @@ contract FundMarketplace {
         emit FundClosed(_fundNum, msg.sender);
     }
 
-    function endFundraising(uint _fundNum) public
-    isOwner(_fundNum, msg.sender){
+    function endFundraising(uint _fundNum) 
+    public
+    isOwner(_fundNum, msg.sender)
+    stopInEmergency()
+    {
         funds.list[_fundNum].fundraising = false;
         emit FundraisingOver(_fundNum, msg.sender);
     }

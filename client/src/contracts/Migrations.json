@@ -1797,10 +1797,16 @@
       "links": {},
       "address": "0x89dc4d53d45D1D2280c4747cC4cdc8A9a832a786",
       "transactionHash": "0xeb8de97de53a6c878d72a0df17b95fbbc41f78cb48889ed877d114f33cdf0108"
+    },
+    "1548563526358": {
+      "events": {},
+      "links": {},
+      "address": "0x53dfD4ACc97CA8249651e32Bf40E6ad0347CEaD3",
+      "transactionHash": "0x13d02363676f7a8747b833473a4b927a17b5b5868561fbf647375de65a2a0bdf"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T04:01:42.692Z",
+  "updatedAt": "2019-01-27T04:33:14.268Z",
   "devdoc": {
     "methods": {}
   },

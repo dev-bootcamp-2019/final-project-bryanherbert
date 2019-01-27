@@ -4451,10 +4451,16 @@
       "links": {},
       "address": "0xa510cA4A5D0E44E59C2d24aA91C5b79F0f80fF77",
       "transactionHash": "0x9cb39d281e4f2c88a956c0d89596d83bad097a1e3a1fcb1a6265bff23bb16071"
+    },
+    "1548563526358": {
+      "events": {},
+      "links": {},
+      "address": "0x8bC87162c383Ff849e5C082e713AE7eFE7D037b0",
+      "transactionHash": "0xde110d62c5e0c680244cbe753499b37e2cc25fefc8f21a2b40cfc2af86032ab1"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T04:01:42.766Z",
+  "updatedAt": "2019-01-27T04:33:14.331Z",
   "devdoc": {
     "methods": {}
   },

@@ -23,11 +23,12 @@
   "dependencies": {
     "bootstrap": "^4.2.1",
     "jquery": "^3.3.1",
-    "openzeppelin-solidity": "^2.1.2",
+    "openzeppelin-solidity": "^2.0.0",
     "popper.js": "^1.14.6",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "reactstrap": "^7.1.0"
+    "reactstrap": "^7.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+  }
 }

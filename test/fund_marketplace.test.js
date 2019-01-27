@@ -37,11 +37,14 @@ contract('FundMarketplace', function(accounts) {
         const fundMarketplace = await FundMarketplace.deployed()
 
         //Manager's Balance to measure Gas Costs
-        var managerBalanceBefore = await web3.eth.getBalance(manager).toNumber()
+        var managerBalanceBefore = await web3.eth.getBalance(manager)
+        console.log("Manager Balance Before: "+managerBalanceBefore);
+        //managerBalanceBefore = managerBalanceBefore.toNumber()
 
         var eventEmitted = false
         //constants for comparison here
-        const initialFund = web3.toWei(1, "ether")
+        let amount = 1;
+        const initialFund = web3.utils.toWei(amount.toString(), "ether")
         const feeRate = 2
         const paymentCycle = 0
         //Transaction from Manager account
@@ -54,7 +57,9 @@ contract('FundMarketplace', function(accounts) {
         }
 
         //Manager Account Balance Afterwards
-        var managerBalanceAfter = await web3.eth.getBalance(manager).toNumber()
+        var managerBalanceAfter = await web3.eth.getBalance(manager)
+        console.log("Manager Balance After: "+managerBalanceAfter);
+        //managerBalanceAfter = managerBalanceAfter.toNumber()
         //Test for Gas Costs
         assert.isBelow(managerBalanceAfter, managerBalanceBefore, "Manager's Account should be decreased by gas costs")
 
@@ -474,6 +479,26 @@ contract('FundMarketplace', function(accounts) {
 
         //Post-Transaction Testing
         assert.equal(_name, 0, "Fund was not deleted");
+
+    })
+
+    it("should allow an admin to initiate a circuit breaker", async() => {
+        //Deployed FundMarketplace
+        const fundMarketplace = await FundMarketplace.deployed()
+
+        //Initial variables
+        let stopped = await fundMarketplace.stopped()
+
+        //Pre-testing
+        assert.equal(stopped,false,"Fund should be initialized with stopped equal to false")
+
+        //Close Funds
+        const tx = await fundMarketplace.setStopped( {from: owner} )
+
+        //Update variables
+        stopped = await fundMarketplace.stopped()
+        //Post-Testing
+        assert.equal(stopped,true,"Fund should be initialized with stopped equal to false")
 
     })
 });
