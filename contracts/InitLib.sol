@@ -16,6 +16,19 @@ library InitLib {
         }
         _;
     }
+
+    function addHash(StructLib.Data storage self, bytes32 ipfsHash, uint8 hash_function, uint8 size, uint _fundCount)
+    internal
+    {
+        self.list[_fundCount].investHash.ipfsHash = ipfsHash;
+        self.list[_fundCount].investHash.hash_function = hash_function;
+        self.list[_fundCount].investHash.size = size;
+
+    }
+
+    // bytes32 ipfsHash;
+    // uint8 hash_function;
+    // uint8 size;
     
     function initializeFund(
         StructLib.Data storage self, 
@@ -24,7 +37,10 @@ library InitLib {
         address _fundOwner, 
         uint _investment, 
         uint _feeRate, 
-        uint _paymentCycle) 
+        uint _paymentCycle,
+        bytes32 ipfsHash,
+        uint8 hash_function,
+        uint8 size) 
     public
     noDupName(self, _fundCount, _name)
     {
@@ -51,5 +67,6 @@ library InitLib {
         self.list[count].fundraising = true;
         //set closed to 0
         self.list[count].closed = false;
+        addHash(self, ipfsHash, hash_function, size, count);
     }
 }

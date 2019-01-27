@@ -2,7 +2,7 @@
 
 ## User Permissions
 
-## Overflow && Underflow Protection
+## Overflow & Underflow Protection
 Each contract uses OpenZeppelin's `SafeMath` library to perform integer operations to prevent overflow or underflow.
 
 ## Reentrancy Attack Protection

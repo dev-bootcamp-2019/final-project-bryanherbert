@@ -85,8 +85,8 @@
       "signature": "0xcf3ebe5d"
     }
   ],
-  "bytecode": "0x6104fa610030600b82828239805160001a6073146000811461002057610022565bfe5b5030600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361061006e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637a27b71f146100735780638a03547e146100c3578063cf3ebe5d14610126575b600080fd5b6100a96004803603604081101561008957600080fd5b81019080803590602001909291908035906020019092919050505061017c565b604051808215151515815260200191505060405180910390f35b8180156100cf57600080fd5b50610124600480360360a08110156100e657600080fd5b8101908080359060200190929190803590602001909291908035906020019092919080359060200190929190803590602001909291905050506101d5565b005b6101666004803603606081101561013c57600080fd5b810190808035906020019092919080359060200190929190803590602001909291905050506103db565b6040518082815260200191505060405180910390f35b600081604051602001808281526020019150506040516020818303038152906040528051906020012083604051602001808281526020019150506040516020818303038152906040528051906020012014905092915050565b60007f6275790000000000000000000000000000000000000000000000000000000000905060007f73656c6c000000000000000000000000000000000000000000000000000000009050610229858361017c565b15610320576102388385610466565b876000016000888152602001908152602001600020600301541115156102ec576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602d8152602001807f436f7374206f662074726164652069732067726561746572207468616e20626181526020017f6c616e6365206f662066756e640000000000000000000000000000000000000081525060400191505060405180910390fd5b6102f68385610466565b876000016000888152602001908152602001600020600401600082825401925050819055506103d2565b61032a858261017c565b15610363576103398385610466565b876000016000888152602001908152602001600020600401600082825403925050819055506103d1565b6040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260128152602001807f4e6f7420612076616c696420616374696f6e000000000000000000000000000081525060200191505060405180910390fd5b5b50505050505050565b600061045d61043f8386600001600087815260200190815260200160002060080160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054610466565b856000016000868152602001908152602001600020600301546104a4565b90509392505050565b600080831415610479576000905061049e565b6000828402905082848281151561048c57fe5b0414151561049957600080fd5b809150505b92915050565b600080821115156104b457600080fd5b600082848115156104c157fe5b049050809150509291505056fea165627a7a72305820d1a7f6c57aa29539fda586a57dae7b072d812d854a77d6f58f3083bc731c5a500029",
-  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040526004361061006e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637a27b71f146100735780638a03547e146100c3578063cf3ebe5d14610126575b600080fd5b6100a96004803603604081101561008957600080fd5b81019080803590602001909291908035906020019092919050505061017c565b604051808215151515815260200191505060405180910390f35b8180156100cf57600080fd5b50610124600480360360a08110156100e657600080fd5b8101908080359060200190929190803590602001909291908035906020019092919080359060200190929190803590602001909291905050506101d5565b005b6101666004803603606081101561013c57600080fd5b810190808035906020019092919080359060200190929190803590602001909291905050506103db565b6040518082815260200191505060405180910390f35b600081604051602001808281526020019150506040516020818303038152906040528051906020012083604051602001808281526020019150506040516020818303038152906040528051906020012014905092915050565b60007f6275790000000000000000000000000000000000000000000000000000000000905060007f73656c6c000000000000000000000000000000000000000000000000000000009050610229858361017c565b15610320576102388385610466565b876000016000888152602001908152602001600020600301541115156102ec576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602d8152602001807f436f7374206f662074726164652069732067726561746572207468616e20626181526020017f6c616e6365206f662066756e640000000000000000000000000000000000000081525060400191505060405180910390fd5b6102f68385610466565b876000016000888152602001908152602001600020600401600082825401925050819055506103d2565b61032a858261017c565b15610363576103398385610466565b876000016000888152602001908152602001600020600401600082825403925050819055506103d1565b6040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260128152602001807f4e6f7420612076616c696420616374696f6e000000000000000000000000000081525060200191505060405180910390fd5b5b50505050505050565b600061045d61043f8386600001600087815260200190815260200160002060080160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054610466565b856000016000868152602001908152602001600020600301546104a4565b90509392505050565b600080831415610479576000905061049e565b6000828402905082848281151561048c57fe5b0414151561049957600080fd5b809150505b92915050565b600080821115156104b457600080fd5b600082848115156104c157fe5b049050809150509291505056fea165627a7a72305820d1a7f6c57aa29539fda586a57dae7b072d812d854a77d6f58f3083bc731c5a500029",
+  "bytecode": "0x6104fa610030600b82828239805160001a6073146000811461002057610022565bfe5b5030600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361061006e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637a27b71f146100735780638a03547e146100c3578063cf3ebe5d14610126575b600080fd5b6100a96004803603604081101561008957600080fd5b81019080803590602001909291908035906020019092919050505061017c565b604051808215151515815260200191505060405180910390f35b8180156100cf57600080fd5b50610124600480360360a08110156100e657600080fd5b8101908080359060200190929190803590602001909291908035906020019092919080359060200190929190803590602001909291905050506101d5565b005b6101666004803603606081101561013c57600080fd5b810190808035906020019092919080359060200190929190803590602001909291905050506103db565b6040518082815260200191505060405180910390f35b600081604051602001808281526020019150506040516020818303038152906040528051906020012083604051602001808281526020019150506040516020818303038152906040528051906020012014905092915050565b60007f6275790000000000000000000000000000000000000000000000000000000000905060007f73656c6c000000000000000000000000000000000000000000000000000000009050610229858361017c565b15610320576102388385610466565b876000016000888152602001908152602001600020600301541115156102ec576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602d8152602001807f436f7374206f662074726164652069732067726561746572207468616e20626181526020017f6c616e6365206f662066756e640000000000000000000000000000000000000081525060400191505060405180910390fd5b6102f68385610466565b876000016000888152602001908152602001600020600401600082825401925050819055506103d2565b61032a858261017c565b15610363576103398385610466565b876000016000888152602001908152602001600020600401600082825403925050819055506103d1565b6040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260128152602001807f4e6f7420612076616c696420616374696f6e000000000000000000000000000081525060200191505060405180910390fd5b5b50505050505050565b600061045d61043f8386600001600087815260200190815260200160002060080160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054610466565b856000016000868152602001908152602001600020600301546104a4565b90509392505050565b600080831415610479576000905061049e565b6000828402905082848281151561048c57fe5b0414151561049957600080fd5b809150505b92915050565b600080821115156104b457600080fd5b600082848115156104c157fe5b049050809150509291505056fea165627a7a723058204fd0cf52ede2c7dac9ba016e282d3f96e6b62ec531c8287b1250423135821e7f0029",
+  "deployedBytecode": "0x730000000000000000000000000000000000000000301460806040526004361061006e576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637a27b71f146100735780638a03547e146100c3578063cf3ebe5d14610126575b600080fd5b6100a96004803603604081101561008957600080fd5b81019080803590602001909291908035906020019092919050505061017c565b604051808215151515815260200191505060405180910390f35b8180156100cf57600080fd5b50610124600480360360a08110156100e657600080fd5b8101908080359060200190929190803590602001909291908035906020019092919080359060200190929190803590602001909291905050506101d5565b005b6101666004803603606081101561013c57600080fd5b810190808035906020019092919080359060200190929190803590602001909291905050506103db565b6040518082815260200191505060405180910390f35b600081604051602001808281526020019150506040516020818303038152906040528051906020012083604051602001808281526020019150506040516020818303038152906040528051906020012014905092915050565b60007f6275790000000000000000000000000000000000000000000000000000000000905060007f73656c6c000000000000000000000000000000000000000000000000000000009050610229858361017c565b15610320576102388385610466565b876000016000888152602001908152602001600020600301541115156102ec576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602d8152602001807f436f7374206f662074726164652069732067726561746572207468616e20626181526020017f6c616e6365206f662066756e640000000000000000000000000000000000000081525060400191505060405180910390fd5b6102f68385610466565b876000016000888152602001908152602001600020600401600082825401925050819055506103d2565b61032a858261017c565b15610363576103398385610466565b876000016000888152602001908152602001600020600401600082825403925050819055506103d1565b6040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260128152602001807f4e6f7420612076616c696420616374696f6e000000000000000000000000000081525060200191505060405180910390fd5b5b50505050505050565b600061045d61043f8386600001600087815260200190815260200160002060080160003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002054610466565b856000016000868152602001908152602001600020600301546104a4565b90509392505050565b600080831415610479576000905061049e565b6000828402905082848281151561048c57fe5b0414151561049957600080fd5b809150505b92915050565b600080821115156104b457600080fd5b600082848115156104c157fe5b049050809150509291505056fea165627a7a723058204fd0cf52ede2c7dac9ba016e282d3f96e6b62ec531c8287b1250423135821e7f0029",
   "sourceMap": "139:1312:6:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
   "deployedSourceMap": "139:1312:6:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;922:160;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;922:160:6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;161:755;;8:9:-1;5:2;;;30:1;27;20:12;5:2;161:755:6;;;;;;13:3:-1;8;5:12;2:2;;;30:1;27;20:12;2:2;161:755:6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1088:361;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1088:361:6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;922:160;989:4;1072:1;1055:19;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;1055:19:6;;;1045:30;;;;;;1038:1;1021:19;;;;;;;;;;;;;;;49:4:-1;39:7;30;26:21;22:32;13:7;6:49;1021:19:6;;;1011:30;;;;;;:64;1004:71;;922:160;;;;:::o;161:755::-;291:11;:19;;;320:12;:21;;;363:28;378:7;387:3;363:14;:28::i;:::-;360:550;;;513:25;526:6;533:4;513:12;:25::i;:::-;478:4;:9;;:19;488:8;478:19;;;;;;;;;;;:32;;;:60;406:211;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;670:26;683:6;691:4;670:12;:26::i;:::-;631:4;:9;;:19;641:8;631:19;;;;;;;;;;;:35;;;:65;;;;;;;;;;;360:550;;;724:29;739:7;748:4;724:14;:29::i;:::-;721:189;;;807:26;820:6;828:4;807:12;:26::i;:::-;768:4;:9;;:19;778:8;768:19;;;;;;;;;;;:35;;;:65;;;;;;;;;;;721:189;;;871:28;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;721:189;360:550;161:755;;;;;;;:::o;1088:361::-;1179:4;1327:114;1340:66;1353:3;1358:4;:9;;:19;1368:8;1358:19;;;;;;;;;;;:35;;:47;1394:10;1358:47;;;;;;;;;;;;;;;;1340:12;:66::i;:::-;1408:4;:9;;:19;1418:8;1408:19;;;;;;;;;;;:32;;;1327:12;:114::i;:::-;1320:122;;1088:361;;;;;:::o;229:421:10:-;287:7;532:1;527;:6;523:45;;;556:1;549:8;;;;523:45;578:9;594:1;590;:5;578:17;;622:1;617;613;:5;;;;;;;;:10;605:19;;;;;;;;642:1;635:8;;;229:421;;;;;:::o;778:296::-;836:7;933:1;929;:5;921:14;;;;;;;;945:9;961:1;957;:5;;;;;;;;945:17;;1066:1;1059:8;;;778:296;;;;:::o",
   "source": "pragma solidity ^0.5.0;\n\nimport \"../contracts/StructLib.sol\";\nimport \"../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol\";\n\nlibrary OrderLib{\n    function placeOrder(StructLib.Data storage self, uint _fundNum, bytes32 _action, uint _qty, uint _price)\n    public\n    {\n        bytes32 buy = \"buy\";\n        bytes32 sell = \"sell\";\n        \n        if(compareStrings(_action, buy)){\n            require(\n                //Cost of trade is price * qty\n                self.list[_fundNum].totalCapital > SafeMath.mul(_price,_qty),\n                \"Cost of trade is greater than balance of fund\"\n            );\n            self.list[_fundNum].capitalDeployed += SafeMath.mul(_price, _qty);\n        }\n        else if(compareStrings(_action, sell)){\n            self.list[_fundNum].capitalDeployed -= SafeMath.mul(_price, _qty);\n        }\n        else{\n            revert(\"Not a valid action\");\n        }\n    }\n\n    function compareStrings(bytes32 a, bytes32  b) public pure returns(bool){\n        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));\n    }\n\n    function calcQty(StructLib.Data storage self, uint _fundNum, uint qty) public view returns(uint) {\n        //Investor's capital as a percentage of total funds\n        //Need to incorporate Safe.Math for more robust solution\n        return(SafeMath.div(SafeMath.mul(qty, self.list[_fundNum].virtualBalances[msg.sender]), self.list[_fundNum].totalCapital));\n    }\n}",
@@ -95,14 +95,14 @@
     "absolutePath": "/home/bryan/final-project-bryanherbert/contracts/OrderLib.sol",
     "exportedSymbols": {
       "OrderLib": [
-        1147
+        1264
       ]
     },
-    "id": 1148,
+    "id": 1265,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1006,
+        "id": 1123,
         "literals": [
           "solidity",
           "^",
@@ -115,10 +115,10 @@
       {
         "absolutePath": "/home/bryan/final-project-bryanherbert/contracts/StructLib.sol",
         "file": "../contracts/StructLib.sol",
-        "id": 1007,
+        "id": 1124,
         "nodeType": "ImportDirective",
-        "scope": 1148,
-        "sourceUnit": 1452,
+        "scope": 1265,
+        "sourceUnit": 1578,
         "src": "25:36:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -126,10 +126,10 @@
       {
         "absolutePath": "/home/bryan/final-project-bryanherbert/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol",
         "file": "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol",
-        "id": 1008,
+        "id": 1125,
         "nodeType": "ImportDirective",
-        "scope": 1148,
-        "sourceUnit": 1729,
+        "scope": 1265,
+        "sourceUnit": 1855,
         "src": "62:75:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -140,30 +140,30 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1147,
+        "id": 1264,
         "linearizedBaseContracts": [
-          1147
+          1264
         ],
         "name": "OrderLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 1087,
+              "id": 1204,
               "nodeType": "Block",
               "src": "281:635:6",
               "statements": [
                 {
                   "assignments": [
-                    1022
+                    1139
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 1022,
+                      "id": 1139,
                       "name": "buy",
                       "nodeType": "VariableDeclaration",
-                      "scope": 1087,
+                      "scope": 1204,
                       "src": "291:11:6",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -172,7 +172,7 @@
                         "typeString": "bytes32"
                       },
                       "typeName": {
-                        "id": 1021,
+                        "id": 1138,
                         "name": "bytes32",
                         "nodeType": "ElementaryTypeName",
                         "src": "291:7:6",
@@ -185,11 +185,11 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 1024,
+                  "id": 1141,
                   "initialValue": {
                     "argumentTypes": null,
                     "hexValue": "627579",
-                    "id": 1023,
+                    "id": 1140,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -209,15 +209,15 @@
                 },
                 {
                   "assignments": [
-                    1026
+                    1143
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 1026,
+                      "id": 1143,
                       "name": "sell",
                       "nodeType": "VariableDeclaration",
-                      "scope": 1087,
+                      "scope": 1204,
                       "src": "320:12:6",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -226,7 +226,7 @@
                         "typeString": "bytes32"
                       },
                       "typeName": {
-                        "id": 1025,
+                        "id": 1142,
                         "name": "bytes32",
                         "nodeType": "ElementaryTypeName",
                         "src": "320:7:6",
@@ -239,11 +239,11 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 1028,
+                  "id": 1145,
                   "initialValue": {
                     "argumentTypes": null,
                     "hexValue": "73656c6c",
-                    "id": 1027,
+                    "id": 1144,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -267,11 +267,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 1030,
+                        "id": 1147,
                         "name": "_action",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1014,
+                        "referencedDeclaration": 1131,
                         "src": "378:7:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -280,11 +280,11 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 1031,
+                        "id": 1148,
                         "name": "buy",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1022,
+                        "referencedDeclaration": 1139,
                         "src": "387:3:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -303,18 +303,18 @@
                           "typeString": "bytes32"
                         }
                       ],
-                      "id": 1029,
+                      "id": 1146,
                       "name": "compareStrings",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1112,
+                      "referencedDeclaration": 1229,
                       "src": "363:14:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes32_$returns$_t_bool_$",
                         "typeString": "function (bytes32,bytes32) pure returns (bool)"
                       }
                     },
-                    "id": 1032,
+                    "id": 1149,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -334,11 +334,11 @@
                       "arguments": [
                         {
                           "argumentTypes": null,
-                          "id": 1063,
+                          "id": 1180,
                           "name": "_action",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1014,
+                          "referencedDeclaration": 1131,
                           "src": "739:7:6",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -347,11 +347,11 @@
                         },
                         {
                           "argumentTypes": null,
-                          "id": 1064,
+                          "id": 1181,
                           "name": "sell",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1026,
+                          "referencedDeclaration": 1143,
                           "src": "748:4:6",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -370,18 +370,18 @@
                             "typeString": "bytes32"
                           }
                         ],
-                        "id": 1062,
+                        "id": 1179,
                         "name": "compareStrings",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1112,
+                        "referencedDeclaration": 1229,
                         "src": "724:14:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes32_$returns$_t_bool_$",
                           "typeString": "function (bytes32,bytes32) pure returns (bool)"
                         }
                       },
-                      "id": 1065,
+                      "id": 1182,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -396,7 +396,7 @@
                       }
                     },
                     "falseBody": {
-                      "id": 1084,
+                      "id": 1201,
                       "nodeType": "Block",
                       "src": "857:53:6",
                       "statements": [
@@ -407,7 +407,7 @@
                               {
                                 "argumentTypes": null,
                                 "hexValue": "4e6f7420612076616c696420616374696f6e",
-                                "id": 1081,
+                                "id": 1198,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -430,21 +430,21 @@
                                   "typeString": "literal_string \"Not a valid action\""
                                 }
                               ],
-                              "id": 1080,
+                              "id": 1197,
                               "name": "revert",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [
-                                1748,
-                                1749
+                                1874,
+                                1875
                               ],
-                              "referencedDeclaration": 1749,
+                              "referencedDeclaration": 1875,
                               "src": "871:6:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_revert_pure$_t_string_memory_ptr_$returns$__$",
                                 "typeString": "function (string memory) pure"
                               }
                             },
-                            "id": 1082,
+                            "id": 1199,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -458,24 +458,24 @@
                               "typeString": "tuple()"
                             }
                           },
-                          "id": 1083,
+                          "id": 1200,
                           "nodeType": "ExpressionStatement",
                           "src": "871:28:6"
                         }
                       ]
                     },
-                    "id": 1085,
+                    "id": 1202,
                     "nodeType": "IfStatement",
                     "src": "721:189:6",
                     "trueBody": {
-                      "id": 1079,
+                      "id": 1196,
                       "nodeType": "Block",
                       "src": "754:90:6",
                       "statements": [
                         {
                           "expression": {
                             "argumentTypes": null,
-                            "id": 1077,
+                            "id": 1194,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -488,39 +488,39 @@
                                   "argumentTypes": null,
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 1066,
+                                    "id": 1183,
                                     "name": "self",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1010,
+                                    "referencedDeclaration": 1127,
                                     "src": "768:4:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                      "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                       "typeString": "struct StructLib.Data storage pointer"
                                     }
                                   },
-                                  "id": 1069,
+                                  "id": 1186,
                                   "isConstant": false,
                                   "isLValue": true,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "list",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 1414,
+                                  "referencedDeclaration": 1531,
                                   "src": "768:9:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                     "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                   }
                                 },
-                                "id": 1070,
+                                "id": 1187,
                                 "indexExpression": {
                                   "argumentTypes": null,
-                                  "id": 1068,
+                                  "id": 1185,
                                   "name": "_fundNum",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1012,
+                                  "referencedDeclaration": 1129,
                                   "src": "778:8:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -534,18 +534,18 @@
                                 "nodeType": "IndexAccess",
                                 "src": "768:19:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                  "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                   "typeString": "struct StructLib.Fund storage ref"
                                 }
                               },
-                              "id": 1071,
+                              "id": 1188,
                               "isConstant": false,
                               "isLValue": true,
                               "isPure": false,
                               "lValueRequested": true,
                               "memberName": "capitalDeployed",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 1425,
+                              "referencedDeclaration": 1542,
                               "src": "768:35:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -559,11 +559,11 @@
                               "arguments": [
                                 {
                                   "argumentTypes": null,
-                                  "id": 1074,
+                                  "id": 1191,
                                   "name": "_price",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1018,
+                                  "referencedDeclaration": 1135,
                                   "src": "820:6:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -572,11 +572,11 @@
                                 },
                                 {
                                   "argumentTypes": null,
-                                  "id": 1075,
+                                  "id": 1192,
                                   "name": "_qty",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1016,
+                                  "referencedDeclaration": 1133,
                                   "src": "828:4:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -597,32 +597,32 @@
                                 ],
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 1072,
+                                  "id": 1189,
                                   "name": "SafeMath",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1728,
+                                  "referencedDeclaration": 1854,
                                   "src": "807:8:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                    "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                     "typeString": "type(library SafeMath)"
                                   }
                                 },
-                                "id": 1073,
+                                "id": 1190,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "mul",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1635,
+                                "referencedDeclaration": 1761,
                                 "src": "807:12:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                   "typeString": "function (uint256,uint256) pure returns (uint256)"
                                 }
                               },
-                              "id": 1076,
+                              "id": 1193,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -642,18 +642,18 @@
                               "typeString": "uint256"
                             }
                           },
-                          "id": 1078,
+                          "id": 1195,
                           "nodeType": "ExpressionStatement",
                           "src": "768:65:6"
                         }
                       ]
                     }
                   },
-                  "id": 1086,
+                  "id": 1203,
                   "nodeType": "IfStatement",
                   "src": "360:550:6",
                   "trueBody": {
-                    "id": 1061,
+                    "id": 1178,
                     "nodeType": "Block",
                     "src": "392:315:6",
                     "statements": [
@@ -667,7 +667,7 @@
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
                               },
-                              "id": 1044,
+                              "id": 1161,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -680,39 +680,39 @@
                                     "argumentTypes": null,
                                     "expression": {
                                       "argumentTypes": null,
-                                      "id": 1034,
+                                      "id": 1151,
                                       "name": "self",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1010,
+                                      "referencedDeclaration": 1127,
                                       "src": "478:4:6",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                        "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                         "typeString": "struct StructLib.Data storage pointer"
                                       }
                                     },
-                                    "id": 1035,
+                                    "id": 1152,
                                     "isConstant": false,
                                     "isLValue": true,
                                     "isPure": false,
                                     "lValueRequested": false,
                                     "memberName": "list",
                                     "nodeType": "MemberAccess",
-                                    "referencedDeclaration": 1414,
+                                    "referencedDeclaration": 1531,
                                     "src": "478:9:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                       "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                     }
                                   },
-                                  "id": 1037,
+                                  "id": 1154,
                                   "indexExpression": {
                                     "argumentTypes": null,
-                                    "id": 1036,
+                                    "id": 1153,
                                     "name": "_fundNum",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1012,
+                                    "referencedDeclaration": 1129,
                                     "src": "488:8:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -726,18 +726,18 @@
                                   "nodeType": "IndexAccess",
                                   "src": "478:19:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                    "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                     "typeString": "struct StructLib.Fund storage ref"
                                   }
                                 },
-                                "id": 1038,
+                                "id": 1155,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "totalCapital",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1423,
+                                "referencedDeclaration": 1540,
                                 "src": "478:32:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -751,11 +751,11 @@
                                 "arguments": [
                                   {
                                     "argumentTypes": null,
-                                    "id": 1041,
+                                    "id": 1158,
                                     "name": "_price",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1018,
+                                    "referencedDeclaration": 1135,
                                     "src": "526:6:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -764,11 +764,11 @@
                                   },
                                   {
                                     "argumentTypes": null,
-                                    "id": 1042,
+                                    "id": 1159,
                                     "name": "_qty",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1016,
+                                    "referencedDeclaration": 1133,
                                     "src": "533:4:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -789,32 +789,32 @@
                                   ],
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 1039,
+                                    "id": 1156,
                                     "name": "SafeMath",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1728,
+                                    "referencedDeclaration": 1854,
                                     "src": "513:8:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                      "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                       "typeString": "type(library SafeMath)"
                                     }
                                   },
-                                  "id": 1040,
+                                  "id": 1157,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "mul",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 1635,
+                                  "referencedDeclaration": 1761,
                                   "src": "513:12:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                     "typeString": "function (uint256,uint256) pure returns (uint256)"
                                   }
                                 },
-                                "id": 1043,
+                                "id": 1160,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -837,7 +837,7 @@
                             {
                               "argumentTypes": null,
                               "hexValue": "436f7374206f662074726164652069732067726561746572207468616e2062616c616e6365206f662066756e64",
-                              "id": 1045,
+                              "id": 1162,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -864,21 +864,21 @@
                                 "typeString": "literal_string \"Cost of trade is greater than balance of fund\""
                               }
                             ],
-                            "id": 1033,
+                            "id": 1150,
                             "name": "require",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [
-                              1746,
-                              1747
+                              1872,
+                              1873
                             ],
-                            "referencedDeclaration": 1747,
+                            "referencedDeclaration": 1873,
                             "src": "406:7:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                               "typeString": "function (bool,string memory) pure"
                             }
                           },
-                          "id": 1046,
+                          "id": 1163,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -892,14 +892,14 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 1047,
+                        "id": 1164,
                         "nodeType": "ExpressionStatement",
                         "src": "406:211:6"
                       },
                       {
                         "expression": {
                           "argumentTypes": null,
-                          "id": 1059,
+                          "id": 1176,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -912,39 +912,39 @@
                                 "argumentTypes": null,
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 1048,
+                                  "id": 1165,
                                   "name": "self",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1010,
+                                  "referencedDeclaration": 1127,
                                   "src": "631:4:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                     "typeString": "struct StructLib.Data storage pointer"
                                   }
                                 },
-                                "id": 1051,
+                                "id": 1168,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "list",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1414,
+                                "referencedDeclaration": 1531,
                                 "src": "631:9:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                   "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                 }
                               },
-                              "id": 1052,
+                              "id": 1169,
                               "indexExpression": {
                                 "argumentTypes": null,
-                                "id": 1050,
+                                "id": 1167,
                                 "name": "_fundNum",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1012,
+                                "referencedDeclaration": 1129,
                                 "src": "641:8:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -958,18 +958,18 @@
                               "nodeType": "IndexAccess",
                               "src": "631:19:6",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                 "typeString": "struct StructLib.Fund storage ref"
                               }
                             },
-                            "id": 1053,
+                            "id": 1170,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": true,
                             "memberName": "capitalDeployed",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1425,
+                            "referencedDeclaration": 1542,
                             "src": "631:35:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -983,11 +983,11 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 1056,
+                                "id": 1173,
                                 "name": "_price",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1018,
+                                "referencedDeclaration": 1135,
                                 "src": "683:6:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -996,11 +996,11 @@
                               },
                               {
                                 "argumentTypes": null,
-                                "id": 1057,
+                                "id": 1174,
                                 "name": "_qty",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1016,
+                                "referencedDeclaration": 1133,
                                 "src": "691:4:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1021,32 +1021,32 @@
                               ],
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 1054,
+                                "id": 1171,
                                 "name": "SafeMath",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1728,
+                                "referencedDeclaration": 1854,
                                 "src": "670:8:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                   "typeString": "type(library SafeMath)"
                                 }
                               },
-                              "id": 1055,
+                              "id": 1172,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
                               "lValueRequested": false,
                               "memberName": "mul",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 1635,
+                              "referencedDeclaration": 1761,
                               "src": "670:12:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                 "typeString": "function (uint256,uint256) pure returns (uint256)"
                               }
                             },
-                            "id": 1058,
+                            "id": 1175,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1066,7 +1066,7 @@
                             "typeString": "uint256"
                           }
                         },
-                        "id": 1060,
+                        "id": 1177,
                         "nodeType": "ExpressionStatement",
                         "src": "631:65:6"
                       }
@@ -1076,38 +1076,38 @@
               ]
             },
             "documentation": null,
-            "id": 1088,
+            "id": 1205,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "placeOrder",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1019,
+              "id": 1136,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1010,
+                  "id": 1127,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "181:27:6",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1009,
+                    "id": 1126,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1415,
+                    "referencedDeclaration": 1532,
                     "src": "181:14:6",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -1116,10 +1116,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1012,
+                  "id": 1129,
                   "name": "_fundNum",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "210:13:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1128,7 +1128,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1011,
+                    "id": 1128,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "210:4:6",
@@ -1142,10 +1142,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1014,
+                  "id": 1131,
                   "name": "_action",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "225:15:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1154,7 +1154,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1013,
+                    "id": 1130,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "225:7:6",
@@ -1168,10 +1168,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1016,
+                  "id": 1133,
                   "name": "_qty",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "242:9:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1180,7 +1180,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1015,
+                    "id": 1132,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "242:4:6",
@@ -1194,10 +1194,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1018,
+                  "id": 1135,
                   "name": "_price",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "253:11:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1206,7 +1206,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1017,
+                    "id": 1134,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "253:4:6",
@@ -1222,12 +1222,12 @@
               "src": "180:85:6"
             },
             "returnParameters": {
-              "id": 1020,
+              "id": 1137,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "281:0:6"
             },
-            "scope": 1147,
+            "scope": 1264,
             "src": "161:755:6",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1235,7 +1235,7 @@
           },
           {
             "body": {
-              "id": 1111,
+              "id": 1228,
               "nodeType": "Block",
               "src": "994:88:6",
               "statements": [
@@ -1246,7 +1246,7 @@
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     },
-                    "id": 1109,
+                    "id": 1226,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1259,11 +1259,11 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 1100,
+                              "id": 1217,
                               "name": "a",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1090,
+                              "referencedDeclaration": 1207,
                               "src": "1038:1:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bytes32",
@@ -1280,18 +1280,18 @@
                             ],
                             "expression": {
                               "argumentTypes": null,
-                              "id": 1098,
+                              "id": 1215,
                               "name": "abi",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1730,
+                              "referencedDeclaration": 1856,
                               "src": "1021:3:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_abi",
                                 "typeString": "abi"
                               }
                             },
-                            "id": 1099,
+                            "id": 1216,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -1305,7 +1305,7 @@
                               "typeString": "function () pure returns (bytes memory)"
                             }
                           },
-                          "id": 1101,
+                          "id": 1218,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1327,18 +1327,18 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 1097,
+                        "id": 1214,
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1737,
+                        "referencedDeclaration": 1863,
                         "src": "1011:9:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                           "typeString": "function (bytes memory) pure returns (bytes32)"
                         }
                       },
-                      "id": 1102,
+                      "id": 1219,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1362,11 +1362,11 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 1106,
+                              "id": 1223,
                               "name": "b",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1209,
                               "src": "1072:1:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bytes32",
@@ -1383,18 +1383,18 @@
                             ],
                             "expression": {
                               "argumentTypes": null,
-                              "id": 1104,
+                              "id": 1221,
                               "name": "abi",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1730,
+                              "referencedDeclaration": 1856,
                               "src": "1055:3:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_abi",
                                 "typeString": "abi"
                               }
                             },
-                            "id": 1105,
+                            "id": 1222,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -1408,7 +1408,7 @@
                               "typeString": "function () pure returns (bytes memory)"
                             }
                           },
-                          "id": 1107,
+                          "id": 1224,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1430,18 +1430,18 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 1103,
+                        "id": 1220,
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1737,
+                        "referencedDeclaration": 1863,
                         "src": "1045:9:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                           "typeString": "function (bytes memory) pure returns (bytes32)"
                         }
                       },
-                      "id": 1108,
+                      "id": 1225,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1461,30 +1461,30 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 1096,
-                  "id": 1110,
+                  "functionReturnParameters": 1213,
+                  "id": 1227,
                   "nodeType": "Return",
                   "src": "1004:71:6"
                 }
               ]
             },
             "documentation": null,
-            "id": 1112,
+            "id": 1229,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "compareStrings",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1093,
+              "id": 1210,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1090,
+                  "id": 1207,
                   "name": "a",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1112,
+                  "scope": 1229,
                   "src": "946:9:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1493,7 +1493,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1089,
+                    "id": 1206,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "946:7:6",
@@ -1507,10 +1507,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1092,
+                  "id": 1209,
                   "name": "b",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1112,
+                  "scope": 1229,
                   "src": "957:10:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1519,7 +1519,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1091,
+                    "id": 1208,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "957:7:6",
@@ -1535,15 +1535,15 @@
               "src": "945:23:6"
             },
             "returnParameters": {
-              "id": 1096,
+              "id": 1213,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1095,
+                  "id": 1212,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1112,
+                  "scope": 1229,
                   "src": "989:4:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1552,7 +1552,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1094,
+                    "id": 1211,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "989:4:6",
@@ -1567,7 +1567,7 @@
               ],
               "src": "988:6:6"
             },
-            "scope": 1147,
+            "scope": 1264,
             "src": "922:160:6",
             "stateMutability": "pure",
             "superFunction": null,
@@ -1575,7 +1575,7 @@
           },
           {
             "body": {
-              "id": 1145,
+              "id": 1262,
               "nodeType": "Block",
               "src": "1185:264:6",
               "statements": [
@@ -1591,11 +1591,11 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 1127,
+                                "id": 1244,
                                 "name": "qty",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1118,
+                                "referencedDeclaration": 1235,
                                 "src": "1353:3:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1612,39 +1612,39 @@
                                       "argumentTypes": null,
                                       "expression": {
                                         "argumentTypes": null,
-                                        "id": 1128,
+                                        "id": 1245,
                                         "name": "self",
                                         "nodeType": "Identifier",
                                         "overloadedDeclarations": [],
-                                        "referencedDeclaration": 1114,
+                                        "referencedDeclaration": 1231,
                                         "src": "1358:4:6",
                                         "typeDescriptions": {
-                                          "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                          "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                           "typeString": "struct StructLib.Data storage pointer"
                                         }
                                       },
-                                      "id": 1129,
+                                      "id": 1246,
                                       "isConstant": false,
                                       "isLValue": true,
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "memberName": "list",
                                       "nodeType": "MemberAccess",
-                                      "referencedDeclaration": 1414,
+                                      "referencedDeclaration": 1531,
                                       "src": "1358:9:6",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                         "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                       }
                                     },
-                                    "id": 1131,
+                                    "id": 1248,
                                     "indexExpression": {
                                       "argumentTypes": null,
-                                      "id": 1130,
+                                      "id": 1247,
                                       "name": "_fundNum",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1116,
+                                      "referencedDeclaration": 1233,
                                       "src": "1368:8:6",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_uint256",
@@ -1658,41 +1658,41 @@
                                     "nodeType": "IndexAccess",
                                     "src": "1358:19:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                      "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                       "typeString": "struct StructLib.Fund storage ref"
                                     }
                                   },
-                                  "id": 1132,
+                                  "id": 1249,
                                   "isConstant": false,
                                   "isLValue": true,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "virtualBalances",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 1437,
+                                  "referencedDeclaration": 1554,
                                   "src": "1358:35:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                                     "typeString": "mapping(address => uint256)"
                                   }
                                 },
-                                "id": 1135,
+                                "id": 1252,
                                 "indexExpression": {
                                   "argumentTypes": null,
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 1133,
+                                    "id": 1250,
                                     "name": "msg",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1743,
+                                    "referencedDeclaration": 1869,
                                     "src": "1394:3:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_magic_message",
                                       "typeString": "msg"
                                     }
                                   },
-                                  "id": 1134,
+                                  "id": 1251,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -1731,32 +1731,32 @@
                               ],
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 1125,
+                                "id": 1242,
                                 "name": "SafeMath",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1728,
+                                "referencedDeclaration": 1854,
                                 "src": "1340:8:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                   "typeString": "type(library SafeMath)"
                                 }
                               },
-                              "id": 1126,
+                              "id": 1243,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
                               "lValueRequested": false,
                               "memberName": "mul",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 1635,
+                              "referencedDeclaration": 1761,
                               "src": "1340:12:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                 "typeString": "function (uint256,uint256) pure returns (uint256)"
                               }
                             },
-                            "id": 1136,
+                            "id": 1253,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1778,39 +1778,39 @@
                                 "argumentTypes": null,
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 1137,
+                                  "id": 1254,
                                   "name": "self",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1114,
+                                  "referencedDeclaration": 1231,
                                   "src": "1408:4:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                     "typeString": "struct StructLib.Data storage pointer"
                                   }
                                 },
-                                "id": 1138,
+                                "id": 1255,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "list",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1414,
+                                "referencedDeclaration": 1531,
                                 "src": "1408:9:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                   "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                 }
                               },
-                              "id": 1140,
+                              "id": 1257,
                               "indexExpression": {
                                 "argumentTypes": null,
-                                "id": 1139,
+                                "id": 1256,
                                 "name": "_fundNum",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1116,
+                                "referencedDeclaration": 1233,
                                 "src": "1418:8:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1824,18 +1824,18 @@
                               "nodeType": "IndexAccess",
                               "src": "1408:19:6",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                 "typeString": "struct StructLib.Fund storage ref"
                               }
                             },
-                            "id": 1141,
+                            "id": 1258,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "totalCapital",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1423,
+                            "referencedDeclaration": 1540,
                             "src": "1408:32:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1856,32 +1856,32 @@
                           ],
                           "expression": {
                             "argumentTypes": null,
-                            "id": 1123,
+                            "id": 1240,
                             "name": "SafeMath",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1728,
+                            "referencedDeclaration": 1854,
                             "src": "1327:8:6",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                              "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                               "typeString": "type(library SafeMath)"
                             }
                           },
-                          "id": 1124,
+                          "id": 1241,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "div",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 1659,
+                          "referencedDeclaration": 1785,
                           "src": "1327:12:6",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                             "typeString": "function (uint256,uint256) pure returns (uint256)"
                           }
                         },
-                        "id": 1142,
+                        "id": 1259,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1896,7 +1896,7 @@
                         }
                       }
                     ],
-                    "id": 1143,
+                    "id": 1260,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
@@ -1909,46 +1909,46 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 1122,
-                  "id": 1144,
+                  "functionReturnParameters": 1239,
+                  "id": 1261,
                   "nodeType": "Return",
                   "src": "1320:122:6"
                 }
               ]
             },
             "documentation": null,
-            "id": 1146,
+            "id": 1263,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "calcQty",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1119,
+              "id": 1236,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1114,
+                  "id": 1231,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1105:27:6",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1113,
+                    "id": 1230,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1415,
+                    "referencedDeclaration": 1532,
                     "src": "1105:14:6",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -1957,10 +1957,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1116,
+                  "id": 1233,
                   "name": "_fundNum",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1134:13:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1969,7 +1969,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1115,
+                    "id": 1232,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1134:4:6",
@@ -1983,10 +1983,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1118,
+                  "id": 1235,
                   "name": "qty",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1149:8:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1995,7 +1995,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1117,
+                    "id": 1234,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1149:4:6",
@@ -2011,15 +2011,15 @@
               "src": "1104:54:6"
             },
             "returnParameters": {
-              "id": 1122,
+              "id": 1239,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1121,
+                  "id": 1238,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1179:4:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2028,7 +2028,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1120,
+                    "id": 1237,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1179:4:6",
@@ -2043,14 +2043,14 @@
               ],
               "src": "1178:6:6"
             },
-            "scope": 1147,
+            "scope": 1264,
             "src": "1088:361:6",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1148,
+        "scope": 1265,
         "src": "139:1312:6"
       }
     ],
@@ -2060,14 +2060,14 @@
     "absolutePath": "/home/bryan/final-project-bryanherbert/contracts/OrderLib.sol",
     "exportedSymbols": {
       "OrderLib": [
-        1147
+        1264
       ]
     },
-    "id": 1148,
+    "id": 1265,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1006,
+        "id": 1123,
         "literals": [
           "solidity",
           "^",
@@ -2080,10 +2080,10 @@
       {
         "absolutePath": "/home/bryan/final-project-bryanherbert/contracts/StructLib.sol",
         "file": "../contracts/StructLib.sol",
-        "id": 1007,
+        "id": 1124,
         "nodeType": "ImportDirective",
-        "scope": 1148,
-        "sourceUnit": 1452,
+        "scope": 1265,
+        "sourceUnit": 1578,
         "src": "25:36:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2091,10 +2091,10 @@
       {
         "absolutePath": "/home/bryan/final-project-bryanherbert/node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol",
         "file": "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol",
-        "id": 1008,
+        "id": 1125,
         "nodeType": "ImportDirective",
-        "scope": 1148,
-        "sourceUnit": 1729,
+        "scope": 1265,
+        "sourceUnit": 1855,
         "src": "62:75:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2105,30 +2105,30 @@
         "contractKind": "library",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 1147,
+        "id": 1264,
         "linearizedBaseContracts": [
-          1147
+          1264
         ],
         "name": "OrderLib",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "body": {
-              "id": 1087,
+              "id": 1204,
               "nodeType": "Block",
               "src": "281:635:6",
               "statements": [
                 {
                   "assignments": [
-                    1022
+                    1139
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 1022,
+                      "id": 1139,
                       "name": "buy",
                       "nodeType": "VariableDeclaration",
-                      "scope": 1087,
+                      "scope": 1204,
                       "src": "291:11:6",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -2137,7 +2137,7 @@
                         "typeString": "bytes32"
                       },
                       "typeName": {
-                        "id": 1021,
+                        "id": 1138,
                         "name": "bytes32",
                         "nodeType": "ElementaryTypeName",
                         "src": "291:7:6",
@@ -2150,11 +2150,11 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 1024,
+                  "id": 1141,
                   "initialValue": {
                     "argumentTypes": null,
                     "hexValue": "627579",
-                    "id": 1023,
+                    "id": 1140,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -2174,15 +2174,15 @@
                 },
                 {
                   "assignments": [
-                    1026
+                    1143
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 1026,
+                      "id": 1143,
                       "name": "sell",
                       "nodeType": "VariableDeclaration",
-                      "scope": 1087,
+                      "scope": 1204,
                       "src": "320:12:6",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -2191,7 +2191,7 @@
                         "typeString": "bytes32"
                       },
                       "typeName": {
-                        "id": 1025,
+                        "id": 1142,
                         "name": "bytes32",
                         "nodeType": "ElementaryTypeName",
                         "src": "320:7:6",
@@ -2204,11 +2204,11 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 1028,
+                  "id": 1145,
                   "initialValue": {
                     "argumentTypes": null,
                     "hexValue": "73656c6c",
-                    "id": 1027,
+                    "id": 1144,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -2232,11 +2232,11 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 1030,
+                        "id": 1147,
                         "name": "_action",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1014,
+                        "referencedDeclaration": 1131,
                         "src": "378:7:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -2245,11 +2245,11 @@
                       },
                       {
                         "argumentTypes": null,
-                        "id": 1031,
+                        "id": 1148,
                         "name": "buy",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1022,
+                        "referencedDeclaration": 1139,
                         "src": "387:3:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -2268,18 +2268,18 @@
                           "typeString": "bytes32"
                         }
                       ],
-                      "id": 1029,
+                      "id": 1146,
                       "name": "compareStrings",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1112,
+                      "referencedDeclaration": 1229,
                       "src": "363:14:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes32_$returns$_t_bool_$",
                         "typeString": "function (bytes32,bytes32) pure returns (bool)"
                       }
                     },
-                    "id": 1032,
+                    "id": 1149,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2299,11 +2299,11 @@
                       "arguments": [
                         {
                           "argumentTypes": null,
-                          "id": 1063,
+                          "id": 1180,
                           "name": "_action",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1014,
+                          "referencedDeclaration": 1131,
                           "src": "739:7:6",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -2312,11 +2312,11 @@
                         },
                         {
                           "argumentTypes": null,
-                          "id": 1064,
+                          "id": 1181,
                           "name": "sell",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1026,
+                          "referencedDeclaration": 1143,
                           "src": "748:4:6",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes32",
@@ -2335,18 +2335,18 @@
                             "typeString": "bytes32"
                           }
                         ],
-                        "id": 1062,
+                        "id": 1179,
                         "name": "compareStrings",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1112,
+                        "referencedDeclaration": 1229,
                         "src": "724:14:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_bytes32_$_t_bytes32_$returns$_t_bool_$",
                           "typeString": "function (bytes32,bytes32) pure returns (bool)"
                         }
                       },
-                      "id": 1065,
+                      "id": 1182,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2361,7 +2361,7 @@
                       }
                     },
                     "falseBody": {
-                      "id": 1084,
+                      "id": 1201,
                       "nodeType": "Block",
                       "src": "857:53:6",
                       "statements": [
@@ -2372,7 +2372,7 @@
                               {
                                 "argumentTypes": null,
                                 "hexValue": "4e6f7420612076616c696420616374696f6e",
-                                "id": 1081,
+                                "id": 1198,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -2395,21 +2395,21 @@
                                   "typeString": "literal_string \"Not a valid action\""
                                 }
                               ],
-                              "id": 1080,
+                              "id": 1197,
                               "name": "revert",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [
-                                1748,
-                                1749
+                                1874,
+                                1875
                               ],
-                              "referencedDeclaration": 1749,
+                              "referencedDeclaration": 1875,
                               "src": "871:6:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_revert_pure$_t_string_memory_ptr_$returns$__$",
                                 "typeString": "function (string memory) pure"
                               }
                             },
-                            "id": 1082,
+                            "id": 1199,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -2423,24 +2423,24 @@
                               "typeString": "tuple()"
                             }
                           },
-                          "id": 1083,
+                          "id": 1200,
                           "nodeType": "ExpressionStatement",
                           "src": "871:28:6"
                         }
                       ]
                     },
-                    "id": 1085,
+                    "id": 1202,
                     "nodeType": "IfStatement",
                     "src": "721:189:6",
                     "trueBody": {
-                      "id": 1079,
+                      "id": 1196,
                       "nodeType": "Block",
                       "src": "754:90:6",
                       "statements": [
                         {
                           "expression": {
                             "argumentTypes": null,
-                            "id": 1077,
+                            "id": 1194,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -2453,39 +2453,39 @@
                                   "argumentTypes": null,
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 1066,
+                                    "id": 1183,
                                     "name": "self",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1010,
+                                    "referencedDeclaration": 1127,
                                     "src": "768:4:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                      "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                       "typeString": "struct StructLib.Data storage pointer"
                                     }
                                   },
-                                  "id": 1069,
+                                  "id": 1186,
                                   "isConstant": false,
                                   "isLValue": true,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "list",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 1414,
+                                  "referencedDeclaration": 1531,
                                   "src": "768:9:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                    "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                     "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                   }
                                 },
-                                "id": 1070,
+                                "id": 1187,
                                 "indexExpression": {
                                   "argumentTypes": null,
-                                  "id": 1068,
+                                  "id": 1185,
                                   "name": "_fundNum",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1012,
+                                  "referencedDeclaration": 1129,
                                   "src": "778:8:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -2499,18 +2499,18 @@
                                 "nodeType": "IndexAccess",
                                 "src": "768:19:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                  "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                   "typeString": "struct StructLib.Fund storage ref"
                                 }
                               },
-                              "id": 1071,
+                              "id": 1188,
                               "isConstant": false,
                               "isLValue": true,
                               "isPure": false,
                               "lValueRequested": true,
                               "memberName": "capitalDeployed",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 1425,
+                              "referencedDeclaration": 1542,
                               "src": "768:35:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -2524,11 +2524,11 @@
                               "arguments": [
                                 {
                                   "argumentTypes": null,
-                                  "id": 1074,
+                                  "id": 1191,
                                   "name": "_price",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1018,
+                                  "referencedDeclaration": 1135,
                                   "src": "820:6:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -2537,11 +2537,11 @@
                                 },
                                 {
                                   "argumentTypes": null,
-                                  "id": 1075,
+                                  "id": 1192,
                                   "name": "_qty",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1016,
+                                  "referencedDeclaration": 1133,
                                   "src": "828:4:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_uint256",
@@ -2562,32 +2562,32 @@
                                 ],
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 1072,
+                                  "id": 1189,
                                   "name": "SafeMath",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1728,
+                                  "referencedDeclaration": 1854,
                                   "src": "807:8:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                    "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                     "typeString": "type(library SafeMath)"
                                   }
                                 },
-                                "id": 1073,
+                                "id": 1190,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "mul",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1635,
+                                "referencedDeclaration": 1761,
                                 "src": "807:12:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                   "typeString": "function (uint256,uint256) pure returns (uint256)"
                                 }
                               },
-                              "id": 1076,
+                              "id": 1193,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -2607,18 +2607,18 @@
                               "typeString": "uint256"
                             }
                           },
-                          "id": 1078,
+                          "id": 1195,
                           "nodeType": "ExpressionStatement",
                           "src": "768:65:6"
                         }
                       ]
                     }
                   },
-                  "id": 1086,
+                  "id": 1203,
                   "nodeType": "IfStatement",
                   "src": "360:550:6",
                   "trueBody": {
-                    "id": 1061,
+                    "id": 1178,
                     "nodeType": "Block",
                     "src": "392:315:6",
                     "statements": [
@@ -2632,7 +2632,7 @@
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
                               },
-                              "id": 1044,
+                              "id": 1161,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -2645,39 +2645,39 @@
                                     "argumentTypes": null,
                                     "expression": {
                                       "argumentTypes": null,
-                                      "id": 1034,
+                                      "id": 1151,
                                       "name": "self",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1010,
+                                      "referencedDeclaration": 1127,
                                       "src": "478:4:6",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                        "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                         "typeString": "struct StructLib.Data storage pointer"
                                       }
                                     },
-                                    "id": 1035,
+                                    "id": 1152,
                                     "isConstant": false,
                                     "isLValue": true,
                                     "isPure": false,
                                     "lValueRequested": false,
                                     "memberName": "list",
                                     "nodeType": "MemberAccess",
-                                    "referencedDeclaration": 1414,
+                                    "referencedDeclaration": 1531,
                                     "src": "478:9:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                       "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                     }
                                   },
-                                  "id": 1037,
+                                  "id": 1154,
                                   "indexExpression": {
                                     "argumentTypes": null,
-                                    "id": 1036,
+                                    "id": 1153,
                                     "name": "_fundNum",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1012,
+                                    "referencedDeclaration": 1129,
                                     "src": "488:8:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -2691,18 +2691,18 @@
                                   "nodeType": "IndexAccess",
                                   "src": "478:19:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                    "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                     "typeString": "struct StructLib.Fund storage ref"
                                   }
                                 },
-                                "id": 1038,
+                                "id": 1155,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "totalCapital",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1423,
+                                "referencedDeclaration": 1540,
                                 "src": "478:32:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -2716,11 +2716,11 @@
                                 "arguments": [
                                   {
                                     "argumentTypes": null,
-                                    "id": 1041,
+                                    "id": 1158,
                                     "name": "_price",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1018,
+                                    "referencedDeclaration": 1135,
                                     "src": "526:6:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -2729,11 +2729,11 @@
                                   },
                                   {
                                     "argumentTypes": null,
-                                    "id": 1042,
+                                    "id": 1159,
                                     "name": "_qty",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1016,
+                                    "referencedDeclaration": 1133,
                                     "src": "533:4:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
@@ -2754,32 +2754,32 @@
                                   ],
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 1039,
+                                    "id": 1156,
                                     "name": "SafeMath",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1728,
+                                    "referencedDeclaration": 1854,
                                     "src": "513:8:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                      "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                       "typeString": "type(library SafeMath)"
                                     }
                                   },
-                                  "id": 1040,
+                                  "id": 1157,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "mul",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 1635,
+                                  "referencedDeclaration": 1761,
                                   "src": "513:12:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                     "typeString": "function (uint256,uint256) pure returns (uint256)"
                                   }
                                 },
-                                "id": 1043,
+                                "id": 1160,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -2802,7 +2802,7 @@
                             {
                               "argumentTypes": null,
                               "hexValue": "436f7374206f662074726164652069732067726561746572207468616e2062616c616e6365206f662066756e64",
-                              "id": 1045,
+                              "id": 1162,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2829,21 +2829,21 @@
                                 "typeString": "literal_string \"Cost of trade is greater than balance of fund\""
                               }
                             ],
-                            "id": 1033,
+                            "id": 1150,
                             "name": "require",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [
-                              1746,
-                              1747
+                              1872,
+                              1873
                             ],
-                            "referencedDeclaration": 1747,
+                            "referencedDeclaration": 1873,
                             "src": "406:7:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                               "typeString": "function (bool,string memory) pure"
                             }
                           },
-                          "id": 1046,
+                          "id": 1163,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2857,14 +2857,14 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 1047,
+                        "id": 1164,
                         "nodeType": "ExpressionStatement",
                         "src": "406:211:6"
                       },
                       {
                         "expression": {
                           "argumentTypes": null,
-                          "id": 1059,
+                          "id": 1176,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2877,39 +2877,39 @@
                                 "argumentTypes": null,
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 1048,
+                                  "id": 1165,
                                   "name": "self",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1010,
+                                  "referencedDeclaration": 1127,
                                   "src": "631:4:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                     "typeString": "struct StructLib.Data storage pointer"
                                   }
                                 },
-                                "id": 1051,
+                                "id": 1168,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "list",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1414,
+                                "referencedDeclaration": 1531,
                                 "src": "631:9:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                   "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                 }
                               },
-                              "id": 1052,
+                              "id": 1169,
                               "indexExpression": {
                                 "argumentTypes": null,
-                                "id": 1050,
+                                "id": 1167,
                                 "name": "_fundNum",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1012,
+                                "referencedDeclaration": 1129,
                                 "src": "641:8:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -2923,18 +2923,18 @@
                               "nodeType": "IndexAccess",
                               "src": "631:19:6",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                 "typeString": "struct StructLib.Fund storage ref"
                               }
                             },
-                            "id": 1053,
+                            "id": 1170,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": true,
                             "memberName": "capitalDeployed",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1425,
+                            "referencedDeclaration": 1542,
                             "src": "631:35:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -2948,11 +2948,11 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 1056,
+                                "id": 1173,
                                 "name": "_price",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1018,
+                                "referencedDeclaration": 1135,
                                 "src": "683:6:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -2961,11 +2961,11 @@
                               },
                               {
                                 "argumentTypes": null,
-                                "id": 1057,
+                                "id": 1174,
                                 "name": "_qty",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1016,
+                                "referencedDeclaration": 1133,
                                 "src": "691:4:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -2986,32 +2986,32 @@
                               ],
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 1054,
+                                "id": 1171,
                                 "name": "SafeMath",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1728,
+                                "referencedDeclaration": 1854,
                                 "src": "670:8:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                   "typeString": "type(library SafeMath)"
                                 }
                               },
-                              "id": 1055,
+                              "id": 1172,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
                               "lValueRequested": false,
                               "memberName": "mul",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 1635,
+                              "referencedDeclaration": 1761,
                               "src": "670:12:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                 "typeString": "function (uint256,uint256) pure returns (uint256)"
                               }
                             },
-                            "id": 1058,
+                            "id": 1175,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -3031,7 +3031,7 @@
                             "typeString": "uint256"
                           }
                         },
-                        "id": 1060,
+                        "id": 1177,
                         "nodeType": "ExpressionStatement",
                         "src": "631:65:6"
                       }
@@ -3041,38 +3041,38 @@
               ]
             },
             "documentation": null,
-            "id": 1088,
+            "id": 1205,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "placeOrder",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1019,
+              "id": 1136,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1010,
+                  "id": 1127,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "181:27:6",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1009,
+                    "id": 1126,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1415,
+                    "referencedDeclaration": 1532,
                     "src": "181:14:6",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -3081,10 +3081,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1012,
+                  "id": 1129,
                   "name": "_fundNum",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "210:13:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3093,7 +3093,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1011,
+                    "id": 1128,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "210:4:6",
@@ -3107,10 +3107,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1014,
+                  "id": 1131,
                   "name": "_action",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "225:15:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3119,7 +3119,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1013,
+                    "id": 1130,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "225:7:6",
@@ -3133,10 +3133,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1016,
+                  "id": 1133,
                   "name": "_qty",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "242:9:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3145,7 +3145,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1015,
+                    "id": 1132,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "242:4:6",
@@ -3159,10 +3159,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1018,
+                  "id": 1135,
                   "name": "_price",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1088,
+                  "scope": 1205,
                   "src": "253:11:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3171,7 +3171,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1017,
+                    "id": 1134,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "253:4:6",
@@ -3187,12 +3187,12 @@
               "src": "180:85:6"
             },
             "returnParameters": {
-              "id": 1020,
+              "id": 1137,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "281:0:6"
             },
-            "scope": 1147,
+            "scope": 1264,
             "src": "161:755:6",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -3200,7 +3200,7 @@
           },
           {
             "body": {
-              "id": 1111,
+              "id": 1228,
               "nodeType": "Block",
               "src": "994:88:6",
               "statements": [
@@ -3211,7 +3211,7 @@
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
                     },
-                    "id": 1109,
+                    "id": 1226,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3224,11 +3224,11 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 1100,
+                              "id": 1217,
                               "name": "a",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1090,
+                              "referencedDeclaration": 1207,
                               "src": "1038:1:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bytes32",
@@ -3245,18 +3245,18 @@
                             ],
                             "expression": {
                               "argumentTypes": null,
-                              "id": 1098,
+                              "id": 1215,
                               "name": "abi",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1730,
+                              "referencedDeclaration": 1856,
                               "src": "1021:3:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_abi",
                                 "typeString": "abi"
                               }
                             },
-                            "id": 1099,
+                            "id": 1216,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -3270,7 +3270,7 @@
                               "typeString": "function () pure returns (bytes memory)"
                             }
                           },
-                          "id": 1101,
+                          "id": 1218,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3292,18 +3292,18 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 1097,
+                        "id": 1214,
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1737,
+                        "referencedDeclaration": 1863,
                         "src": "1011:9:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                           "typeString": "function (bytes memory) pure returns (bytes32)"
                         }
                       },
-                      "id": 1102,
+                      "id": 1219,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3327,11 +3327,11 @@
                           "arguments": [
                             {
                               "argumentTypes": null,
-                              "id": 1106,
+                              "id": 1223,
                               "name": "b",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1092,
+                              "referencedDeclaration": 1209,
                               "src": "1072:1:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bytes32",
@@ -3348,18 +3348,18 @@
                             ],
                             "expression": {
                               "argumentTypes": null,
-                              "id": 1104,
+                              "id": 1221,
                               "name": "abi",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 1730,
+                              "referencedDeclaration": 1856,
                               "src": "1055:3:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_magic_abi",
                                 "typeString": "abi"
                               }
                             },
-                            "id": 1105,
+                            "id": 1222,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -3373,7 +3373,7 @@
                               "typeString": "function () pure returns (bytes memory)"
                             }
                           },
-                          "id": 1107,
+                          "id": 1224,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3395,18 +3395,18 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 1103,
+                        "id": 1220,
                         "name": "keccak256",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1737,
+                        "referencedDeclaration": 1863,
                         "src": "1045:9:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
                           "typeString": "function (bytes memory) pure returns (bytes32)"
                         }
                       },
-                      "id": 1108,
+                      "id": 1225,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3426,30 +3426,30 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 1096,
-                  "id": 1110,
+                  "functionReturnParameters": 1213,
+                  "id": 1227,
                   "nodeType": "Return",
                   "src": "1004:71:6"
                 }
               ]
             },
             "documentation": null,
-            "id": 1112,
+            "id": 1229,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "compareStrings",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1093,
+              "id": 1210,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1090,
+                  "id": 1207,
                   "name": "a",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1112,
+                  "scope": 1229,
                   "src": "946:9:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3458,7 +3458,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1089,
+                    "id": 1206,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "946:7:6",
@@ -3472,10 +3472,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1092,
+                  "id": 1209,
                   "name": "b",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1112,
+                  "scope": 1229,
                   "src": "957:10:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3484,7 +3484,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 1091,
+                    "id": 1208,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "957:7:6",
@@ -3500,15 +3500,15 @@
               "src": "945:23:6"
             },
             "returnParameters": {
-              "id": 1096,
+              "id": 1213,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1095,
+                  "id": 1212,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1112,
+                  "scope": 1229,
                   "src": "989:4:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3517,7 +3517,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 1094,
+                    "id": 1211,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "989:4:6",
@@ -3532,7 +3532,7 @@
               ],
               "src": "988:6:6"
             },
-            "scope": 1147,
+            "scope": 1264,
             "src": "922:160:6",
             "stateMutability": "pure",
             "superFunction": null,
@@ -3540,7 +3540,7 @@
           },
           {
             "body": {
-              "id": 1145,
+              "id": 1262,
               "nodeType": "Block",
               "src": "1185:264:6",
               "statements": [
@@ -3556,11 +3556,11 @@
                             "arguments": [
                               {
                                 "argumentTypes": null,
-                                "id": 1127,
+                                "id": 1244,
                                 "name": "qty",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1118,
+                                "referencedDeclaration": 1235,
                                 "src": "1353:3:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3577,39 +3577,39 @@
                                       "argumentTypes": null,
                                       "expression": {
                                         "argumentTypes": null,
-                                        "id": 1128,
+                                        "id": 1245,
                                         "name": "self",
                                         "nodeType": "Identifier",
                                         "overloadedDeclarations": [],
-                                        "referencedDeclaration": 1114,
+                                        "referencedDeclaration": 1231,
                                         "src": "1358:4:6",
                                         "typeDescriptions": {
-                                          "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                          "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                           "typeString": "struct StructLib.Data storage pointer"
                                         }
                                       },
-                                      "id": 1129,
+                                      "id": 1246,
                                       "isConstant": false,
                                       "isLValue": true,
                                       "isPure": false,
                                       "lValueRequested": false,
                                       "memberName": "list",
                                       "nodeType": "MemberAccess",
-                                      "referencedDeclaration": 1414,
+                                      "referencedDeclaration": 1531,
                                       "src": "1358:9:6",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                        "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                         "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                       }
                                     },
-                                    "id": 1131,
+                                    "id": 1248,
                                     "indexExpression": {
                                       "argumentTypes": null,
-                                      "id": 1130,
+                                      "id": 1247,
                                       "name": "_fundNum",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 1116,
+                                      "referencedDeclaration": 1233,
                                       "src": "1368:8:6",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_uint256",
@@ -3623,41 +3623,41 @@
                                     "nodeType": "IndexAccess",
                                     "src": "1358:19:6",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                      "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                       "typeString": "struct StructLib.Fund storage ref"
                                     }
                                   },
-                                  "id": 1132,
+                                  "id": 1249,
                                   "isConstant": false,
                                   "isLValue": true,
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "memberName": "virtualBalances",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 1437,
+                                  "referencedDeclaration": 1554,
                                   "src": "1358:35:6",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                                     "typeString": "mapping(address => uint256)"
                                   }
                                 },
-                                "id": 1135,
+                                "id": 1252,
                                 "indexExpression": {
                                   "argumentTypes": null,
                                   "expression": {
                                     "argumentTypes": null,
-                                    "id": 1133,
+                                    "id": 1250,
                                     "name": "msg",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1743,
+                                    "referencedDeclaration": 1869,
                                     "src": "1394:3:6",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_magic_message",
                                       "typeString": "msg"
                                     }
                                   },
-                                  "id": 1134,
+                                  "id": 1251,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -3696,32 +3696,32 @@
                               ],
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 1125,
+                                "id": 1242,
                                 "name": "SafeMath",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1728,
+                                "referencedDeclaration": 1854,
                                 "src": "1340:8:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                                  "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                                   "typeString": "type(library SafeMath)"
                                 }
                               },
-                              "id": 1126,
+                              "id": 1243,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
                               "lValueRequested": false,
                               "memberName": "mul",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 1635,
+                              "referencedDeclaration": 1761,
                               "src": "1340:12:6",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                                 "typeString": "function (uint256,uint256) pure returns (uint256)"
                               }
                             },
-                            "id": 1136,
+                            "id": 1253,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -3743,39 +3743,39 @@
                                 "argumentTypes": null,
                                 "expression": {
                                   "argumentTypes": null,
-                                  "id": 1137,
+                                  "id": 1254,
                                   "name": "self",
                                   "nodeType": "Identifier",
                                   "overloadedDeclarations": [],
-                                  "referencedDeclaration": 1114,
+                                  "referencedDeclaration": 1231,
                                   "src": "1408:4:6",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                                     "typeString": "struct StructLib.Data storage pointer"
                                   }
                                 },
-                                "id": 1138,
+                                "id": 1255,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "list",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 1414,
+                                "referencedDeclaration": 1531,
                                 "src": "1408:9:6",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1450_storage_$",
+                                  "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Fund_$1569_storage_$",
                                   "typeString": "mapping(uint256 => struct StructLib.Fund storage ref)"
                                 }
                               },
-                              "id": 1140,
+                              "id": 1257,
                               "indexExpression": {
                                 "argumentTypes": null,
-                                "id": 1139,
+                                "id": 1256,
                                 "name": "_fundNum",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 1116,
+                                "referencedDeclaration": 1233,
                                 "src": "1418:8:6",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3789,18 +3789,18 @@
                               "nodeType": "IndexAccess",
                               "src": "1408:19:6",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Fund_$1450_storage",
+                                "typeIdentifier": "t_struct$_Fund_$1569_storage",
                                 "typeString": "struct StructLib.Fund storage ref"
                               }
                             },
-                            "id": 1141,
+                            "id": 1258,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
                             "lValueRequested": false,
                             "memberName": "totalCapital",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 1423,
+                            "referencedDeclaration": 1540,
                             "src": "1408:32:6",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -3821,32 +3821,32 @@
                           ],
                           "expression": {
                             "argumentTypes": null,
-                            "id": 1123,
+                            "id": 1240,
                             "name": "SafeMath",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 1728,
+                            "referencedDeclaration": 1854,
                             "src": "1327:8:6",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_contract$_SafeMath_$1728_$",
+                              "typeIdentifier": "t_type$_t_contract$_SafeMath_$1854_$",
                               "typeString": "type(library SafeMath)"
                             }
                           },
-                          "id": 1124,
+                          "id": 1241,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "div",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 1659,
+                          "referencedDeclaration": 1785,
                           "src": "1327:12:6",
                           "typeDescriptions": {
                             "typeIdentifier": "t_function_internal_pure$_t_uint256_$_t_uint256_$returns$_t_uint256_$",
                             "typeString": "function (uint256,uint256) pure returns (uint256)"
                           }
                         },
-                        "id": 1142,
+                        "id": 1259,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3861,7 +3861,7 @@
                         }
                       }
                     ],
-                    "id": 1143,
+                    "id": 1260,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
@@ -3874,46 +3874,46 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 1122,
-                  "id": 1144,
+                  "functionReturnParameters": 1239,
+                  "id": 1261,
                   "nodeType": "Return",
                   "src": "1320:122:6"
                 }
               ]
             },
             "documentation": null,
-            "id": 1146,
+            "id": 1263,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "calcQty",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1119,
+              "id": 1236,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1114,
+                  "id": 1231,
                   "name": "self",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1105:27:6",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                    "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                     "typeString": "struct StructLib.Data"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 1113,
+                    "id": 1230,
                     "name": "StructLib.Data",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 1415,
+                    "referencedDeclaration": 1532,
                     "src": "1105:14:6",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Data_$1415_storage_ptr",
+                      "typeIdentifier": "t_struct$_Data_$1532_storage_ptr",
                       "typeString": "struct StructLib.Data"
                     }
                   },
@@ -3922,10 +3922,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1116,
+                  "id": 1233,
                   "name": "_fundNum",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1134:13:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3934,7 +3934,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1115,
+                    "id": 1232,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1134:4:6",
@@ -3948,10 +3948,10 @@
                 },
                 {
                   "constant": false,
-                  "id": 1118,
+                  "id": 1235,
                   "name": "qty",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1149:8:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3960,7 +3960,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1117,
+                    "id": 1234,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1149:4:6",
@@ -3976,15 +3976,15 @@
               "src": "1104:54:6"
             },
             "returnParameters": {
-              "id": 1122,
+              "id": 1239,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1121,
+                  "id": 1238,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 1146,
+                  "scope": 1263,
                   "src": "1179:4:6",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3993,7 +3993,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1120,
+                    "id": 1237,
                     "name": "uint",
                     "nodeType": "ElementaryTypeName",
                     "src": "1179:4:6",
@@ -4008,14 +4008,14 @@
               ],
               "src": "1178:6:6"
             },
-            "scope": 1147,
+            "scope": 1264,
             "src": "1088:361:6",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 1148,
+        "scope": 1265,
         "src": "139:1312:6"
       }
     ],
@@ -4235,10 +4235,22 @@
       "links": {},
       "address": "0xA4D343eB310C09718f9985a73e4e88b85f8EEa4a",
       "transactionHash": "0x24053bbd94affd0ae3a4fb15077a9918e9aa4e402916db8e08bf91fd0af3f11a"
+    },
+    "1548571697346": {
+      "events": {},
+      "links": {},
+      "address": "0x39b94f63C6FE26615172Ff36Cd4608A3f5e69fD8",
+      "transactionHash": "0xc6164fe2582cd3b9efc246b198f411a6fa99e856fba78d0b66ebe6b74a12a20e"
+    },
+    "1548577489477": {
+      "events": {},
+      "links": {},
+      "address": "0x78c3cF0227734CE741C21Fd4126DD419d2e0F879",
+      "transactionHash": "0xbb3520421922db2a2188858531c17ccd0d3bed8392b083193e3a1cc21329c1f9"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T04:33:14.341Z",
+  "updatedAt": "2019-01-27T08:25:12.240Z",
   "devdoc": {
     "methods": {}
   },

@@ -115,12 +115,28 @@ contract FundMarketplace {
         stopped = !stopped;
     }
 
-    function initializeFund(bytes32 _name, address _fundOwner, uint _investment, uint _feeRate, uint _paymentCycle) 
+    function initializeFund(bytes32 _name, 
+    address _fundOwner, 
+    uint _investment, 
+    uint _feeRate, 
+    uint _paymentCycle,
+    bytes32 _ipfsHash,
+    uint8 _hash_function,
+    uint8 _size) 
     external payable 
     stopInEmergency()
     {
         //Changed fundCount to lifetimeCount in arguments
-        InitLib.initializeFund(funds, lifetimeCount, _name, _fundOwner, _investment, _feeRate, _paymentCycle);
+        InitLib.initializeFund(funds, 
+        lifetimeCount, 
+        _name, 
+        _fundOwner, 
+        _investment, 
+        _feeRate,
+        _paymentCycle,
+        _ipfsHash,
+        _hash_function,
+        _size);
         //Increment fundCount
         fundCount++;
         lifetimeCount++;

@@ -32,6 +32,13 @@ library StructLib{
         bool fundraising;
         //Boolean representing whether fund is closed
         bool closed;
-        //will need to add IPFS hash eventually to verify code
+        //IPFS Multihash for Investment Prospectus
+        Multihash investHash;
+    }
+
+    struct Multihash{
+        bytes32 ipfsHash;
+        uint8 hash_function;
+        uint8 size;
     }
 }

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
+import ipfs from './ipfs';
 import { Alert, Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
 import classnames from 'classnames';
 import "./App.css";
@@ -970,7 +971,8 @@ class App extends Component {
           fundVirtualBalance: null,
           fundFundraising: null,
           fundClosed: null,
-          fundInvestorList: null
+          fundInvestorList: null,
+          fundIPFSHash: null
         }
       ],
 
@@ -996,13 +998,19 @@ class App extends Component {
       inputPaymentCycle: null, 
       
       fundCount: null, 
+
+      ipfsHash: null,
       
       web3: null, 
       accounts: null, 
-      contract: null };
+      contract: null,
+    };
     
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.ascii_to_hex = this.ascii_to_hex.bind(this);
+    this.handleHash = this.handleHash.bind(this);
+    this.joinHash = this.joinHash.bind(this);
   }
 
   componentDidMount = async () => {
@@ -1031,6 +1039,31 @@ class App extends Component {
     }
   };
 
+  //turns file into a buffer
+  captureFile = (event) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const file = event.target.files[0];
+    let reader = new window.FileReader();
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => this.convertToBuffer(reader);
+  };
+  //helper function
+  convertToBuffer = async(reader) => {
+    const buffer = await Buffer.from(reader.result);
+    this.setState({buffer});
+  };
+
+  //sends buffer to ipfs node and sends ipfs to ui
+  onIPFSSubmit = async (event) => {
+    event.preventDefault();
+    await ipfs.add(this.state.buffer, (err, ipfsHash) => {
+      console.log(err, ipfsHash);
+      this.setState({ ipfsHash: ipfsHash[0].hash });
+    })
+  };
+
+
   handleChange(event) {
     const target = event.target;
     const value = target.value;
@@ -1041,15 +1074,53 @@ class App extends Component {
     });
   }
 
+  ascii_to_hex(str){
+    let arr = [];
+    let length = str.length;
+    for(let i=0; i<length; i++){
+      let hex = Number(str.charCodeAt(i)).toString(16);
+      arr.push(hex);
+    }
+    return arr.join('');
+  }
+
+  handleHash (ipfsHash) {
+    let hex = this.ascii_to_hex(ipfsHash);
+    console.log("Hexadecimal Value: "+hex);
+    return hex;
+  }
+
+  joinHash (hashArr){
+    let str = "";
+    let length = hashArr.length;
+    for(let i=4; i<length; i++){
+      let index = hashArr[i];
+      str = str+index;
+    }
+    str = str+"";
+    return str;
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
-    const { web3, accounts, contract, inputName, inputInvestment, inputFeeRate, inputPaymentCycle } = this.state;
+    const { web3, accounts, contract, inputName, inputInvestment, inputFeeRate, inputPaymentCycle, ipfsHash } = this.state;
     const name = web3.utils.asciiToHex(inputName);
     const manager = accounts[0];
     let amount = inputInvestment;
     let investment = web3.utils.toWei(amount.toString(), "ether");
     let feeRate = inputFeeRate;
     let paymentCycle = inputPaymentCycle;
+    let result = this.handleHash(ipfsHash);
+    console.log("original hash: "+ipfsHash);
+    let result_split = result.split("");
+    console.log("result_split: "+result_split);
+    console.log("result_split first: "+result_split[0]);
+    let hash_function = result_split[0] + result_split[1];
+    let size = result_split[2] + result_split[3];
+    console.log("Hash_function: "+hash_function);
+    console.log("size: "+size);
+    let IPFSHash = this.joinHash(result_split);
+    console.log("ipfs hash: "+IPFSHash);
 
     await contract.initializeFund(name, 
       manager, 
@@ -1176,38 +1247,6 @@ class App extends Component {
     .on('error', console.error);
   };
 
-  // runExample = async () => {
-  //   //Add web3 here
-  //   const { web3, accounts, contract } = this.state;
-
-  //   //Initializes fund with account[0]
-  //   let name = web3.utils.asciiToHex("alpha");
-  //   const manager = accounts[0];
-  //   let amount = 1;
-  //   let investment = web3.utils.toWei(amount.toString(), "ether");
-  //   let feeRate = 2;
-  //   let paymentCycle = 0;
-  //   let fundNum = 1;
-
-  //   await contract.initializeFund(name, manager, investment, feeRate, paymentCycle, { from: manager });
-
-  //   //Get the information from the newly established fund
-  //   const response = await contract.getFundDetails(fundNum);
-
-  //   //Test for getting the fundCount
-  //   const fundCount = await contract.fundCount();
-
-  //   //Update state with result
-  //   this.setState({ 
-  //     name: web3.utils.hexToAscii(response[0]), 
-  //     manager: response[1], 
-  //     investment: web3.utils.fromWei(response[2].toString(), "ether"), 
-  //     feeRate: response[4].toNumber(), 
-  //     paymentCycle: response[5].toNumber(),
-  //     fundCount: fundCount.toNumber()
-  //   });
-  // };
-
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
@@ -1292,6 +1331,15 @@ class App extends Component {
                     <Label for="fundPaymentCycleInput">Payment Cycle (in days)</Label>
                     <Input type = "text" name ="inputPaymentCycle" id="paymentCycleForm" onChange = {this.handleChange}/>
                   </FormGroup>
+
+                  <FormGroup>
+                      <Label for ="ipfsSubmission">Investment Prospectus</Label>
+                      <Input type="file" onChange={this.captureFile}/>
+                  </FormGroup>
+
+                  <Button color="secondary" onClick={this.onIPFSSubmit}>Upload Prospectus</Button>
+
+                  <p className='ipfs-result'>The IPFS hash is {this.state.ipfsHash}</p>
 
                   <FormGroup>
                     <Button type="submit" color="primary">Submit</Button>
