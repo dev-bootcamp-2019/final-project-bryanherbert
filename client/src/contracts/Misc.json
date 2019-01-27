@@ -918,10 +918,16 @@
       "links": {},
       "address": "0xF2eF02c01661e2C7Aa7caa8dE771283DEc9E0A05",
       "transactionHash": "0x365f15bb59fb644cd4298645a8ee06bc031d530607e948fca7c861a843844539"
+    },
+    "1548583828747": {
+      "events": {},
+      "links": {},
+      "address": "0xfffa2C89e0435173c54bC27a14E4141DBc49B855",
+      "transactionHash": "0x1ce468c01ec5a37724fa3f27b7276d5bfb8044cda6b80596c14854accb18558a"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T08:25:12.060Z",
+  "updatedAt": "2019-01-27T10:10:44.730Z",
   "devdoc": {
     "methods": {}
   },

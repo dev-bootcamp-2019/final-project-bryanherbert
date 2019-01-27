@@ -6,6 +6,7 @@ import ipfs from './ipfs';
 import { Alert, Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
 import classnames from 'classnames';
 import "./App.css";
+import bs58 from 'bs58';
 
 class Fund extends React.Component {
   constructor(props){
@@ -1011,6 +1012,7 @@ class App extends Component {
     this.ascii_to_hex = this.ascii_to_hex.bind(this);
     this.handleHash = this.handleHash.bind(this);
     this.joinHash = this.joinHash.bind(this);
+    this.multiHashBreakdown = this.multiHashBreakdown.bind(this);
   }
 
   componentDidMount = async () => {
@@ -1101,6 +1103,21 @@ class App extends Component {
     return str;
   }
 
+  str2bytes (str) {
+    let uint8Array = new TextEncoder("utf-8").encode(str);
+    return uint8Array;
+  }
+
+  multiHashBreakdown(str){
+    const decoded = bs58.decode(str);
+
+    return {
+      IPFSHash: `0x${decoded.slice(2).toString('hex')}`,
+      hash_function: decoded[0],
+      size: decoded[1]
+    }
+  }
+
   handleSubmit = async (event) => {
     event.preventDefault();
     const { web3, accounts, contract, inputName, inputInvestment, inputFeeRate, inputPaymentCycle, ipfsHash } = this.state;
@@ -1110,23 +1127,35 @@ class App extends Component {
     let investment = web3.utils.toWei(amount.toString(), "ether");
     let feeRate = inputFeeRate;
     let paymentCycle = inputPaymentCycle;
-    let result = this.handleHash(ipfsHash);
-    console.log("original hash: "+ipfsHash);
-    let result_split = result.split("");
-    console.log("result_split: "+result_split);
-    console.log("result_split first: "+result_split[0]);
-    let hash_function = result_split[0] + result_split[1];
-    let size = result_split[2] + result_split[3];
+    let result = await this.multiHashBreakdown(ipfsHash);
+    let hash_function = result.hash_function;
+    let size = result.size;
+    let IPFSHash = result.IPFSHash;
+    // let bytes_result = web3.utils.hexToBytes(hex_result)
+    // console.log("Result: "+result);
+    // let hash_function = '0x'+result[2]+result[3];
+    // let size = '0x'+result[4]+result[5];
+    // let IPFSHash = '0x'+this.joinHash(result);
+    // let result = this.handleHash(ipfsHash);
+    // console.log("original hash: "+ipfsHash);
+    // let result_split = result.split("");
+    // console.log("result_split: "+result_split);
+    // console.log("result_split first: "+result_split[0]);
+    // let hash_function = result_split[0] + result_split[1];
+    // let size = result_split[2] + result_split[3];
     console.log("Hash_function: "+hash_function);
     console.log("size: "+size);
-    let IPFSHash = this.joinHash(result_split);
+    // let IPFSHash = this.joinHash(result_split);
     console.log("ipfs hash: "+IPFSHash);
 
     await contract.initializeFund(name, 
       manager, 
       investment, 
       feeRate, 
-      paymentCycle, 
+      paymentCycle,
+      IPFSHash,
+      hash_function,
+      size,
       { from: manager });
     
     //Update state with result

@@ -7627,10 +7627,18 @@
       },
       "address": "0x44B6e38ddE07CAA95155bc51B2DF950C858F3e8C",
       "transactionHash": "0x0dc89cfaf047028f7dfa77fb23934858bda3db091cf462f83b89a9cdcd7e3c46"
+    },
+    "1548583828747": {
+      "events": {},
+      "links": {
+        "Misc": "0xfffa2C89e0435173c54bC27a14E4141DBc49B855"
+      },
+      "address": "0x3957d2bf6c6199bBca26461A9a9C884F25BcA5b1",
+      "transactionHash": "0x9864a539aa1fd4d3a6c662fc21ea15d8e0b69b458c57b95170e24ed7bcc31077"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T08:25:12.256Z",
+  "updatedAt": "2019-01-27T10:10:44.839Z",
   "devdoc": {
     "methods": {}
   },
