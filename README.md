@@ -3,7 +3,7 @@ A dApp on the Ethereum network that serves as a decentralized marketplace for in
 
 Investors can subscribe to different funds, which are controlled by managers who make investment decisions to buy or sell equities for the fund. These decisions are then broken up into orders and distributed to the subscribed investors on a pro rata basis. Investors then execute these trades to mimic the strategy of the fund.
 
-![alt text](./img/Screenshot1);
+![alt text](./img/Screenshot1.png?raw=true "Homepage");
 
 ## Demo on Rinkeby Testnet
 The FundMarketplace contract and relevant libraries are deployed on the Rinkeby testnet. For reference, the contract addresses are listed in `deployed_addresses.txt`.
