@@ -232,13 +232,15 @@ contract FundMarketplace {
 
     /**@dev One-time pay fee function
       *@param _fundNum Fund number
-      *@param _timePeriod Time period to divide payments
       *@dev Uses stopInEmergency modifier
      */
-    function payFee(uint _fundNum, uint _timePeriod) 
+    function payFee(uint _fundNum) 
     external
     stopInEmergency()
     {
+        uint paymentCycle = funds.list[_fundNum].paymentCycle;
+        //Payment periods equal 1 year / number of days in cycle
+        uint _timePeriod = SafeMath.div(365,paymentCycle);
         PayFeeLib.payFee(funds, _fundNum, _timePeriod);
         uint payment = SafeMath.div(SafeMath.div(funds.list[_fundNum].virtualBalances[msg.sender], checkFeeRate(_fundNum)), _timePeriod);
         emit FeesPaid (_fundNum, msg.sender, payment);
@@ -246,11 +248,14 @@ contract FundMarketplace {
 
     /**@dev Checks whether a payment is due and how much
       *@param  _fundNun Fund number
-      *@param _timePeriod Time period to divide payments
       *@return payment uint that returns the payment due
       *@return paymentDue bool that represents whether a payment is due
      */
-    function checkFee(uint _fundNum, uint _timePeriod) external view returns (uint, bool) {
+    function checkFee(uint _fundNum) external returns (uint, bool) {
+        uint paymentCycle = funds.list[_fundNum].paymentCycle;
+        //Payment periods equal 1 year / number of days in cycle
+        uint _timePeriod = SafeMath.div(365,paymentCycle);
+        PayFeeLib.payFee(funds, _fundNum, _timePeriod);
         uint payment;
         bool paymentDue;
         (payment, paymentDue) = PayFeeLib.checkFee(funds, _fundNum, _timePeriod);

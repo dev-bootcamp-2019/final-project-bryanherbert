@@ -166,8 +166,8 @@ I've written tests in both Solidity and Javascript that check the following beha
 - fund initialization
 - investing in a fund
 - placing and receiving investment orders
-- paying and collecting fees
 - withdrawing capital from a fund
+- closing
 
 Use the following command to run the Solidity and Javascript tests:
 ```

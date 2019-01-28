@@ -51,6 +51,7 @@ contract TestFundMarketplace {
         //feeRate is 2%
         uint feeRate = 2;
         //paymentCycle is in unit of days
+        //made it zero days for testing purposes
         uint paymentCycle = 0;
         //Multihash
         bytes32 digest = 0x7D5A99F603F231D53A4F39D1521F98D2E8BB279CF29BEBFD0687DC98458E7F89;
@@ -135,45 +136,6 @@ contract TestFundMarketplace {
         Assert.equal(test, actual, "Wrong quantity returned");
     }
 
-    function testPayFees() public {
-        //Paid monthly; 12 times in a year
-        uint timePeriod = 12;
-        uint investment = 2 ether;
-        uint fee = SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(fundNum)),1);
-
-        //Pre Fee Tests
-        //Manager
-        (,,i) = fm.getFundDetails2(fundNum, managerAddr);
-        Assert.equal(i, 0, "Manager's fees were not zero");
-        //Investor
-        (,,i) = fm.getFundDetails2(fundNum, investorAddr);
-        Assert.equal(i, fee, "Investor's fees are not valid");
-
-        investor.payFee(fm, fundNum, timePeriod);
-
-        //Post Fee Tests
-        //Manager
-        (,,i) = fm.getFundDetails2(fundNum, managerAddr);
-        Assert.equal(i, SafeMath.div(fee,timePeriod), "Manager did not receive fee");
-        //Investor
-        (,,i) = fm.getFundDetails2(fundNum, investorAddr);
-        Assert.equal(i, SafeMath.sub(fee, SafeMath.div(fee, timePeriod)), "Investor did not pay fee");
-    }
-
-    function testCollectFees() public {
-        uint managerBalance = 2 ether;
-        uint investment = 2 ether;
-        uint timePeriod = 12;
-        uint feePayment = SafeMath.div(SafeMath.add(SafeMath.div(investment, fm.checkFeeRate(fundNum)), 1), timePeriod);
-        //Pre-collection tests
-        Assert.equal(managerAddr.balance, managerBalance, "manager account pre-balance is incorrect");
-
-        //Collect Fees
-        manager.collectFees(fm, fundNum);
-
-        //Post-collection tests
-        Assert.equal(managerAddr.balance, SafeMath.add(managerBalance, feePayment), "Manager account post-balance is incorrect");
-    }
 
     function testWithdrawFunds() public {
         uint preBalance = investorAddr.balance;
@@ -239,11 +201,6 @@ contract Manager {
         fm.initializeFund(_name, address(this), _initalFund, _feeRate, _paymentCycle, _digest, _hash_function, _size);
     }
 
-    function collectFees(FundMarketplace fm, uint _fundNum) 
-    external 
-    {
-        fm.collectFees(_fundNum);
-    }
 
     function placeOrder(FundMarketplace fm, uint _fundNum, bytes32 _action, bytes32 _ticker, uint _qty, uint _price)
     external
@@ -269,12 +226,6 @@ contract Investor {
     {
         uint fee = SafeMath.add(SafeMath.div(_investment, fm.checkFeeRate(_fundNum)), 1);
         fm.Invest.value(fee)(_fundNum, _investment);
-    }
-
-    function payFee(FundMarketplace fm, uint _fundNum, uint _timePeriod) 
-    external 
-    {
-        fm.payFee(_fundNum, _timePeriod);
     }
 
     function withdrawFunds(FundMarketplace fm, uint _fundNum, uint _amount) 

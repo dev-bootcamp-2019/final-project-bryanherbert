@@ -1188,7 +1188,7 @@ class App extends Component {
         break;
       case 'inputPaymentCycle':
         //Only accepts integers less than or equal to 365
-        paymentCycleValid = value.match(/^[0-9]+$/) && !isNaN(value) && value <= 365;
+        paymentCycleValid = value.match(/^[0-9]+$/) && !isNaN(value) && value <= 365 && value > 0;
         fieldValidationErrors.paymentCycle = paymentCycleValid ? '' : ' is invalid';
         break;
       default:
