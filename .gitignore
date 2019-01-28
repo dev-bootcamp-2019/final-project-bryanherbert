@@ -1,0 +1,4 @@
+#Ignore files
+
+#Ignore secret.js with private keys
+.secret.js

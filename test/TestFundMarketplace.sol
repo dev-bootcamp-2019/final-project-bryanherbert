@@ -9,25 +9,28 @@ import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 contract TestFundMarketplace {
 
     //State Variables
+    //FundMarketplace contract
     FundMarketplace fm;
+    //Manager contract (at bottom)
     Manager manager;
+    //Investor contract (at bottom)
     Investor investor;
     address managerAddr;
     address investorAddr;
     uint public initialBalance = 10 ether;
     uint fundNum;
-    bytes32 a;
-    address b;
-    uint c;
-    uint d;
-    uint e;
-    uint f;
-    bool g;
-    uint h;
-    uint i;
-    bytes32 j;
-    uint8 k;
-    uint8 l;
+    bytes32 a; //name
+    address b; //fundOwner
+    uint c; //totalCapital
+    uint d; //capitalDeployed
+    uint e; //Fee Rate
+    uint f; //Payment Cycle
+    bool g; //Investor Status
+    uint h; //Virtual Balance
+    uint i; //Investor Fees
+    bytes32 j; //digest of ipfs hash
+    uint8 k; //hashfunction
+    uint8 l; //hash function size
 
     function beforeAll() public {
         //Deploy FundMarketplace contracts
@@ -44,7 +47,7 @@ contract TestFundMarketplace {
     }
   
     function testInitializeFund() public{
-        //Manager initializes new strategy
+        //Manager initializes new fund
         fundNum = 1;
         bytes32 name = "alpha";
         uint initialFund = 1 ether;
@@ -52,7 +55,7 @@ contract TestFundMarketplace {
         uint feeRate = 2;
         //paymentCycle is in unit of days
         //made it zero days for testing purposes
-        uint paymentCycle = 0;
+        uint paymentCycle = 30;
         //Multihash
         bytes32 digest = 0x7D5A99F603F231D53A4F39D1521F98D2E8BB279CF29BEBFD0687DC98458E7F89;
         uint8 hash_function = 0x12;
@@ -80,7 +83,7 @@ contract TestFundMarketplace {
     }
 
     function testInvestment() public{
-        //Check to see if account is an investor in a certain strategy
+        //Investor account will invest 2 ether into Fund Number 1
         uint investment = 2 ether;
 
         (,,c,,,) = fm.getFundDetails(fundNum);
@@ -107,7 +110,7 @@ contract TestFundMarketplace {
     }
     
     function testPlaceOrder() public {
-        //bytes used for string comparison in OrderLib compareStrings()
+        //Manager will place an order for the following "Buy 3 PLNT at an execution price of 100 finney"
         bytes32 action = "buy";
         bytes32 ticker = "PLNT";
         uint qty = 3;
@@ -128,6 +131,10 @@ contract TestFundMarketplace {
     }
 
     function testReceiveOrder() public {
+        //Orders are received by listening for events
+        //Therefore cannot test for receiving the actual order
+        
+        //Test for calculating correct quantity of shares for investor order based on share of capital in fund
         uint qty = 3;
         uint actual = 2;
 
@@ -138,7 +145,10 @@ contract TestFundMarketplace {
 
 
     function testWithdrawFunds() public {
+        //Test for both a partial and a full withdrawal
+        //Investor's pre-withdrawal balance
         uint preBalance = investorAddr.balance;
+        //Partial withdrawal amount
         uint amount = 1 ether;
         uint currentFees;
         (,,currentFees) = fm.getFundDetails2(fundNum, investorAddr);
@@ -155,7 +165,6 @@ contract TestFundMarketplace {
         Assert.equal(g, true, "Account should still be listed as an investor");
         Assert.equal(h, 1 ether, "Investor's should not be zeroed out");
         Assert.equal(i, currentFees, "Investor's fees should not change");
-        //Not sure why gas costs aren't lowering midBalance compared to preBalance
         Assert.equal(midBalance, preBalance, "Midbalance should be equal to preBalance");
 
         //investor withdraws remainder of funds
@@ -176,6 +185,8 @@ contract TestFundMarketplace {
     }
 
     function testCloseFund() public {
+        //Test to verify a manager can close a fund and that the fundCount decreases
+        
         //Tests
         (,g) = fm.checkFundStatus(fundNum);
         uint fundCount_old = fm.fundCount();
@@ -194,6 +205,8 @@ contract TestFundMarketplace {
 }
 
 contract Manager {
+
+    //All functions call functions in FundMarketplace.sol from manager address
 
     function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle, bytes32 _digest, uint8 _hash_function, uint8 _size) 
     external 
@@ -221,9 +234,11 @@ contract Manager {
 
 contract Investor {
 
+    //All functions call functions in FundMarketplace.sol from investor address
     function makeInvestment(FundMarketplace fm, uint _fundNum, uint _investment) 
     external 
     {
+        //Fee calculated by dividing investment by the result from checkFeeRate() and adding 1 to round
         uint fee = SafeMath.add(SafeMath.div(_investment, fm.checkFeeRate(_fundNum)), 1);
         fm.Invest.value(fee)(_fundNum, _investment);
     }
@@ -234,6 +249,7 @@ contract Investor {
         fm.withdrawFunds(_fundNum, _amount);
     }
 
+    //Calculates the quantity of shares an investor will receive in their customized order
     function calcQty(FundMarketplace fm, uint _fundNum, uint qty) 
     external view returns (uint) 
     {

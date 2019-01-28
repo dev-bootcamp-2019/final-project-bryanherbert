@@ -163,11 +163,13 @@ The FundMarketplace contract and relevant libraries are deployed on the Ropsten 
 
 ## Testing
 I've written tests in both Solidity and Javascript that check the following behavior:
-- fund initialization
-- investing in a fund
-- placing and receiving investment orders
-- withdrawing capital from a fund
-- closing
+- fund initialization: tests state changes when a manager starts a fund
+- investing in a fund: tests state changes and ether transfers when an investor subscribes to a fund
+- placing and receiving investment orders: tests state changes when a manager places an order and tests functions that customize an investor's received order
+- withdrawing capital from a fund: tests state changes and ether transfers when there is an investor partly or completely withdraws from a fund
+- closing a fund: tests state changes when a manager closes a fund
+
+There are currently no tests for paying and collecting fees because the setTimeout() function would take too long for a reasonable testing time (at least 1 day);
 
 Use the following command to run the Solidity and Javascript tests:
 ```
