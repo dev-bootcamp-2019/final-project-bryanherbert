@@ -7,14 +7,16 @@ An investor of a fund can:
 - pay fees
 - withdraw balance
 - receive information about the fund  
-A manager of a fund can:
+
+  A manager of a fund can:
 - initialize a fund
 - collect fees
 - place orders
 - end the fundraising period
 - close the fund
-- receive information about the fund  
-An administrator of the contract can:
+- receive information about the fund 
+
+  An administrator of the contract can:
 - execute the circuit breaker for the contract
 
 ## Overflow & Underflow Protection
