@@ -3,11 +3,14 @@ import FundMarketplace from "./contracts/FundMarketplace.json";
 import getWeb3 from "./utils/getWeb3";
 import truffleContract from "truffle-contract";
 import ipfs from './ipfs';
-import { Alert, Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, FormText, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
+import { Alert, Button, Jumbotron, Row, Col, Form, FormGroup, Label, Input, Table, Modal, ModalHeader, ModalFooter, ModalBody, TabContent, TabPane, Nav, NavItem, NavLink} from 'reactstrap';
 import classnames from 'classnames';
 import "./App.css";
 import bs58 from 'bs58';
-
+/** @title App.js
+  * @author Bryan Herbert
+  */
+//Component for Displaying Funds in the Fund Marketplace
 class Fund extends React.Component {
   constructor(props){
     super(props);
@@ -28,6 +31,9 @@ class Fund extends React.Component {
     });
   }
 
+  /** @dev handles when a user clicks invest
+    * @param event onClick event
+    */
   handleInvestClick= async(event) => {
     event.preventDefault();
     const { investmentAmount } = this.state;
@@ -35,18 +41,20 @@ class Fund extends React.Component {
     var feeRate = await this.props.contract.checkFeeRate.call(this.props.fundNum);
     //Add 1% for rounding
     var fee = 1.01*(investment/feeRate);
+    //Call Invest function
     await this.props.contract.Invest(
       this.props.fundNum, 
       investment,
       { from: this.props.accounts[0], value:fee });
     
-    //Update state with result - not sure this is correct format
+    //Update state with result
     this.setState(this.props.setup);
   }
 
   render(){
     const fundraising = this.props.fundraising;
     let investment;
+    //If the fund is in fundraising period, display button to invest
     if(fundraising){
       investment = (
         <Form inline className="invest-button">
@@ -58,6 +66,7 @@ class Fund extends React.Component {
           <Button color="success" onClick={this.handleInvestClick}>Invest</Button>
         </Form>
       );
+      //Else display an alert stating the fund raising period is over
     }else{
       investment = (
       <Alert color="secondary">
@@ -82,6 +91,8 @@ class Fund extends React.Component {
   
 }
 
+/**@dev FeeModal that pops up when it is clicked in the "My Funds Table"
+ */
 class FeeModal extends React.Component{
   constructor(props){
     super(props);
@@ -104,7 +115,7 @@ class FeeModal extends React.Component{
       this.props.fundNumber,
       { from: this.props.account }
     );
-    //Not sure this is correct format but it works
+    //Update state
     this.setState(this.props.setup);
     //Close Window
     this.toggle();
@@ -129,6 +140,8 @@ class FeeModal extends React.Component{
   }
 }
 
+/**@dev Order Table Entry for Order Table in My Funds Table
+ */
 class OrderTableEntry2 extends React.Component{
   constructor(props){
     super(props);
@@ -137,7 +150,9 @@ class OrderTableEntry2 extends React.Component{
     };
     this.calcQty = this.calcQty.bind(this);
   }
-
+  /**@dev Calls calcQty function inf FundMarketplace to calculate the number of shares the manager should purchase as an investor
+   * @param quantity total number of shares in the order
+   */
   calcQty = async(quantity) => {
     let result = await this.props.contract.calcQty(this.props.fundNumber, quantity, { from: this.props.account });
     let newQty = result.toNumber();
@@ -162,6 +177,7 @@ class OrderTableEntry2 extends React.Component{
   }
 }
 
+/**@dev Modal that pops up when you click Orders Menu in My Funds Table */
 class OrderModal extends React.Component{
   constructor(props){
     super(props);
@@ -232,7 +248,6 @@ class OrderModal extends React.Component{
       { from: account });
     
     //Update state with result
-    //Not sure this is correct format but it works
     this.setState(this.props.setup);
     //Close window
     this.toggle();
@@ -240,6 +255,9 @@ class OrderModal extends React.Component{
 
   render() {
     let i = 0;
+    /**@dev Dynamically displays all the past orders with the relevant information
+     * @param orderList state variable this is passed as a property to this component containing the info for each order
+     */
     const DisplayOrderList = this.props.orderList.map((order, orderNum) => { 
       if(order.fundNum==this.state.fundNumber){
         i++;
@@ -350,6 +368,7 @@ class OrderModal extends React.Component{
   }
 }
 
+/**@dev Modal that opens up when on manager My Funds Table when he hits Close Fund Button */
 class CloseModal extends React.Component{
   constructor(props){
     super(props);
@@ -400,6 +419,7 @@ class CloseModal extends React.Component{
   }
 }
 
+/**@dev Modal that pops up providing information on fund for manager */
 class FundModal extends React.Component{
   constructor(props){
     super(props);
@@ -431,6 +451,8 @@ class FundModal extends React.Component{
   render() {
     let status;
     let endFundraising;
+    //if fundraising is true, then the button is active
+    //if fundraising is false, then the button is not rendered
     if(this.props.fundraising){
       status = "Active";
       endFundraising = (
@@ -462,14 +484,20 @@ class FundModal extends React.Component{
   }
 }
 
+/**@dev Entry in the My Funds Table
+ * @dev For managers
+ */
 class FundTableEntry extends React.Component{
   constructor(props){
     super(props);
   }
 
   render(){
+    //fraction is share of capital invested
     const fraction = (this.props.capitalDeployed/this.props.totalCapital)*100;
+    //Limit to two digits
     const rounded = Math.floor(fraction*100)/100;
+    //Round Capital Deployed
     const capDepRounded = Math.floor(this.props.capitalDeployed*100)/100;
     return(
       <tr>
@@ -522,6 +550,7 @@ class FundTableEntry extends React.Component{
   }
 }
 
+/**@dev My Funds Table for Managers */
 class FundsTable extends React.Component {
   constructor(props){
     super(props);
@@ -529,6 +558,9 @@ class FundsTable extends React.Component {
 
   render(){
     let i = 0;
+    /**@dev function iterates through all funds in stored in app's state and renders relevent ones dynamically 
+     * @param fundList state variable with list of funds and data for each
+    */
     const DisplayFundList = this.props.fundList.map((fund, fundNum) => {
       const owner = fund.fundManager;
       const fundNumber = fundNum+1; 
@@ -584,6 +616,7 @@ class FundsTable extends React.Component {
   }
 }
 
+/**@dev Modal that appears when an investor clicks the Withdraw Button */
 class WithdrawModal extends React.Component{
   constructor(props){
     super(props);
@@ -615,14 +648,16 @@ class WithdrawModal extends React.Component{
   handleClick = async(event) => {
     event.preventDefault();
     const amount = this.state.withdrawAmount;
+    //convert the withdrawal argument, currently in ether, to Wei
     const withdrawal = this.props.web3.utils.toWei(amount.toString(), "ether");
 
+    //call withdrawFunds from investor account
     await this.props.contract.withdrawFunds(
       this.props.fundNumber,
       withdrawal,
       { from: this.props.account }
     );
-    //Not sure this is correct format but it works
+    //Reset state
     this.setState(this.props.setup);
   }
 
@@ -653,6 +688,7 @@ class WithdrawModal extends React.Component{
   }
 }
 
+/**@dev Entry in List of Orders in My Investments Table */
 class OrderTableEntry extends React.Component{
   constructor(props){
     super(props);
@@ -662,6 +698,9 @@ class OrderTableEntry extends React.Component{
     this.calcQty = this.calcQty.bind(this);
   }
 
+  /**@dev Calculates quantity of shares for this investor's order
+   * @param quantity Total quantity of shares in order
+  */
   calcQty = async(quantity) => {
     let result = await this.props.contract.calcQty(this.props.fundNumber, quantity, { from: this.props.account });
     let newQty = result.toNumber();
@@ -685,6 +724,7 @@ class OrderTableEntry extends React.Component{
   }
 }
 
+/**@dev Order Modal that pops up for Investors */
 class OrderModal2 extends React.Component{
   constructor(props){
     super(props);
@@ -702,6 +742,7 @@ class OrderModal2 extends React.Component{
 
   render() {
     let i = 0;
+    //Dynamically renders order lists
     const DisplayOrderList = this.props.orderList.map((order, orderNum) => { 
       if(order.fundNum==this.props.fundNumber){
         i++;
@@ -751,6 +792,7 @@ class OrderModal2 extends React.Component{
   }
 }
 
+/**@dev Fee Modal for Investors */
 class FeeModal2 extends React.Component{
   constructor(props){
     super(props);
@@ -785,6 +827,10 @@ class FeeModal2 extends React.Component{
     this.setState(this.props.setup);
   }
 
+  /**@dev checks on status of fee payment
+   * @return feesOwed
+   * @return cycleComplete: true or false. If true, fees owed are owed
+   */
   checkFee = async() => {
     const result = await this.props.contract.checkFee(this.props.fundNumber, 12, { from: this.props.account });
     const feesOwed = this.props.web3.utils.fromWei(result[0].toString(), "ether");
@@ -796,6 +842,7 @@ class FeeModal2 extends React.Component{
   }
 
   render() {
+    //Only enable feeButton if fees are due
     let FeeButton;
     if(this.state.cycleComplete){
       FeeButton = (
@@ -825,14 +872,17 @@ class FeeModal2 extends React.Component{
   }
 }
 
+/**@dev Entry in My Investments Table */
 class InvestmentTableEntry extends React.Component{
   constructor(props){
     super(props);
   }
 
   render(){
+    //Share of capital invested in fund
     const fraction = this.props.capitalDeployed/this.props.totalCapital*100;
     const rounded = Math.floor(fraction*100)/100;
+    //Balance in Fund that is deployed
     const balanceDeployed = this.props.virtualBalance * (fraction/100);
     const balDepRounded = Math.floor(balanceDeployed*100)/100;
     return(
@@ -883,6 +933,7 @@ class InvestmentTableEntry extends React.Component{
   }
 }
 
+/**@dev My Investments Table */
 class InvestmentsTable extends React.Component {
   constructor(props){
     super(props);
@@ -890,6 +941,7 @@ class InvestmentsTable extends React.Component {
 
   render(){
     let i = 0;
+    //Dynamically renders list of funds in which I am an investor
     const DisplayInvestmentList = this.props.fundList.map((fund, fundNum) => {
       //const result = this.props.contract.getFundDetails2(fundNum, account);   
       const status = fund.fundInvestorStatus;
@@ -921,6 +973,7 @@ class InvestmentsTable extends React.Component {
       }
     })
 
+    /**@dev When Investments list is rendered, the program checks to see if the investor is still a member of any funds that the manager has closed and warns the investor to divest. */
     const DisplayWarningsList = this.props.fundList.map((fund, fundNum) => {
       const closed = fund.fundClosed;
       const status = fund.fundInvestorStatus;
@@ -965,7 +1018,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      
+      //List of Funds
       fundList: [
         {
           fundName: null,
@@ -983,7 +1036,7 @@ class App extends Component {
           fundIpfsURL: null
         }
       ],
-
+      //List of all orders
       orderList: [
         {
           fundNum: null,
@@ -994,7 +1047,7 @@ class App extends Component {
           blockNumber: null,
         }
       ],
-      
+      //input[value] are used to detect change in the form initialization form
       inputName: null, 
       
       inputManager: null,
@@ -1006,9 +1059,10 @@ class App extends Component {
       inputPaymentCycle: null, 
       
       fundCount: null, 
-
+      //ipfsHash of Investment Prospectus
       ipfsHash: null,
 
+      //Catches errors in Fund Initialization Form
       formErrors: {
           name: '',
           investment: '',
@@ -1016,16 +1070,18 @@ class App extends Component {
           paymentCycle: '',
           file: '',
       },
-
+      //Used for form valiation
       nameValid: false,
       investmentValid: false,
       feeValid: false,
       paymentCycleValid: false,
       fileValid: false,
       formValid: false,
-      
-      web3: null, 
-      accounts: null, 
+      //web3 instance
+      web3: null,
+      //current user 
+      accounts: null,
+      //Deployed Fund Marketplace Contract
       contract: null,
     };
     
@@ -1101,6 +1157,9 @@ class App extends Component {
     );
   }
 
+  /**@dev decodes multihash into its composite parts: digest, hash function and size
+   * @param str multihash string
+   */
   multiHashBreakdown(str){
     const decoded = bs58.decode(str);
 
@@ -1111,6 +1170,9 @@ class App extends Component {
     }
   }
 
+  /**@dev handles submit for Form Initialization
+   * @param event
+   */
   handleSubmit = async (event) => {
     event.preventDefault();
     const { web3, accounts, contract, inputName, inputInvestment, inputFeeRate, inputPaymentCycle, ipfsHash } = this.state;
@@ -1125,6 +1187,7 @@ class App extends Component {
     let size = result.size;
     let IPFSHash = result.IPFSHash;
 
+    //Call initializeFund
     await contract.initializeFund(name, 
       manager, 
       investment, 
@@ -1162,6 +1225,7 @@ class App extends Component {
     return bs58.encode(mhBytes);
   }
 
+  /**@dev Validates each field in the fund initialization form */
   validateField(fieldName, value) {
     let fieldValidationErrors = this.state.formErrors;
     let nameValid = this.state.nameValid;
@@ -1210,12 +1274,14 @@ class App extends Component {
     }, this.validateForm);
   }
 
+  /**@dev used to make sure there is a file uploaded and corresponding ipfsHash */
   validateFile() {
     this.setState({
       formValid: true
     }, this.validateForm);
   }
 
+  /**@dev confirms all fields in form are valid */
   validateForm() {
     this.setState({formValid: 
       this.state.nameValid 
@@ -1225,6 +1291,9 @@ class App extends Component {
       && this.state.formValid});
   }
 
+  /**@dev Setup function that happens on every page reload and change in state
+   * @dev Populates fundList and orderList by retrieving information from the blockchain
+   */
   setup = async () => {
     //Add web3 here
     const { web3, accounts, contract } = this.state;
@@ -1232,6 +1301,7 @@ class App extends Component {
     //Test for getting the fundCount
     let fundCount = await contract.fundCount()
     fundCount = fundCount.toNumber();
+    //count of all historical funds
     let lifetimeCount = await contract.lifetimeCount();
     lifetimeCount = lifetimeCount.toNumber();
 
@@ -1251,7 +1321,7 @@ class App extends Component {
         //Encode  Multihash structure
         let multihash = this.bytes2multihash(response4[0], response4[1], response4[2]);
         let investProspURL = "https://gateway.ipfs.io/ipfs/"+multihash;
-
+        //first fund
         if(i===1){
           this.setState({
             fundList: [
@@ -1272,6 +1342,7 @@ class App extends Component {
               }
             ]
           });
+          //> 1 fund
         } else{
             //maybe make this a slice
             const tempFundList = this.state.fundList;
@@ -1298,12 +1369,16 @@ class App extends Component {
       };
     };
 
-    //Watch for Order Events
+    //Watch for OrderPlaced Events
     let i = 0;
 
+    /**@dev updates the state in case of an event
+     * @param event OrderPlaced
+     */
     let updateState = (event) => {
 
       const tempOrderList = this.state.orderList;
+      //Append to orderList
       if(i===0){
         i++;
         this.setState({
@@ -1333,7 +1408,7 @@ class App extends Component {
         });
       }
     }
-
+    //Event Watcher
     let event = this.state.contract.OrderPlaced({
       //Want all the orders
       //filter: {fundNum: 1},
@@ -1351,6 +1426,7 @@ class App extends Component {
     }
 
     const fundList = this.state.fundList;
+    //Dynamically renders valid funds
     const funds = fundList.map((fund, fundNum) => {
       if(this.state.fundCount !== 0 && !fund.fundClosed) {
         return(
@@ -1367,14 +1443,15 @@ class App extends Component {
             setup = {this.setup}
             fundraising = {fund.fundFundraising}
             ipfsURL = {fund.fundIpfsURL}
-            //handleChange = {(event) => this.handleChange(event)}
-            //handleInvestClick = {(event) => this.handleInvestClick(event)}
           />
         );
       }
     })
 
+    //Used for Form validation
+    //formErrors
     const fE = this.state.formErrors;
+    //formErrors array to use map function
     const fEArr = [fE.name, fE.investment, fE.fee, fE.paymentCycle, fE.file];
     const displayFormErrors = fEArr.map((fieldErrors, i) => {
       let fieldLabel = null;

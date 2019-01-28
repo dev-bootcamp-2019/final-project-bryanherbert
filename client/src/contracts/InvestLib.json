@@ -4127,10 +4127,18 @@
       },
       "address": "0xf112338739067E620113822757750E7791fc2B5a",
       "transactionHash": "0x08f277882f7cb08a5de558903944b52bea8db792b186ced620fffadde9bc1b99"
+    },
+    "1548674265909": {
+      "events": {},
+      "links": {
+        "Misc": "0x42746be5C149dd472c051C2d3B84c29dE0BA6C10"
+      },
+      "address": "0x5133fbf2e1d7F0ac992d02B8925e880A263E5FF9",
+      "transactionHash": "0x41a4fec2604a8844a6a4533cc2958255c16fb2ec2d5904072d182c05f9778c35"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-28T10:39:52.232Z",
+  "updatedAt": "2019-01-28T11:18:26.718Z",
   "devdoc": {
     "author": "Bryan Herbert",
     "methods": {

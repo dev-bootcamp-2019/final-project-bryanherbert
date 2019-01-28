@@ -19127,10 +19127,24 @@
       },
       "address": "0xE9762d432ea01A8E8c7e1bC181f8cF17bbee01CD",
       "transactionHash": "0x015d38fb47fa6e49f1c4edcf06d4dfd8ef7fd1b312858aa5e612c53e139e1115"
+    },
+    "1548674265909": {
+      "events": {},
+      "links": {
+        "InitLib": "0x6280615f7437D45AF3079E145CEd16dE0817A67E",
+        "Misc": "0x42746be5C149dd472c051C2d3B84c29dE0BA6C10",
+        "InvestLib": "0x5133fbf2e1d7F0ac992d02B8925e880A263E5FF9",
+        "PayFeeLib": "0xEe8F8B73bcEA114341Ec373767e6c697E4E60c4d",
+        "CollectFeesLib": "0xdDB05e63034e0c2244EEc2bBC12f8d0Bb31A4fa4",
+        "WithdrawFundsLib": "0x71eb0F3AeE91A5191BA9c4067F24F311329D0C3B",
+        "OrderLib": "0xd45BE282945EABE0E3EfD91A4023d97B26C280cC"
+      },
+      "address": "0xe8c079C630b543Df5c6b15EAB0Fb722fba5F43f8",
+      "transactionHash": "0x2eacf02f90f53da64ec755e9d1e4e68ab017c114426add7ca20f9dc0da413e0a"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-28T10:39:52.273Z",
+  "updatedAt": "2019-01-28T11:18:26.857Z",
   "devdoc": {
     "author": "Bryan Herbert",
     "methods": {

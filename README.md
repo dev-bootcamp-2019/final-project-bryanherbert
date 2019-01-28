@@ -134,6 +134,7 @@ $ npm install
 ``` 
 $ ganache-cli
 ```
+Copy the mnemonic to recover your account in Metamask.
 **Note: The development network should be listening at `127.0.0.1:8545`**  
 
 4. Use truffle to compile contracts:  

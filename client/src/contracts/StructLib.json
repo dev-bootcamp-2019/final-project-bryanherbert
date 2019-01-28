@@ -1571,10 +1571,16 @@
       "links": {},
       "address": "0x1fF52ef1B5F0CE1658D136B28A79f9C34F96Ce75",
       "transactionHash": "0x5f8031febf40aa5082215a094f8ba8f1a1edf0c89f20b1d67e2e82c707580366"
+    },
+    "1548674265909": {
+      "events": {},
+      "links": {},
+      "address": "0xc46571F411d65349f875728914460288d56a4f27",
+      "transactionHash": "0xb8ca054192bbc25aa8b9c8ef663a6780542c2d5a4d23cc649fdc8050d6de4086"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-28T10:39:52.166Z",
+  "updatedAt": "2019-01-28T11:18:26.644Z",
   "devdoc": {
     "author": "Bryan Herbert",
     "methods": {},

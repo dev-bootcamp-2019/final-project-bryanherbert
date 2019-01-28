@@ -5003,10 +5003,16 @@
       "links": {},
       "address": "0x79D4518cDb928a20E0d9d8B35fA57072644d5A6c",
       "transactionHash": "0x11b0b5f74a1f3d482301c14cd0b1c71da2ef75d076d32c8071d598f5e18aa1b1"
+    },
+    "1548674265909": {
+      "events": {},
+      "links": {},
+      "address": "0xd45BE282945EABE0E3EfD91A4023d97B26C280cC",
+      "transactionHash": "0xcbe65131bfe19edde8d6f91bb02d02f2f6b2d2ec7e636b29311b8891328c8131"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-28T10:39:52.243Z",
+  "updatedAt": "2019-01-28T11:18:26.767Z",
   "devdoc": {
     "author": "Bryan Herbert",
     "methods": {
