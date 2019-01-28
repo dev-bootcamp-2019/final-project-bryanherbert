@@ -73,7 +73,7 @@ class Fund extends React.Component {
         <p>Annual Fee Rate: {this.props.feeRate}%</p>
         <p>Payment Cycle: {this.props.paymentCycle} days</p>
         <div className="ipfs-button">
-          <a href={this.props.ipfsURL} class="ipfs-button" target="_blank">View Prospectus</a>
+          <a href={this.props.ipfsURL} className="ipfs-button" target="_blank">View Prospectus</a>
         </div>
         {investment}
       </div>
@@ -1008,6 +1008,21 @@ class App extends Component {
       fundCount: null, 
 
       ipfsHash: null,
+
+      formErrors: {
+          name: '',
+          investment: '',
+          fee: '',
+          paymentCycle: '',
+          file: '',
+      },
+
+      nameValid: false,
+      investmentValid: false,
+      feeValid: false,
+      paymentCycleValid: false,
+      fileValid: false,
+      formValid: false,
       
       web3: null, 
       accounts: null, 
@@ -1018,6 +1033,8 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.multiHashBreakdown = this.multiHashBreakdown.bind(this);
     this.bytes2multihash = this.bytes2multihash.bind(this);
+    this.validateField = this.validateField.bind(this);
+    this.validateForm = this.validateForm.bind(this);
   }
 
   componentDidMount = async () => {
@@ -1078,7 +1095,9 @@ class App extends Component {
 
     this.setState({
       [name]: value
-    });
+    },
+    () => {this.validateField(name, value)}
+    );
   }
 
   multiHashBreakdown(str){
@@ -1142,6 +1161,59 @@ class App extends Component {
     return bs58.encode(mhBytes);
   }
 
+  validateField(fieldName, value) {
+    console.log("fieldName: "+fieldName);
+    console.log("Value: "+value);
+    let fieldValidationErrors = this.state.formErrors;
+    let nameValid = this.state.nameValid;
+    let investmentValid = this.state.investmentValid;
+    let feeValid = this.state.feeValid;
+    let paymentCycleValid = this.state.paymentCycleValid;
+    let fileValid = this.state.fieValid;
+
+    switch(fieldName) {
+      case 'inputName':
+        //Name must be more than zero characters
+        nameValid = value.length >= 1;
+        fieldValidationErrors.name = nameValid ? '' : ' is invalid';
+        break;
+      case 'inputInvestment':
+        //Only accept integers
+        investmentValid = value.match(/^[0-9]+$/);
+        fieldValidationErrors.name = investmentValid ? '' : ' is invalid';
+        break;
+      case 'inputFeeRate':
+        //Only accepts integers less than or equal to 20
+        feeValid = value.match(/^[0-9]+$/) && value.toNumber() <= 20;
+        fieldValidationErrors.name = feeValid ? '' : ' is invalid';
+        break;
+      case 'inputPaymentCycle':
+        //Only accepts integers less than or equal to 365
+        paymentCycleValid = value.match(/^[0-9]+$/) && value.toNumber() <= 365;
+        fieldValidationErrors.name = paymentCycleValid ? '' : ' is invalid';
+        break;
+      default:
+        break;
+    }
+
+    this.setState({
+      formErrors: fieldValidationErrors,
+      nameValid: nameValid,
+      investmentValid: investmentValid,
+      feeValid: feeValid,
+      paymentCycleValid: paymentCycleValid,
+      fileValid: fileValid
+    }, this.validateForm);
+  }
+
+  validateForm() {
+    this.setState({formValid: 
+      this.state.nameValid 
+      && this.state.investmentValid 
+      && this.state.feeValid 
+      && this.state.paymentCycleValid 
+      && this.state.ipfsHash});
+  }
 
   setup = async () => {
     //Add web3 here
@@ -1292,6 +1364,43 @@ class App extends Component {
       }
     })
 
+    const fE = this.state.formErrors;
+    const fEArr = [fE.name, fE.investment, fE.fee, fE.paymentCycle, fE.file];
+    console.log("Form Errors: "+fE);
+    const displayFormErrors = fEArr.map((fieldName, i) => {
+      let fieldLabel;
+      switch(i){
+        case 0:
+          fieldLabel = "Fund Name";
+          break;
+        case 1:
+          fieldLabel = "Investment";
+          break;
+        case 2:
+          fieldLabel = "Fee Rate";
+          break;
+        case 3:
+          fieldLabel = "Payment Cycle";
+          break;
+        default:
+          break;
+      }
+      console.log("fieldName "+fieldName);
+      if(fEArr[i].length > 0){
+        return(
+          <p key={i}>{fieldLabel} {fieldName}</p>
+        )
+      } else {
+        return '';
+      }
+    });
+    console.log("Name Valid: "+this.state.nameValid);
+    console.log("Investment Valid: "+this.state.investmentValid);
+    console.log("Fee Valid: "+this.state.feeValid);
+    console.log("Payment Cycle Valid: "+this.state.paymentCycleValid);
+    console.log("File Valid: "+this.state.fileValid);
+    console.log("Form Valid: "+this.state.formValid);
+
     return (
       <div className="App">
         <div>
@@ -1331,7 +1440,8 @@ class App extends Component {
           <Row>
               <Col sm="12" md={{ size: 6, offset: 3}}>
                 <Form className="fundform" onSubmit={this.handleSubmit}>
-                  <h3>Launch a Fund with the form below:</h3>
+                  <h3>Launch a Fund with the form below:</h3>          
+                  {displayFormErrors}
                   <FormGroup>
                     <Label for="fundNameInput">Fund Name</Label>
                     <Input type="text" name="inputName" id="nameForm" onChange = {this.handleChange}/>
@@ -1362,7 +1472,7 @@ class App extends Component {
                   <p className='ipfs-result'>The IPFS hash is {this.state.ipfsHash}</p>
 
                   <FormGroup>
-                    <Button type="submit" color="primary">Submit</Button>
+                    <Button type="submit" color="primary" disabled={!this.state.formValid}>Submit</Button>
                   </FormGroup>
                 </Form>
               </Col>

@@ -5963,10 +5963,16 @@
       "links": {},
       "address": "0xbC935f1338cA752600F565c8b1C1c52301d31e5E",
       "transactionHash": "0x3f7a39c8c80c31118ba5a5ace4f82fb97206a83b4b200d11a89c0be2a9379833"
+    },
+    "1548634627665": {
+      "events": {},
+      "links": {},
+      "address": "0x72904eE1E146896533888c981B7Aa2b0944eB0f6",
+      "transactionHash": "0xde476186970d3f4cc75d30af5d6318934e40b1e043deebf7314736ee88af8c32"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T20:51:53.755Z",
+  "updatedAt": "2019-01-28T00:17:34.681Z",
   "devdoc": {
     "methods": {}
   },

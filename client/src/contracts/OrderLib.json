@@ -4271,10 +4271,16 @@
       "links": {},
       "address": "0x7Ae8EDe3CB72F373fd96935ac589ec61f182996b",
       "transactionHash": "0x4840cb68f5be19d896ad8cbf7d66e82e8a8b40d3e3e4a4a3a2fe36b6febc8c91"
+    },
+    "1548634627665": {
+      "events": {},
+      "links": {},
+      "address": "0x38e15738d1F60ece78B9793c1970Ac9F8C27A06C",
+      "transactionHash": "0x051377a6ff8e8ba961adc21935a3ce64159a007bae8a024c95cc5a0eed262cdb"
     }
   },
   "schemaVersion": "3.0.1",
-  "updatedAt": "2019-01-27T20:51:53.633Z",
+  "updatedAt": "2019-01-28T00:17:34.662Z",
   "devdoc": {
     "methods": {}
   },

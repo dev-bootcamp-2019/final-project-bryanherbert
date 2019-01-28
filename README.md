@@ -85,7 +85,7 @@ When the manager decides to close the fund, she clicks the "Close Fund" Button, 
 1. Clone the github repository:  
 `git clone https://github.com/dev-bootcamp-2019/final-project-bryanherbert.git`
 2. Install dependencies in the root directory and in the client directory:  
-`cd final-project-bryanherbert`
+`cd final-project-bryanherbert`  
 `npm install`  
 `cd client`  
 `npm install`  
