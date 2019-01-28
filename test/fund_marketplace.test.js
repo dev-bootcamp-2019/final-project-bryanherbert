@@ -171,7 +171,7 @@ contract('FundMarketplace', function(accounts) {
         const action = "buy"
         const ticker = "PLNT"
         const qty = 3
-        const price = web3.toWei(100, "szabo") //0.0001 ether
+        const price = web3.toWei(100, "finney") //0.0001 ether
 
         //Pre-transaction Testing
         result = await fundMarketplace.getFundDetails.call(fundNum)
@@ -243,7 +243,7 @@ contract('FundMarketplace', function(accounts) {
         //Post-transaction Testing
         result = await fundMarketplace.getFundDetails.call(fundNum)
         //Make sure Capital Deployed is equal to cost of trade (price * quantity)
-        assert.equal(result[3], web3.toWei(300, "szabo"), "capital was not successfully deployed")
+        assert.equal(result[3], web3.toWei(300, "finney"), "capital was not successfully deployed")
     })
 
     it("should allow investors to pay fees", async() => {

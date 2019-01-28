@@ -99,7 +99,7 @@ contract TestFundMarketplace {
         bytes32 ticker = "PLNT";
         uint qty = 3;
         //Price of individual security
-        uint price = 100 szabo; //0.0001 ether
+        uint price = 100 finney; //0.0001 ether
 
         //Test to make sure deployed capital is zero
         uint capDeploy;

@@ -219,7 +219,7 @@ class OrderModal extends React.Component{
     }
     finalAction = web3.utils.asciiToHex(finalAction);
     const finalTicker = web3.utils.asciiToHex(ticker);
-    const finalPrice = web3.utils.toWei(price.toString(), "szabo");
+    const finalPrice = web3.utils.toWei(price.toString(), "finney");
 
     //Price currently must be in ether
     //figure out conversion
@@ -312,7 +312,7 @@ class OrderModal extends React.Component{
                   <FormGroup row>
                     <Label for="price" sm={2}>Price</Label>
                     <Col sm={10}>
-                      <Input type="text" name="price" id="price" placeholder="Enter Execution Price (in szabo)" onChange={this.handleChange}/>
+                      <Input type="text" name="price" id="price" placeholder="Enter Execution Price (in finney)" onChange={this.handleChange}/>
                     </Col>
                   </FormGroup>
                 </Form>
