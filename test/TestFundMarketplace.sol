@@ -245,10 +245,10 @@ contract Manager {
         fm.closeFund(_fundNum);
     }
 
-    function setStopped(FundMarketplace fm)
-    external{
-        fm.setStopped();
-    }
+    // function setStopped(FundMarketplace fm)
+    // external{
+    //     fm.setStopped();
+    // }
 
     //Fallback function, accepts ether
     function() external payable {
