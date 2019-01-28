@@ -149,7 +149,7 @@ You can also migrate the contracts to the Ropsten testnet:
 ```
 $ truffle migrate --network ropsten
 ```
-In order to properly migrate onto the Ropsten network, you must set your own MNEMONIC and infuraKey in `truffle.js`.  
+In order to properly migrate onto the Ropsten network, you must set your own MNEMONIC and infuraKey (Infura API key) in `secret.js`.  
 
 6. Run the frontend (in client directory):
 ```  
