@@ -5,15 +5,6 @@ Users can act both as investors and managers. Investors can subscribe to differe
 
 ![alt text](./img/Screenshot1.png?raw=true "Homepage")
 
-## Note on Investment Subscription Model
-Mimic enables investors to subscribe to the investment strategies of different managers. In a traditional investment fund, an investor transfers her investment to the fund and the manager at the fund will directly invest that capital into asset classes. The fund changes value and the investor recognizes her gains or losses when she withdraws her balance in the fund. 
-
-With Mimic's Investment Subscription Model, the investor does not actually transfer capital to the manager, but instead allocates a "virtual balance" that she would like managed by the fund. The manager of the fund uses the sum of these virtual balances (total capital) to make investment decisions. However, each individual investor still controls the funds they've subscribed to the fund. 
-
-The manager will make an investment decision on behalf of the fund and "place an order". This order is then broken down into smaller orders on a pro rata basis and communicated to each investor based on the size of her investment in the fund. The investor receives her pro rata order and executes it with their allocated capital through her broker. In this way, the investor's allocated capital for the fund is used to create a portfolio that will produce an identical return to that of the overall fund. Put simply, the investor subscribes to a fund and receives investment decisions proportional to her allocated capital in the fund. The only value transfer across the platform is the payment of management fees.
-
-For example, Investor A could allocate 100 ether to "Alpha Fund", which has a 2% management fee. When Investor A clicks the "Invest" button, she will only transfer 2 ether to hold in escrow for the payment of the management fee but retains ownership of the 100 ether investment. The resulting total capital of Alpha Fund increases to 1,000 ether and the manager of Alpha Fund makes investment decisions with that balance. The manager of the fund then decides to buy 1,000 ether worth of Apple shares and communicates that decision by placing an order on the Mimic platform. Investor A then receives an order to buy 100 ether worth of Apple shares (10% of the order because she owns 10% of the fund). Investor A uses her 100 ether of allocated capital to purchase the shares. In this way, her portfolio will "mimic" the performance of the fund.
-
 ## Structure
 The main contract is FundMarketplace.sol. It was implemented in Solidity v0.5.0 with the truffle development framework. This contract is responsible for storing the on-chain data, holding ether in escrow for fee payments and all the functions of the dApp. These functions are implemented across libraries that I wrote to decrease the size of the main contract. This choice is discussed in more detail in design_pattern_decsions.md. The libraries deployed as part of this project are:
 - CollectFeesLib.sol
@@ -44,6 +35,15 @@ One of the state variables in FundMarketplace.sol is funds, which is a Data stru
 - A multihash struct that contains the information to reproduce the IPFS hash
 
 As discussed above, the ether that an investor invests or commits to a fund is not actually transferred. Only the associated management fees are transferred to the FundMarketplace.sol contract when investor subscribes to a fund. As these payments become do, an investor will use the `PayFee()` function to change the state such that these fees are credited to the manager's account, who can then retrieve them with the `CollectFee` function. During the time in between, the ether is stored in the smart contract.
+
+## Note on Investment Subscription Model
+Mimic enables investors to subscribe to the investment strategies of different managers. In a traditional investment fund, an investor transfers her investment to the fund and the manager at the fund will directly invest that capital into asset classes. The fund changes value and the investor recognizes her gains or losses when she withdraws her balance in the fund. 
+
+With Mimic's Investment Subscription Model, the investor does not actually transfer capital to the manager, but instead allocates a "virtual balance" that she would like managed by the fund. The manager of the fund uses the sum of these virtual balances (total capital) to make investment decisions. However, each individual investor still controls the funds they've subscribed to the fund. 
+
+The manager will make an investment decision on behalf of the fund and "place an order". This order is then broken down into smaller orders on a pro rata basis and communicated to each investor based on the size of her investment in the fund. The investor receives her pro rata order and executes it with their allocated capital through her broker. In this way, the investor's allocated capital for the fund is used to create a portfolio that will produce an identical return to that of the overall fund. Put simply, the investor subscribes to a fund and receives investment decisions proportional to her allocated capital in the fund. The only value transfer across the platform is the payment of management fees.
+
+For example, Investor A could allocate 100 ether to "Alpha Fund", which has a 2% management fee. When Investor A clicks the "Invest" button, she will only transfer 2 ether to hold in escrow for the payment of the management fee but retains ownership of the 100 ether investment. The resulting total capital of Alpha Fund increases to 1,000 ether and the manager of Alpha Fund makes investment decisions with that balance. The manager of the fund then decides to buy 1,000 ether worth of Apple shares and communicates that decision by placing an order on the Mimic platform. Investor A then receives an order to buy 100 ether worth of Apple shares (10% of the order because she owns 10% of the fund). Investor A uses her 100 ether of allocated capital to purchase the shares. In this way, her portfolio will "mimic" the performance of the fund.
 
 ## User Stories
 **Note: A user can be both an investor and a manager**
@@ -134,7 +134,8 @@ $ npm install
 ``` 
 $ ganache-cli
 ```
-**Note: The development network should be listening at `127.0.0.1:8545`**
+**Note: The development network should be listening at `127.0.0.1:8545`**  
+
 4. Use truffle to compile contracts:  
 ```
 $ truffle compile
@@ -153,7 +154,7 @@ In order to properly migrate onto the Ropsten network, you must set your own MNE
 ```  
 $ npm run start
 ```
-Access the frontend in your browser at http://localhost:3000/.  
+Access the frontend in your browser at `http://localhost:3000/`.  
 
 Once the dApp is running, you can begin to interact with it. In the development environment, the first ganache address will be the owner and admin user of the FundMarketplace.sol contract. This account can call the `setStopped()` function to halt all functionality except for functions that allow the user to withdraw fees. When switching accounts in Metamask, remember to refresh the page to update the UI.
 

@@ -25,6 +25,9 @@ contract TestFundMarketplace {
     bool g;
     uint h;
     uint i;
+    bytes32 j;
+    uint8 k;
+    uint8 l;
 
     function beforeAll() public {
         //Deploy FundMarketplace contracts
@@ -40,31 +43,40 @@ contract TestFundMarketplace {
         investorAddr = address(investor);
     }
   
-    // function testInitializeFund() public{
-    //     //Manager initializes new strategy
-    //     fundNum = 1;
-    //     bytes32 name = "alpha";
-    //     uint initialFund = 1 ether;
-    //     //feeRate is 2%
-    //     uint feeRate = 2;
-    //     //paymentCycle is in unit of days
-    //     uint paymentCycle = 0;
-    //     manager.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
+    function testInitializeFund() public{
+        //Manager initializes new strategy
+        fundNum = 1;
+        bytes32 name = "alpha";
+        uint initialFund = 1 ether;
+        //feeRate is 2%
+        uint feeRate = 2;
+        //paymentCycle is in unit of days
+        uint paymentCycle = 0;
+        //Multihash
+        bytes32 digest = 0x7D5A99F603F231D53A4F39D1521F98D2E8BB279CF29BEBFD0687DC98458E7F89;
+        uint8 hash_function = 0x12;
+        uint8 size = 0x20;
 
-    //     (a,b,c,d,e,f) = fm.getFundDetails(fundNum);
-    //     (g,h,i) = fm. getFundDetails2(fundNum, managerAddr);
+        manager.initializeFund(fm, name, initialFund, feeRate, paymentCycle, digest, hash_function, size);
 
-    //     //Tests
-    //     Assert.equal(a, name, "Strategy name does not match test name");
-    //     Assert.equal(b, managerAddr, "Manager is not owner of strategy");
-    //     Assert.equal(c, initialFund, "Strategy funds do not match test funds");
-    //     Assert.equal(d, 0, "Deployed Capital is not equal to zero");
-    //     Assert.equal(e, feeRate, "Fee Rate does not match test rate");
-    //     Assert.equal(f, paymentCycle, "Payment Cycle does not match test cycle");
-    //     Assert.equal(g, true, "Manager is not listed as investor");
-    //     Assert.equal(h, initialFund, "Manager's funds are not listed");
-    //     Assert.equal(i, 0, "Manager's fees deposited are not zero");
-    // }
+        (a,b,c,d,e,f) = fm.getFundDetails(fundNum);
+        (g,h,i) = fm. getFundDetails2(fundNum, managerAddr);
+        (j,k,l) = fm.getIpfsHash(fundNum);
+
+        //Tests
+        Assert.equal(a, name, "Strategy name does not match test name");
+        Assert.equal(b, managerAddr, "Manager is not owner of strategy");
+        Assert.equal(c, initialFund, "Strategy funds do not match test funds");
+        Assert.equal(d, 0, "Deployed Capital is not equal to zero");
+        Assert.equal(e, feeRate, "Fee Rate does not match test rate");
+        Assert.equal(f, paymentCycle, "Payment Cycle does not match test cycle");
+        Assert.equal(g, true, "Manager is not listed as investor");
+        Assert.equal(h, initialFund, "Manager's funds are not listed");
+        Assert.equal(i, 0, "Manager's fees deposited are not zero");
+        Assert.equal(j, digest, "digest of ipfs hash does not match test value");
+        Assert.equal(uint(k), uint(hash_function), "hash_function of ipfs hash does not match test value");
+        Assert.equal(uint(l), uint(size), "size of ipfs hash does not match test value");
+    }
 
     function testInvestment() public{
         //Check to see if account is an investor in a certain strategy
@@ -221,11 +233,11 @@ contract TestFundMarketplace {
 
 contract Manager {
 
-    // function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) 
-    // external 
-    // {
-    //     fm.initializeFund(_name, address(this), _initalFund, _feeRate, _paymentCycle);
-    // }
+    function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle, bytes32 _digest, uint8 _hash_function, uint8 _size) 
+    external 
+    {
+        fm.initializeFund(_name, address(this), _initalFund, _feeRate, _paymentCycle, _digest, _hash_function, _size);
+    }
 
     function collectFees(FundMarketplace fm, uint _fundNum) 
     external 
@@ -244,11 +256,6 @@ contract Manager {
     {
         fm.closeFund(_fundNum);
     }
-
-    // function setStopped(FundMarketplace fm)
-    // external{
-    //     fm.setStopped();
-    // }
 
     //Fallback function, accepts ether
     function() external payable {

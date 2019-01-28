@@ -1,7 +1,7 @@
 {
   "name": "final-project-bryanherbert",
   "version": "1.0.0",
-  "description": "",
+  "description": "Mimic App",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/dev-bootcamp-2019/final-project-bryanherbert.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Bryan Herbert",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/dev-bootcamp-2019/final-project-bryanherbert/issues"

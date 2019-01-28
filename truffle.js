@@ -3,14 +3,6 @@ let HDWalletProvider = require("truffle-hdwallet-provider")
 let secrets = require('./secret.js');
 const MNEMONIC = secrets.MNEMONIC;
 const infuraKey = secrets.infuraKey;
-// let secrets = require('./secret.js');
-// const WalletProvider = require("truffle-wallet-provider");
-// const Wallet = require('ethereumjs-wallet');
-
-// //Ropsten Testnet
-// let ropstenPrivateKey = new Buffer(secrets.ropstenPK, "hex");
-// let ropstenWallet = Wallet.fromPrivateKey(ropstenPrivateKey);
-// let ropstenProvider = new WalletProvider(ropstenWallet, "https://ropsten.infura.io/");
 
 module.exports = {
   // See <http://truffleframework.com/docs/advanced/configuration>
