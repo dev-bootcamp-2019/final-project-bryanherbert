@@ -1035,6 +1035,7 @@ class App extends Component {
     this.bytes2multihash = this.bytes2multihash.bind(this);
     this.validateField = this.validateField.bind(this);
     this.validateForm = this.validateForm.bind(this);
+    this.validateFile = this.validateFile.bind(this);
   }
 
   componentDidMount = async () => {
@@ -1083,7 +1084,7 @@ class App extends Component {
     event.preventDefault();
     await ipfs.add(this.state.buffer, (err, ipfsHash) => {
       console.log(err, ipfsHash);
-      this.setState({ ipfsHash: ipfsHash[0].hash });
+      this.setState({ ipfsHash: ipfsHash[0].hash }, this.validateFile());
     })
   };
 
@@ -1162,14 +1163,12 @@ class App extends Component {
   }
 
   validateField(fieldName, value) {
-    console.log("fieldName: "+fieldName);
-    console.log("Value: "+value);
     let fieldValidationErrors = this.state.formErrors;
     let nameValid = this.state.nameValid;
     let investmentValid = this.state.investmentValid;
     let feeValid = this.state.feeValid;
     let paymentCycleValid = this.state.paymentCycleValid;
-    let fileValid = this.state.fieValid;
+    let fileValid = this.state.fileValid;
 
     switch(fieldName) {
       case 'inputName':
@@ -1179,21 +1178,26 @@ class App extends Component {
         break;
       case 'inputInvestment':
         //Only accept integers
-        investmentValid = value.match(/^[0-9]+$/);
-        fieldValidationErrors.name = investmentValid ? '' : ' is invalid';
+        investmentValid = value.match(/^[0-9]+$/) && !isNaN(value);
+        fieldValidationErrors.investment = investmentValid ? '' : ' is invalid';
         break;
       case 'inputFeeRate':
         //Only accepts integers less than or equal to 20
-        feeValid = value.match(/^[0-9]+$/) && value.toNumber() <= 20;
-        fieldValidationErrors.name = feeValid ? '' : ' is invalid';
+        feeValid = value.match(/^[0-9]+$/) && !isNaN(value) && value <= 20;
+        fieldValidationErrors.fee = feeValid ? '' : ' is invalid';
         break;
       case 'inputPaymentCycle':
         //Only accepts integers less than or equal to 365
-        paymentCycleValid = value.match(/^[0-9]+$/) && value.toNumber() <= 365;
-        fieldValidationErrors.name = paymentCycleValid ? '' : ' is invalid';
+        paymentCycleValid = value.match(/^[0-9]+$/) && !isNaN(value) && value <= 365;
+        fieldValidationErrors.paymentCycle = paymentCycleValid ? '' : ' is invalid';
         break;
       default:
         break;
+    }
+
+    //Make sure ipfsHash exists
+    if(this.state.ipfsHash){
+      fileValid = true;
     }
 
     this.setState({
@@ -1203,6 +1207,12 @@ class App extends Component {
       feeValid: feeValid,
       paymentCycleValid: paymentCycleValid,
       fileValid: fileValid
+    }, this.validateForm);
+  }
+
+  validateFile() {
+    this.setState({
+      formValid: true
     }, this.validateForm);
   }
 
@@ -1366,9 +1376,8 @@ class App extends Component {
 
     const fE = this.state.formErrors;
     const fEArr = [fE.name, fE.investment, fE.fee, fE.paymentCycle, fE.file];
-    console.log("Form Errors: "+fE);
-    const displayFormErrors = fEArr.map((fieldName, i) => {
-      let fieldLabel;
+    const displayFormErrors = fEArr.map((fieldErrors, i) => {
+      let fieldLabel = null;
       switch(i){
         case 0:
           fieldLabel = "Fund Name";
@@ -1383,23 +1392,16 @@ class App extends Component {
           fieldLabel = "Payment Cycle";
           break;
         default:
-          break;
+          fieldLabel = "File";
       }
-      console.log("fieldName "+fieldName);
       if(fEArr[i].length > 0){
         return(
-          <p key={i}>{fieldLabel} {fieldName}</p>
+          <p key={i} className="error-message"><strong>{fieldLabel} {fieldErrors}</strong></p>
         )
       } else {
         return '';
       }
     });
-    console.log("Name Valid: "+this.state.nameValid);
-    console.log("Investment Valid: "+this.state.investmentValid);
-    console.log("Fee Valid: "+this.state.feeValid);
-    console.log("Payment Cycle Valid: "+this.state.paymentCycleValid);
-    console.log("File Valid: "+this.state.fileValid);
-    console.log("Form Valid: "+this.state.formValid);
 
     return (
       <div className="App">
