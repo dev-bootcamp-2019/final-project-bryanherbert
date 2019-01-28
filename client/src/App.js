@@ -1222,7 +1222,7 @@ class App extends Component {
       && this.state.investmentValid 
       && this.state.feeValid 
       && this.state.paymentCycleValid 
-      && this.state.ipfsHash});
+      && this.state.formValid});
   }
 
   setup = async () => {

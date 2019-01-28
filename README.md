@@ -3,6 +3,8 @@ A dApp on the Ethereum network that serves as a decentralized marketplace for in
 
 Investors can subscribe to different funds, which are controlled by managers who make investment decisions to buy or sell equities for the fund. These decisions are then broken up into orders and distributed to the subscribed investors on a pro rata basis. Investors then execute these trades to mimic the strategy of the fund.
 
+![alt text](./img/Screenshot1);
+
 ## Demo on Rinkeby Testnet
 The FundMarketplace contract and relevant libraries are deployed on the Rinkeby testnet. For reference, the contract addresses are listed in `deployed_addresses.txt`.
 
@@ -14,6 +16,10 @@ With Mimic's Investment Subscription Model, the investor does not actually trans
 The manager will make an investment decision on behalf of the fund and "place an order". This order is then broken down into smaller orders on a pro rata basis and communicated to each investor based on the size of her investment in the fund. The investor receives her pro rata order and executes it with their allocated capital through her broker. In this way, the investor's allocated capital for the fund is used to create a portfolio that will produce an identical return to that of the overall fund. Put simply, the investor subscribes to a fund and receives investment decisions proportional to her allocated capital in the fund. The only value transfer across the platform is the payment of management fees.
 
 For example, Investor A could allocate 100 ether to "Alpha Fund", which has a 2% management fee. When Investor A clicks the "Invest" button, she will only transfer 2 ether to hold in escrow for the payment of the management fee but retains ownership of the 100 ether investment. The resulting total capital of Alpha Fund increases to 1,000 ether and the manager of Alpha Fund makes investment decisions with that balance. The manager of the fund then decides to buy 1,000 ether worth of Apple shares and communicates that decision by placing an order on the Mimic platform. Investor A then receives an order to buy 100 ether worth of Apple shares (10% of the order because she owns 10% of the fund). Investor A uses her 100 ether of allocated capital to purchase the shares. In this way, her portfolio will "mimic" the performance of the fund.
+
+## Structure
+Notes on how the architecture is designed- multiple contracts
+any technical thing not related to user stories
 
 ## User Stories
 **Note: A user can be both an investor and a manager**
@@ -83,20 +89,32 @@ When the manager decides to close the fund, she clicks the "Close Fund" Button, 
 
 ## Running the dApp Locally
 1. Clone the github repository:  
-`git clone https://github.com/dev-bootcamp-2019/final-project-bryanherbert.git`
-2. Install dependencies in the root directory and in the client directory:  
-`cd final-project-bryanherbert`  
-`npm install`  
-`cd client`  
-`npm install`  
-3. Start Ganache:  
-`ganache-cli`
+```
+$ git clone https://github.com/dev-bootcamp-2019/final-project-bryanherbert.git
+```
+2. Install dependencies in the root directory and in the client directory:
+```  
+$ cd final-project-bryanherbert  
+$ npm install
+$ cd client 
+$ npm install
+```
+3. Start Ganache:
+``` 
+$ ganache-cli
+```
 4. Use truffle to compile contracts:  
-`truffle compile`
-5. Use truffle to deploy contracts:  
-`truffle migrate`
-6. Run the frontend (in client directory):  
-`npm run start`  
+```
+$ truffle compile
+```
+5. Use truffle to deploy contracts: 
+``` 
+$ truffle migrate
+```
+6. Run the frontend (in client directory):
+```  
+$ npm run start
+```
 Access the frontend in your browser at http://localhost:3000/.
 
 ## Testing
@@ -108,7 +126,9 @@ I've written tests in both Solidity and Javascript that check the following beha
 - withdrawing capital from a fund
 
 Use the following command to run the Solidity and Javascript tests:
-`truffle test`
+```
+truffle test
+```
 
 ## Security Features
 [Open file](https://github.com/dev-bootcamp-2019/final-project-bryanherbert/blob/master/avoiding_common_attacks.md)

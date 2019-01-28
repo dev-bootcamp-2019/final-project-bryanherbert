@@ -24,11 +24,12 @@
   color: #61dafb;
 }
 
+/*Image Link: https://www.liberatedstocktrader.com/wp-content/uploads/2017/11/pexels-photo-534216.jpeg*/
 .jumbotron{
   background: linear-gradient(
                     rgba(20,20,20,0.5),
                     rgba(20,20,20,0.5)),
-                    url("https://www.liberatedstocktrader.com/wp-content/uploads/2017/11/pexels-photo-534216.jpeg");                    
+                    url('./img/tickers.jpeg');
   background-size: cover;
 }
 
