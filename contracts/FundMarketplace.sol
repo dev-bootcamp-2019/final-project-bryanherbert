@@ -147,6 +147,7 @@ contract FundMarketplace {
       *@param _hash_function Hash function of ipfs hash
       *@param _size size of ipfs hash
       *@dev uses stopInEmergency() modifier
+      *@dev lifetimeCount is used in InitLib.initializeFund because current implementation makes it difficult to delete and replace fund data
      */
     function initializeFund(bytes32 _name, 
     address _fundOwner, 

@@ -1,5 +1,9 @@
 pragma solidity ^0.5.0;
 
+/** @title Struct Library
+  * @author Bryan Herbert
+  * @notice Defines data structures for the projects
+  */
 library StructLib{
     struct Data { mapping(uint => Fund) list; }
 
@@ -23,8 +27,8 @@ library StructLib{
         mapping (address => bool) investors;
         //maps investors to their virtual balances in the strategy
         mapping (address => uint) virtualBalances;
-        //maps investors to the actual fee they have stored in the Strategy Hub contract
-        //fees are paid into stratOwner fee account and paid from investor fee account
+        //maps investors to the actual fee they have stored in the FundMarketplace contract
+        //fees are paid into fundOwner fee account and paid from investor fee account
         mapping (address => uint) fees;
         //Adoption Times for each investor
         mapping(address => uint) paymentCycleStart;
@@ -36,6 +40,7 @@ library StructLib{
         Multihash investHash;
     }
 
+    //IPFS multihash
     struct Multihash{
         bytes32 ipfsHash;
         uint8 hash_function;

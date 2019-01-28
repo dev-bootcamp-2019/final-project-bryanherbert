@@ -2,9 +2,22 @@ pragma solidity ^0.5.0;
 
 import "../contracts/StructLib.sol";
 
+/** @title Withdraw Funds Library
+  * @author Bryan Herbert
+  * @notice Functionality to make state changes and ether transfers when an investor withdraws funds
+  */
 library WithdrawFundsLib {
 
-    modifier maxWithdraw(StructLib.Data storage self, uint _fundNum, address _investor, uint _amount){
+    /** @dev Modifier that limits an investor from withdrawing an amount greater than their virtual balance
+      * @param self Data struct that contains fund information
+      * @param _fundNum Fund Number
+      * @param _investor investor address
+      * @param _amount amount requested to be withdrawn
+      */
+    modifier maxWithdraw(StructLib.Data storage self,
+     uint _fundNum, 
+     address _investor, 
+     uint _amount){
         require(
             //amount to withdraw is not more than balance in account
             _amount <= self.list[_fundNum].virtualBalances[_investor],
@@ -13,7 +26,18 @@ library WithdrawFundsLib {
         _;
     }
 
-    function withdrawFunds(StructLib.Data storage self, uint _fundNum, address payable _investor, uint _amount)
+    /** @dev Makes state changes and ether transfers correspnding to a new withdrawal request
+      * @param self Data struct with fund information
+      * @param _fundNum Fund Number
+      * @param _investor investor address
+      * @param _amount amount requested to be withdrawn
+      * @return uint virtual balance withdrwan
+      * @return uint fees withdrawn
+      */
+    function withdrawFunds(StructLib.Data storage self, 
+    uint _fundNum, 
+    address payable _investor, 
+    uint _amount)
     public
     maxWithdraw(self, _fundNum, _investor, _amount)
     returns (uint, uint)
