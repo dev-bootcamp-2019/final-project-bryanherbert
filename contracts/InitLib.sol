@@ -25,10 +25,6 @@ library InitLib {
         self.list[_fundCount].investHash.size = size;
 
     }
-
-    // bytes32 ipfsHash;
-    // uint8 hash_function;
-    // uint8 size;
     
     function initializeFund(
         StructLib.Data storage self, 
@@ -44,6 +40,11 @@ library InitLib {
     public
     noDupName(self, _fundCount, _name)
     {
+        //Make sure that Message Sender is the same as the declared fund Owner
+        require(
+            _fundOwner == msg.sender,
+            "Message Sender has not listed themselves as fund owner"
+        );
         uint count = _fundCount + 1;
         //initialize fund num to fundCount
         self.list[count].fundNum = count;

@@ -18,6 +18,10 @@ library WithdrawFundsLib {
     maxWithdraw(self, _fundNum, _investor, _amount)
     returns (uint, uint)
     {
+        require(
+            _investor == msg.sender,
+            "The sender trying to execute the function is not the investor"
+        );
         uint bal;
         uint fees;
         //Check for total or partial withdrawal

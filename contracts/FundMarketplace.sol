@@ -154,7 +154,6 @@ contract FundMarketplace {
     }
 
     //Place order for a trade
-    //Not sure what calldata is exactly for _action
     function placeOrder(uint _fundNum, bytes32 _action, bytes32 _ticker, uint _qty, uint _price)
     external 
     stopInEmergency()
@@ -172,7 +171,6 @@ contract FundMarketplace {
     }
 
     //check Fee Rate - read operation from struct
-    //was originally "public view" when not in library
     function checkFeeRate(uint _fundNum) public view returns (uint) {
         return Misc.checkFeeRate(funds, _fundNum);
     }
@@ -198,7 +196,6 @@ contract FundMarketplace {
     //Owner of Strategy Collects Fees
     function collectFees(uint _fundNum) 
     external
-    stopInEmergency()
     //isOwner(_name)
     {
         uint fees = CollectFeesLib.collectFees(funds, _fundNum, msg.sender);

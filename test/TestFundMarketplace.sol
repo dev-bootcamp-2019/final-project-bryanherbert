@@ -40,31 +40,31 @@ contract TestFundMarketplace {
         investorAddr = address(investor);
     }
   
-    function testInitializeFund() public{
-        //Manager initializes new strategy
-        fundNum = 1;
-        bytes32 name = "alpha";
-        uint initialFund = 1 ether;
-        //feeRate is 2%
-        uint feeRate = 2;
-        //paymentCycle is in unit of days
-        uint paymentCycle = 0;
-        manager.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
+    // function testInitializeFund() public{
+    //     //Manager initializes new strategy
+    //     fundNum = 1;
+    //     bytes32 name = "alpha";
+    //     uint initialFund = 1 ether;
+    //     //feeRate is 2%
+    //     uint feeRate = 2;
+    //     //paymentCycle is in unit of days
+    //     uint paymentCycle = 0;
+    //     manager.initializeFund(fm, name, initialFund, feeRate, paymentCycle);
 
-        (a,b,c,d,e,f) = fm.getFundDetails(fundNum);
-        (g,h,i) = fm. getFundDetails2(fundNum, managerAddr);
+    //     (a,b,c,d,e,f) = fm.getFundDetails(fundNum);
+    //     (g,h,i) = fm. getFundDetails2(fundNum, managerAddr);
 
-        //Tests
-        Assert.equal(a, name, "Strategy name does not match test name");
-        Assert.equal(b, managerAddr, "Manager is not owner of strategy");
-        Assert.equal(c, initialFund, "Strategy funds do not match test funds");
-        Assert.equal(d, 0, "Deployed Capital is not equal to zero");
-        Assert.equal(e, feeRate, "Fee Rate does not match test rate");
-        Assert.equal(f, paymentCycle, "Payment Cycle does not match test cycle");
-        Assert.equal(g, true, "Manager is not listed as investor");
-        Assert.equal(h, initialFund, "Manager's funds are not listed");
-        Assert.equal(i, 0, "Manager's fees deposited are not zero");
-    }
+    //     //Tests
+    //     Assert.equal(a, name, "Strategy name does not match test name");
+    //     Assert.equal(b, managerAddr, "Manager is not owner of strategy");
+    //     Assert.equal(c, initialFund, "Strategy funds do not match test funds");
+    //     Assert.equal(d, 0, "Deployed Capital is not equal to zero");
+    //     Assert.equal(e, feeRate, "Fee Rate does not match test rate");
+    //     Assert.equal(f, paymentCycle, "Payment Cycle does not match test cycle");
+    //     Assert.equal(g, true, "Manager is not listed as investor");
+    //     Assert.equal(h, initialFund, "Manager's funds are not listed");
+    //     Assert.equal(i, 0, "Manager's fees deposited are not zero");
+    // }
 
     function testInvestment() public{
         //Check to see if account is an investor in a certain strategy
@@ -221,11 +221,11 @@ contract TestFundMarketplace {
 
 contract Manager {
 
-    function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) 
-    external 
-    {
-        fm.initializeFund(_name, address(this), _initalFund, _feeRate, _paymentCycle);
-    }
+    // function initializeFund(FundMarketplace fm, bytes32 _name, uint _initalFund, uint _feeRate, uint _paymentCycle) 
+    // external 
+    // {
+    //     fm.initializeFund(_name, address(this), _initalFund, _feeRate, _paymentCycle);
+    // }
 
     function collectFees(FundMarketplace fm, uint _fundNum) 
     external 

@@ -4,7 +4,17 @@ import "../contracts/StructLib.sol";
 import "../node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol";
 
 library OrderLib{
+    modifier verifyOwnership(StructLib.Data storage self, uint _fundNum, address sender) {
+        //Verify that fund exists by checking feeRate is not zero
+        require(
+            self.list[_fundNum].fundOwner == sender,
+            "A non-owner is trying to submit an order to the fund"
+        );
+        _;
+    }
+
     function placeOrder(StructLib.Data storage self, uint _fundNum, bytes32 _action, uint _qty, uint _price)
+    verifyOwnership(self, _fundNum, msg.sender)
     public
     {
         bytes32 buy = "buy";
